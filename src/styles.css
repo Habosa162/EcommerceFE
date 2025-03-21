@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  font-family: "Outfit", sans-serif;
+}
+.mainColor {
+  color: #003d29 !important;
+}
+.mainBg {
+  background-color: #003d29 !important;
+}

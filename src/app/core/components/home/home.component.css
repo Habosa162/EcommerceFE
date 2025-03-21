@@ -1,0 +1,10 @@
+#home {
+  min-height: 100vh;
+  background-image: url("/assets/imgs/background.png");
+  background-position: center;
+  background-size: cover;
+}
+
+h1 {
+  font-size: 60px;
+}
