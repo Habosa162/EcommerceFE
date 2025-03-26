@@ -1,0 +1,143 @@
+/* GENERAL PRODUCT CARD STYLING */
+.product-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: white;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* IMAGE STYLING */
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+  filter: brightness(0.98);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effect: Subtle Zoom */
+.product-card:hover .card-img-top {
+  filter: brightness(0.92);
+  transform: scale(1.03);
+}
+
+/* DISCOUNT BADGE */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  background: #ff3e3e;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* ACTION BUTTONS (CART & WISHLIST) */
+.product-actions {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.product-card:hover .product-actions {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* BUTTONS (Cart & Wishlist) */
+.product-actions .btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* Hover Effect: Soft Green */
+.product-actions .btn:hover {
+  background: #a8e6a3;
+  color: black;
+  transform: scale(1.1);
+}
+.bg-light {
+  padding: 15px;
+  border-radius: 8px;
+}
+
+h5 {
+  margin-bottom: 10px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  margin-right: 5px;
+}
+
+.product-card {
+  border: none;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+
+/* RESPONSIVENESS FOR MOBILE */
+@media (max-width: 768px) {
+  /* Adjust Card Layout */
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Image Adjustments */
+  .card-img-top {
+    height: 200px;
+    border-radius: 10px;
+  }
+
+  /* Adjust Action Buttons */
+  .product-actions {
+    bottom: 10px;
+    opacity: 1; /* Ensure buttons are always visible on mobile */
+  }
+
+  .product-actions .btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  /* Disable Hover Effects on Mobile */
+  .product-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,61 @@
+/* Product Gallery */
+.product-gallery {
+  text-align: center;
+}
+
+.main-image {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.thumbnail-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail-img:hover {
+  transform: scale(1.1);
+}
+
+/* Rating Stars */
+.rating-stars {
+  font-size: 1.2rem;
+}
+
+.bi-star-fill {
+  color: #f8b400;
+}
+
+/* Buttons */
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+/* Review Cards */
+.review-card {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-gallery {
+    text-align: left;
+  }
+}

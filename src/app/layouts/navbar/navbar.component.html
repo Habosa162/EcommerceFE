@@ -65,19 +65,43 @@
     </ul>
 
     <!-- search  -->
+   <!-- Search Form -->
     <form class="position-relative mx-auto d-none d-lg-flex" role="search">
-      <input
-        class="form-control me-2 rounded-pill"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn position-absolute end-0 me-2" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </form>
-
-    <div class="d-flex align-items-center justify-content-between gap-3">
+  <div class="search-container">
+    <input
+      class="form-control me-2 rounded-pill"
+      type="search"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchInput()"
+      placeholder="Search products..."
+      aria-label="Search"
+      name="search"
+    />
+    <button class="btn position-absolute end-0 me-2" type="button">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    
+    <!-- Search Results Dropdown -->
+    <div *ngIf="showSearchResults && searchQuery" class="search-results-dropdown">
+      <div *ngIf="searchResults.length > 0; else noResults">
+        <div *ngFor="let result of searchResults" class="search-result-item">
+          <a routerLink="/products/{{result.id}}" class="d-flex align-items-center p-2">
+            <div class="flex-grow-1">
+              <div class="fw-bold">{{result.name}}</div>
+              <small class="text-muted">{{result.category}}</small>
+            </div>
+            <i class="fa-solid fa-chevron-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+      <ng-template #noResults>
+        <div class="p-3 text-center">
+          No results found for "{{searchQuery}}"
+        </div>
+      </ng-template>
+    </div>
+  </div>
+     </form>
       <!-- profile -->
       <div class="dropdown">
         <button
@@ -216,5 +240,5 @@
         </form>
       </div>
     </div>
-  </div>
+  
 </nav>
