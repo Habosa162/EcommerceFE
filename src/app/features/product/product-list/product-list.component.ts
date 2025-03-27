@@ -4,6 +4,7 @@ import { Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -25,7 +26,7 @@ export class ProductListComponent implements OnInit {
   selectedBrands: string[] = [];
   selectedPriceRange: string = '';
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,private cartService: CartService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {
@@ -105,6 +106,10 @@ export class ProductListComponent implements OnInit {
       if (this.selectedPriceRange === '$200 - $300') return price >= 200 && price <= 300;
       return true;
     }
+    addToCart(product: any) {
+      this.cartService.addToCart(product);
+    }
+
   }
   
 

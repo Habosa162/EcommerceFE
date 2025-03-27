@@ -85,7 +85,10 @@ export class ProductService {
   // 1. Get all products (for Product Listing Page)
   getProducts(): Observable<Product[]> {
     // In a real app: return this.http.get<Product[]>(this.apiUrl);
-    return of(this.mockProducts);
+    return of( this.mockProducts.map(product => ({
+      ...product,
+      finalPrice: product.price - (product.price * (product.discount || 0) / 100) // Calculate finalPrice
+    })));
   }
 
   // 2. Get single product details (for Product Details Page)

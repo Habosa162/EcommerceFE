@@ -29,7 +29,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ product.name }}</h5>
                   <p class="text-danger">${{ product.price }}</p>
-                  <button class="btn btn-primary">Add to Cart</button>
+                  <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
                 </div>
               </div>
             </div>

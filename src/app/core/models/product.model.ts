@@ -7,6 +7,9 @@ export interface Product {
     category: string;
     rating: number;
     reviews: Review[];
+    finalPrice?: number;
+    discount?: number;
+    
   }
   
   export interface Review {

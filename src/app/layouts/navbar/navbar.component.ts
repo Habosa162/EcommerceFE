@@ -5,6 +5,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { ProductService } from '../../core/services/product.service'; // Add this import
 import { Product } from '../../core/models/product.model'; // Add this import
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,7 @@ export class NavbarComponent {
   @Output() search = new EventEmitter<string>();
   // productService: any;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService,private cartService: CartService) {
     this.setupSearch();
   }
 
@@ -73,5 +74,8 @@ export class NavbarComponent {
     this.searchQuery = '';
     this.showSearchResults = false;
     this.searchResults = [];
+  }
+  cartCount() {
+    return this.cartService.getCartCount();
   }
 }
