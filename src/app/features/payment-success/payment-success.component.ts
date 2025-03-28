@@ -21,8 +21,8 @@ export class PaymentSuccessComponent {
   constructor(private http: HttpClient, private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
-    //const token = localStorage.getItem('authToken');
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFhNjZjMzg3LWQ3YzMtNDkxOC04MmVjLWQ0NmE3NjA2MDQ4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOlsiTW9oYW1lZCIsIkhhbnkiXSwiZXhwIjoxNzQzMzc3ODAzLCJpc3MiOiJteWRvbWFpbi5jb20iLCJhdWQiOiJteWRvbWFpbi5jb20ifQ.87Jgj62t7WPJEO9zEY5Il079HxXJzE4pJ5VztWVJ__0";
+    const token = localStorage.getItem('token');
+    //const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFhNjZjMzg3LWQ3YzMtNDkxOC04MmVjLWQ0NmE3NjA2MDQ4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOlsiTW9oYW1lZCIsIkhhbnkiXSwiZXhwIjoxNzQzMzc3ODAzLCJpc3MiOiJteWRvbWFpbi5jb20iLCJhdWQiOiJteWRvbWFpbi5jb20ifQ.87Jgj62t7WPJEO9zEY5Il079HxXJzE4pJ5VztWVJ__0";
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
