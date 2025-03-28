@@ -3,9 +3,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import { ProductService } from '../../core/services/product.service'; // Add this import
-import { Product } from '../../core/models/product.model'; // Add this import
-import { CartService } from '../../core/services/cart.service';
+import { ProductService } from '../../../core/services/product.service'; // Add this import
+import { Product } from '../../../core/models/product.model'; // Add this import
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-navbar',

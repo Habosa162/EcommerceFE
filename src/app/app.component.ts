@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { CustomerLayoutComponent } from './layouts/customer-layout/customer-layout.component';
 // import { HomeComponent } from './core/components/home/home.component';
 // import { ProductListComponent } from './core/components/product-list/product-list.component';
 // import { ProductDetailsComponent } from './core/components/product-details/product-details.component';
@@ -9,7 +9,7 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [CustomerLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
