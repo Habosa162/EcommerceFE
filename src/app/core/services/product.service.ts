@@ -9,7 +9,7 @@ import { Product, Review } from '../models/product.model';
 export class ProductService {
   private mockProducts: Product[] = [
     {
-      id: 1,
+      id: 12,
       name: 'Premium Headphones',
       price: 199.99,
       description: 'High-quality noise-canceling headphones with premium sound.',

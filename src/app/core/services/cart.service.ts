@@ -18,7 +18,11 @@ export class CartService {
   }
 
   getCart() {
-    return this.cartItems;
+    return this.cartItems();
+  }
+  clearCart(){
+    this.cartItems.set([]); 
+    localStorage.removeItem('cart'); 
   }
 
   addToCart(product: any) {
@@ -37,17 +41,16 @@ export class CartService {
   
   updateQuantity(productId: number, change: number) {
     const currentItems = this.cartItems(); 
-    //Iterates over each item in the currentItems array to find the item and update quantity
     const updatedItems = currentItems.map((item) => {
       if (item.id === productId) {
         const updatedQuantity = item.quantity + change;
         if (updatedQuantity > 0) {
-          return { ...item, quantity: updatedQuantity }; // Update the quantity
+          return { ...item, quantity: updatedQuantity }; 
         }
-        return null; // Mark for removal if quantity is <= 0
+        return null; 
       }
-      return item; // Keep other items unchanged
-    }).filter(item => item !== null); // Remove items with null (quantity <= 0)
+      return item; 
+    }).filter(item => item !== null); 
 
     this.cartItems.set(updatedItems as any[]);
     this.saveCart(); 

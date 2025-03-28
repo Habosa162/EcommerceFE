@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 export class CartComponent {
   constructor(private cartService: CartService) {}
 
-  cartItems = computed(() => this.cartService.getCart()());
+  cartItems = computed(() => this.cartService.getCart());
 
 
   updateQuantity(productId: number, change: number) {
