@@ -1,0 +1,19 @@
+.order-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 12px;
+}
+
+.order-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.badge {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 10px;
+}

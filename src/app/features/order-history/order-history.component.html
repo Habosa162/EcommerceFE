@@ -1,0 +1,30 @@
+<div class="container py-4">
+    <h2 class="mb-4 text-center text-primary">Order History</h2>
+
+    <div *ngIf="orders.length === 0" class="alert alert-info text-center">
+        No orders found.
+    </div>
+
+    <div *ngFor="let order of orders" class="order-card card shadow-sm mb-3 border-0">
+        <div class="card-body d-flex align-items-center justify-content-between">
+            <div>
+                <h5 class="mb-1">
+                    <a [routerLink]="['/order-details', order.id]" class="text-decoration-none text-dark fw-bold">
+                        Order #{{ order.id }}
+                    </a>
+                </h5>
+                <p class="mb-1 text-muted">
+                    <i class="bi bi-calendar-check"></i> {{ order.orderDate | date: 'medium' }}
+                </p>
+                <p class="mb-0">
+                    <strong>Total:</strong> {{ order.totalAmount | currency }}
+                </p>
+            </div>
+
+            <span class="badge" 
+                  [ngClass]="{'bg-warning text-dark': +order.paymentStatus === 1, 'bg-success': +order.paymentStatus === 0}">
+                {{ +order.paymentStatus === 1 ? 'Pending' : 'Paid' }}
+            </span>
+        </div>
+    </div>
+</div>

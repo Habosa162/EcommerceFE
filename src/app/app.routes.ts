@@ -7,6 +7,7 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 import { PaymentSuccessComponent } from './features/payment-success/payment-success.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { OrderHistoryComponent } from './features/order-history/order-history.component';
 
 
 export const routes: Routes = [
@@ -19,6 +20,8 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'payment-success', component: PaymentSuccessComponent },
     { path: 'checkout', component: CheckoutComponent },
+    {path: 'order-history', component: OrderHistoryComponent}, // Order history route
+
 
     { path: '**', redirectTo: '/home' }, // Fallback route for 404path: 'products/:id', component: ProductDetailsComponent },
 
