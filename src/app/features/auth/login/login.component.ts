@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../Services/auth.service';
-import { ILoginUser } from './../../../core/models/Auth.model';
+import { ILoginUser } from './../../../core/models/auth.model';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] 
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     }
 
     const userObj: ILoginUser = {
-      Email: this.loginForm.value.email,  
+      Email: this.loginForm.value.email,
       Password: this.loginForm.value.password
     };
     this.authService.login(userObj).subscribe({

@@ -3,26 +3,39 @@
       <div class="card p-4 shadow-lg">
         <h3 class="text-center text-dark">Register</h3>
       <div class="card-body">
-        <form>
+        <form [formGroup] ="registerForm " (ngSubmit)="OnRegister()">
         <div class="mb-3">
           <label for="firstName" class="form-label">First Name</label>
-          <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required>
+          <input type="text" formControlName="FName" class="form-control"  id="firstName" placeholder="Enter your first name" required>
         </div>
         <div class="mb-3">
           <label for="lastName" class="form-label">Last Name</label>
-          <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" required>
+          <input type="text" formControlName="LName" class="form-control" id="lastName" placeholder="Enter your last name" required>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+          <input type="email" formControlName="Email" class="form-control" id="email" placeholder="Enter your email" required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+          <input type="password" formControlName="Password" class="form-control" id="password" placeholder="Enter your password" required>
         </div>
+
+        <div class="mb-3">
+          <label for="Role" class="form-label">Role</label>
+          <select class="form-select"name="Role"id="Role"formControlName="Role"aria-label="Default select example"required>
+            <option value="" disabled>Select role for yourself</option>
+            <option value="User">Customer</option>
+            <option value="Merchant">Merchant</option>
+          </select>
+        </div>
+
         <div class="mb-3">
           <label for="profileImage" class="form-label">Profile Image</label>
-          <input type="file" class="form-control" id="profileImage" accept="image/*" required>
+          <input type="file" formControlName="profileImage" class="form-control"
+          id="profileImage" accept="image/*"
+          (change)="onFileSelected($event)"
+          required>
         </div>
         <div class="d-grid">
           <button type="submit" class="btn btn-primary">Register</button>

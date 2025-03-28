@@ -1,9 +1,8 @@
-import { ILoginUser } from '../core/models/Auth.model';
+import { IRegisterUser,ILoginUser } from './../core/models/auth.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from './enviroment';
-
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +10,23 @@ import { environment } from './enviroment';
 export class AuthService {
 
   private LoginEndPoint = `${environment.apiUrl}/Auth/login`;
-  private RegisterEndPoint = `${environment.apiUrl}/Auth/register`;    
-  
+  private RegisterEndPoint = `${environment.apiUrl}/Auth/register`;
+
   constructor(private http:HttpClient) { }
 
-  login(LoginObj:ILoginUser): Observable<any>{
+  login(LoginObj:ILoginUser) : Observable<any>{
     console.log(LoginObj);
     return this.http.post(this.LoginEndPoint, LoginObj);
   }
-  register() : void{
-    console.log('register');
+  register(RegisterObj:FormData) : Observable<any>{
+    return this.http.post(this.RegisterEndPoint, RegisterObj);
   }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
   isLoggedIn() : boolean{
-    return !!localStorage.getItem('token'); 
+    return !!localStorage.getItem('token');
   }
   logout() : void{
     localStorage.removeItem('token');
