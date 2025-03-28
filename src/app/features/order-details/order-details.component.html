@@ -1,0 +1,37 @@
+<div class="container py-4">
+    <h2 class="text-center text-primary mb-4">Order Details</h2>
+
+    <div *ngIf="order" class="order-details p-4 rounded shadow-sm">
+        <!-- Order Summary -->
+        <div class="order-summary p-3 mb-4 border-bottom">
+            <h4 class="text-dark"><strong>Order ID:</strong> <span class="text-muted">#{{ order.id }}</span></h4>
+            <p><strong>Date:</strong> {{ order.orderDate | date }}</p>
+            <p>
+                <strong>Status:</strong> 
+                <span class="badge" 
+                      [ngClass]="{ 'bg-warning': order.paymentStatus === 1, 'bg-success': order.paymentStatus !== 1 }">
+                    {{ order.paymentStatus === 1 ? 'Pending' : 'Paid' }}
+                </span>
+            </p>
+            <p><strong>Total Price:</strong> <span class="text-success">{{ order.totalAmount | currency }}</span></p>
+        </div>
+
+        <!-- Order Items -->
+        <h3 class="mb-3">Items in Order</h3>
+        <div *ngFor="let item of order.orderItems" class="order-item d-flex align-items-center p-3 mb-3 border rounded shadow-sm">
+            <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="100">
+            <div>
+                <h5 class="mb-1">{{ item.name }}</h5>
+                <p class="mb-1"><strong>Price:</strong> {{ item.unitPrice | currency }}</p>
+                <p class="mb-0"><strong>Quantity:</strong> {{ item.qty }}</p>
+            </div>
+        </div>
+
+        <!-- Back to Orders Button -->
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary" routerLink="/order-history">
+                <i class="bi bi-arrow-left"></i> Back to Orders
+            </button>
+        </div>
+    </div>
+</div>
