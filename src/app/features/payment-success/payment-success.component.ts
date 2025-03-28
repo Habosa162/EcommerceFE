@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import {jwtDecode} from 'jwt-decode';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-payment-success',
-  imports: [],
+  imports: [CommonModule,RouterModule],
   templateUrl: './payment-success.component.html',
   styleUrl: './payment-success.component.css'
 })
@@ -62,11 +63,9 @@ export class PaymentSuccessComponent {
     this.http.post(this.apiUrl, orderData).subscribe({
       next: (response) => {
         console.log("Order placed successfully:", response);
-        alert('Order placed successfully! It will be delivered within 3 days.');
 
         this.cartService.clearCart(); 
         localStorage.removeItem('paymentMethod'); 
-        this.router.navigate(['/']); 
       },
       error: (error) => {
         console.error("Error placing order:", error);

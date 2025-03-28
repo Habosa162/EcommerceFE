@@ -1,1 +1,30 @@
-<p>payment-success works!</p>
+<div class="container py-5 text-center">
+    <!-- Success Alert -->
+    <div class="alert alert-success d-flex align-items-center justify-content-center" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <strong>Order Placed Successfully!</strong>
+    </div>
+
+    <p class="lead">Your order will be delivered within <strong>3 days</strong>. Thank you for shopping with us! 🎉</p>
+
+    <!-- Order Summary -->
+    <div class="order-summary-card card shadow-sm p-4 mt-4 mx-auto" style="max-width: 500px;">
+        <h4 class="mb-3">Order Summary</h4>
+        <div *ngFor="let item of cartItems" class="order-item d-flex align-items-center border-bottom pb-2 mb-3">
+            <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="80">
+            <div>
+                <p class="mb-1"><strong>{{ item.name }}</strong></p>
+                <p class="mb-1"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                <p class="mb-0 text-success"><strong>Price:</strong> {{ item.finalPrice | currency }}</p>
+            </div>
+        </div>
+        <h5 class="text-dark"><strong>Total:</strong> {{ totalPrice | currency }}</h5>
+    </div>
+
+    <!-- Continue Shopping Button -->
+    <div class="mt-4">
+        <a routerLink="/products" class="btn btn-primary">
+            <i class="bi bi-cart"></i> Continue Shopping
+        </a>
+    </div>
+</div>
