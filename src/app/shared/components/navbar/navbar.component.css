@@ -9,17 +9,19 @@
   top: -2px !important;
 }
 
-input {
+/* input {
   width: 250px;
   transition-duration: 0.6s;
   transition-property: all;
-}
-@media (min-width: 1200px) {
+} */
+/* @media (min-width: 1200px) {
   input:focus {
     width: 500px;
     border: 2px solid black !important;
   }
-}
+} */
+
+
 .nav-link {
   font-size: 18px;
 }
