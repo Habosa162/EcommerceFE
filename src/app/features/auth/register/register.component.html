@@ -1,50 +1,263 @@
-  <div class="row justify-content-center align-items-center vh-100 mt-5">
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card p-4 shadow-lg">
-        <h3 class="text-center text-dark">Register</h3>
+<div class="row justify-content-center align-items-center vh-100 mt-5">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="card p-4 shadow-lg">
+      <h3 class="text-center text-dark">Register</h3>
       <div class="card-body">
-        <form [formGroup] ="registerForm " (ngSubmit)="OnRegister()">
-        <div class="mb-3">
-          <label for="firstName" class="form-label">First Name</label>
-          <input type="text" formControlName="FName" class="form-control"  id="firstName" placeholder="Enter your first name" required>
-        </div>
-        <div class="mb-3">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input type="text" formControlName="LName" class="form-control" id="lastName" placeholder="Enter your last name" required>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" formControlName="Email" class="form-control" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" formControlName="Password" class="form-control" id="password" placeholder="Enter your password" required>
-        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="OnRegister()">
+          <!-- First name begin -->
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input
+              type="text"
+              formControlName="FName"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('FName')?.invalid &&
+                  registerForm.get('FName')?.touched,
+                'is-valid':
+                  registerForm.get('FName')?.valid &&
+                  registerForm.get('FName')?.touched
+              }"
+              id="firstName"
+              placeholder="Enter your first name"
+              required
+              (blur)="markTouched('FName')"
+            />
+            <div
+              *ngIf="
+                registerForm.get('FName')?.invalid &&
+                registerForm.get('FName')?.touched
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('FName')?.errors?.['required']"
+                >Name is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('FName')?.errors?.['minlength']"
+                >Minimum 3 characters required</small
+              >
+            </div>
+          </div>
+          <!-- First name end -->
+          <!-- Last name begin -->
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input
+              type="text"
+              formControlName="LName"
+              class="form-control"
+              id="lastName"
+              placeholder="Enter your last name"
+              required
+              (blur)="markTouched('LName')"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('LName')?.invalid &&
+                  registerForm.get('LName')?.touched,
+                'is-valid':
+                  registerForm.get('LName')?.valid &&
+                  registerForm.get('LName')?.touched
+              }"
+            />
+            <div
+              *ngIf="
+                registerForm.get('LName')?.invalid &&
+                registerForm.get('LName')?.touched
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('LName')?.errors?.['required']"
+                >Last Name is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('LName')?.errors?.['minlength']"
+                >Minimum 3 characters required</small
+              >
+            </div>
+          </div>
+          <!-- Last name end -->
+          <!-- Email begin -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              formControlName="Email"
+              class="form-control"
+              id="email"
+              placeholder="Enter your email"
+              required
+              (blur)="markTouched('Email')"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('Email')?.invalid &&
+                  registerForm.get('Email')?.touched,
+                'is-valid':
+                  registerForm.get('Email')?.valid &&
+                  registerForm.get('Email')?.touched
+              }"
+            />
+            <div
+              *ngIf="
+                registerForm.get('Email')?.invalid &&
+                registerForm.get('Email')?.touched
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('Email')?.errors?.['required']"
+                >Email is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('Email')?.errors?.['email']"
+                >Invalid email format</small
+              >
+            </div>
+          </div>
+          <!-- Email End -->
 
-        <div class="mb-3">
-          <label for="Role" class="form-label">Role</label>
-          <select class="form-select"name="Role"id="Role"formControlName="Role"aria-label="Default select example"required>
-            <option value="" disabled>Select role for yourself</option>
-            <option value="User">Customer</option>
-            <option value="Merchant">Merchant</option>
-          </select>
-        </div>
+          <!-- Password  begin -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              formControlName="Password"
+              class="form-control"
+              id="password"
+              placeholder="Enter your password"
+              required
+              (blur)="markTouched('Password')"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('Password')?.invalid &&
+                  registerForm.get('Password')?.touched,
+                'is-valid':
+                  registerForm.get('Password')?.valid &&
+                  registerForm.get('Password')?.touched
+              }"
+            />
+            <div
+              *ngIf="
+                registerForm.get('Password')?.invalid &&
+                registerForm.get('Password')?.touched
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('Password')?.errors?.['required']"
+                >Password is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="registerForm.get('Password')?.errors?.['minlength']"
+                >Minimum 6 characters required</small
+              >
+            </div>
+          </div>
+          <!-- Password end -->
+          <!-- Confirm Password begin -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Confirm Password</label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="confirm Password"
+              required
+              (blur)="markTouched('confirmPassword')"
+              [ngClass]="{
+                    'is-invalid': (registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && registerForm.get('confirmPassword')?.touched,
+                     'is-valid': registerForm.get('confirmPassword')?.valid && !registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched
+                      }"
+            />
+            <div
+              *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
+            >
+              <small class="text-danger">Passwords do not match</small>
+            </div>
 
-        <div class="mb-3">
-          <label for="profileImage" class="form-label">Profile Image</label>
-          <input type="file" formControlName="profileImage" class="form-control"
-          id="profileImage" accept="image/*"
-          (change)="onFileSelected($event)"
-          required>
-        </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Register</button>
-        </div>
+            <div
+              *ngIf="registerForm.get('confirmPassword')?.errors?.['required'] && registerForm.get('confirmPassword')?.touched"
+            >
+              <small class="text-danger">Confirm password is required</small>
+            </div>
+          </div>
+          <!-- Confirm Password end -->
+
+          <!-- Role begin -->
+          <div class="mb-3">
+            <label for="Role" class="form-label">Role</label>
+            <select
+              class="form-select"
+              name="Role"
+              id="Role"
+              formControlName="Role"
+              aria-label="Default select example"
+              required
+              (blur)="markTouched('Role')"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('Role')?.invalid &&
+                  registerForm.get('Role')?.touched,
+                'is-valid':
+                  registerForm.get('Role')?.valid &&
+                  registerForm.get('Role')?.touched
+              }"
+            >
+              <option value="" disabled hidden>Select role for yourself</option>
+              <option value="User">Customer</option>
+              <option value="Merchant">Merchant</option>
+            </select>
+          </div>
+          <!-- Role end -->
+
+          <!-- Profile Image begin -->
+          <div class="mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input
+              type="file"
+              formControlName="profileImage"
+              class="form-control"
+              id="profileImage"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              required
+              (blur)="markTouched('profileImage')"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('profileImage')?.invalid && isSubmitted,
+                'is-valid':
+                  registerForm.get('profileImage')?.valid && isSubmitted
+              }"
+            />
+            <div
+              *ngIf="registerForm.get('profileImage')?.invalid && isSubmitted"
+            >
+              <small class="text-danger">Profile image is required</small>
+            </div>
+          </div>
+          <!-- Profile Image end -->
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
         </form>
       </div>
       <div class="card-footer text-center">
-        <p>Already have an account? <a routerLink="/login" class="text-primary text-decoration-none">Login here</a></p>
-      </div>
+        <p>
+          Already have an account?
+          <a routerLink="/login" class="text-primary text-decoration-none"
+            >Login here</a
+          >
+        </p>
       </div>
     </div>
   </div>
+</div>
