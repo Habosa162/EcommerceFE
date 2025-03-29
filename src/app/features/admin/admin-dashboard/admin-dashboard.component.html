@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <h1>Admin Dashboard</h1>
+  <p>Welcome to the admin panel!</p>
+
+  <!-- Overview Cards -->
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <div class="card bg-primary text-white p-3">
+        <h5>Total Products</h5>
+        <h3>{{ totalProducts }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-success text-white p-3">
+        <h5>Total Customers</h5>
+        <h3>{{ totalCustomers }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-warning text-white p-3">
+        <h5>Total Orders</h5>
+        <h3>{{ totalOrders }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-4">
+    <h4>Quick Actions</h4>
+    <button class="btn btn-primary me-2" routerLink="/admin/products/add">
+      <i class="bi bi-plus-circle"></i> Add Product
+    </button>
+    <button class="btn btn-danger" (click)="deleteAllProducts()">
+      <i class="bi bi-trash"></i> Delete All Products
+    </button>
+  </div>
+
+  <!-- Recent Activity (Latest Products Added) -->
+  <div class="mt-4">
+    <h4>Recently Added Products</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of recentProducts">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.stock }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
