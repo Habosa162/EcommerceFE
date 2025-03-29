@@ -25,6 +25,8 @@ export class CheckoutComponent {
     email: '',
     street: '',
     city: '',
+    gov:'',
+    country:'',
     phone_number: '',
     
   };
@@ -42,6 +44,7 @@ export class CheckoutComponent {
       return;
     }
     localStorage.setItem('paymentMethod', this.paymentMethod);
+    localStorage.setItem('billingDetails', JSON.stringify(this.billing));
     if (this.paymentMethod === 'Paymob') {
       this.placeOrder(); 
     } else {
@@ -80,6 +83,7 @@ export class CheckoutComponent {
       error: (error) => {
         console.error("Error in Paymob API request:", error);
         alert("Failed to process payment. Please try again.");
+        
       }
     });
 }

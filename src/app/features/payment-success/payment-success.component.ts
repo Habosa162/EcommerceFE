@@ -12,18 +12,19 @@ import { CommonModule } from '@angular/common';
 })
 export class PaymentSuccessComponent {
   apiUrl: string = 'https://localhost:7280/api/Order'; 
+  shippingApiUrl: string = 'https://localhost:7280/api/Shipping';
   cartItems: any[] = [];
   totalPrice: number = 0;
-  //customerId: string = '1a66c387-d7c3-4918-82ec-d46a76060487'; 
   customerId: string = ''; 
+  orderId : number = 0;
 
-  paymentMethod: string = 'Paymob'; 
+  paymentMethod: string = ''; 
+  billingDetails: any;
 
   constructor(private http: HttpClient, private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
-    //const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjFhNjZjMzg3LWQ3YzMtNDkxOC04MmVjLWQ0NmE3NjA2MDQ4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOlsiTW9oYW1lZCIsIkhhbnkiXSwiZXhwIjoxNzQzMzc3ODAzLCJpc3MiOiJteWRvbWFpbi5jb20iLCJhdWQiOiJteWRvbWFpbi5jb20ifQ.87Jgj62t7WPJEO9zEY5Il079HxXJzE4pJ5VztWVJ__0";
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
@@ -42,7 +43,13 @@ export class PaymentSuccessComponent {
       return;
     }
 
-    const paymentMethod = localStorage.getItem('paymentMethod'); 
+     this.paymentMethod = localStorage.getItem('paymentMethod')??''; 
+    const storedBilling = localStorage.getItem('billingDetails');
+
+    if (storedBilling) {
+      this.billingDetails = JSON.parse(storedBilling);
+    }
+
     this.cartItems = this.cartService.getCart();
     this.totalPrice = this.cartService.getTotalPrice();
     console.log("Cart items:", this.cartItems);
@@ -61,15 +68,42 @@ export class PaymentSuccessComponent {
     console.log("Posting order to backend:", orderData);
 
     this.http.post(this.apiUrl, orderData).subscribe({
-      next: (response) => {
+      next: (response:any) => {
+        this.orderId = response.orderID;
         console.log("Order placed successfully:", response);
-
-        this.cartService.clearCart(); 
-        localStorage.removeItem('paymentMethod'); 
+        this.createShipping();
+        
       },
       error: (error) => {
         console.error("Error placing order:", error);
         alert('Failed to place the order.');
+      }
+    });
+  }
+
+  createShipping(){
+    console.log("Creating shipping with orderId:", this.orderId);
+    const shippingData = {
+      OrderId : this.orderId,
+      CustomerId: this.customerId,
+      DeliveryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days from today
+      ShippingStatus: 0, // Pending status
+      Country: this.billingDetails.country,
+      City: this.billingDetails.city,
+      Gov: this.billingDetails.gov,
+      Street: this.billingDetails.street,
+
+    }
+    this.http.post(this.shippingApiUrl, shippingData).subscribe({
+      next: (res) => {
+        this.cartService.clearCart(); 
+        localStorage.removeItem('paymentMethod'); 
+        localStorage.removeItem('billingDetails')
+        console.log("Shipping Created:", res);
+      },
+      error: (error) => {
+        console.error("Error creating shipping:", error);
+        alert('Failed to create shipping details.');
       }
     });
   }
