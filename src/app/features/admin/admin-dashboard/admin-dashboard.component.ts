@@ -45,10 +45,10 @@ export class AdminDashboardComponent implements OnInit {
     // });
 
     // Fetch Total Orders
-    // this.orderService.getAllOrders().subscribe({
-    //   next: (orders) => this.totalOrders = orders.length,
-    //   error: (err) => console.error('Error fetching orders:', err)
-    // });
+    this.orderService.getAllOrders().subscribe({
+      next: (orders) => this.totalOrders = orders.length,
+      error: (err) => console.error('Error fetching orders:', err)
+    });
   }
 
   deleteAllProducts(): void {

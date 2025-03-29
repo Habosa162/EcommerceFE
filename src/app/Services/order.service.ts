@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderService {
-  private orderApiUrl = `${environment.apiUrl}/Order`; 
+  private orderApiUrl = `${environment.apiUrl}/Order`;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getAllOrders(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.orderApiUrl}/getAll`);
+    return this.http.get<any[]>(`${this.orderApiUrl}/all`);
   }
 }
