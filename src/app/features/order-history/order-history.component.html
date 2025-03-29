@@ -21,10 +21,22 @@
                 </p>
             </div>
 
-            <span class="badge" 
-                  [ngClass]="{'bg-warning text-dark': +order.paymentStatus === 1, 'bg-success': +order.paymentStatus === 0}">
-                {{ +order.paymentStatus === 1 ? 'Pending' : 'Paid' }}
+            <!-- Payment Status Badge -->
+            <span class="badge"
+                  [ngClass]="{
+                    'bg-warning text-dark': order.paymentStatus === 0,  
+                    'bg-success': order.paymentStatus === 1, 
+                    'bg-danger': order.paymentStatus === 2,  
+                    'bg-secondary': order.paymentStatus === 3 
+                  }">
+                  {{ getPaymentStatusText(order.paymentStatus) }}
             </span>
+            <!-- Cancel Order Button (Only available for Paid orders) -->
+            <div *ngIf="order.paymentStatus === 1 || order.paymentStatus === 0" class="text-end mt-2">
+                <button class="btn btn-outline-danger btn-sm" (click)="cancelOrder(order.id)">
+                    <i class="bi bi-x-circle"></i> Cancel Order
+                </button>
+            </div>
         </div>
     </div>
 </div>

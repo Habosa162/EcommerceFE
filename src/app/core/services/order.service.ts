@@ -19,4 +19,7 @@ export class OrderService {
   getOrderById(orderId: number) {
     return this.http.get<order>(`${this.baseUrl}/${orderId}`);
   }
+  cancelOrder(orderId: number) {
+    return this.http.put(`${this.baseUrl}/${orderId}/cancel`, {});
+  }
 }
