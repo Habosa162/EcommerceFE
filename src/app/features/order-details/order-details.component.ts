@@ -21,5 +21,15 @@ export class OrderDetailsComponent {
       });
     });
   }
+  getPaymentStatusText(status: number): string {
+    switch (status) {
+      case 0: return 'Pending';
+      case 1: return 'Paid';
+      case 2: return 'Failed';
+      case 3: return 'Refunded';
+      case 4: return 'Cancelled';
+      default: return 'Unknown';
+    }
+  }
 
 }

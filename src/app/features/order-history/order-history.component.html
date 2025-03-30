@@ -1,40 +1,130 @@
 <div class="container py-4">
     <h2 class="mb-4 text-center text-primary">Order History</h2>
 
-    <div *ngIf="orders.length === 0" class="alert alert-info text-center">
-        No orders found.
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'shipping'" (click)="activeTab = 'shipping'">Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'order-again'" (click)="activeTab = 'order-again'">Buy Again</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'cancelled'" (click)="activeTab = 'cancelled'">Cancelled Orders</a>
+        </li>
+    </ul>
+
+    <!-- Orders Tab -->
+<div *ngIf="activeTab === 'shipping'">
+    <div *ngIf="pendingOrders.length === 0 && shippedOrders.length === 0 && deliveredOrders.length === 0" class="text-center text-muted py-5">
+        <i class="bi bi-box"></i> You have not placed any orders.
     </div>
 
-    <div *ngFor="let order of orders" class="order-card card shadow-sm mb-3 border-0">
+    <!-- Pending Orders -->
+    <div *ngFor="let order of pendingOrders" class="order-card card shadow-sm mb-3 border-0">
         <div class="card-body d-flex align-items-center justify-content-between">
             <div>
-                <h5 class="mb-1">
-                    <a [routerLink]="['/order-details', order.id]" class="text-decoration-none text-dark fw-bold">
+                <h5>
+                    <a [routerLink]="['/order-details', order.id]" class="text-decoration-none">
                         Order #{{ order.id }}
                     </a>
                 </h5>
-                <p class="mb-1 text-muted">
-                    <i class="bi bi-calendar-check"></i> {{ order.orderDate | date: 'medium' }}
-                </p>
-                <p class="mb-0">
-                    <strong>Total:</strong> {{ order.totalAmount | currency }}
-                </p>
+                <p class="text-muted"><i class="bi bi-clock"></i> Pending</p>
+                <p><strong>Estimated Delivery:</strong> {{ order.delivaryDate | date: 'medium' }}</p>
+                <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
             </div>
-
-            <!-- Payment Status Badge -->
-            <span class="badge"
-                  [ngClass]="{
-                    'bg-warning text-dark': order.paymentStatus === 0,  
-                    'bg-success': order.paymentStatus === 1, 
-                    'bg-danger': order.paymentStatus === 2,  
-                    'bg-secondary': order.paymentStatus === 3 
-                  }">
-                  {{ getPaymentStatusText(order.paymentStatus) }}
-            </span>
-            <!-- Cancel Order Button (Only available for Paid orders) -->
-            <div *ngIf="order.paymentStatus === 1 || order.paymentStatus === 0" class="text-end mt-2">
+            <div class="d-flex align-items-center">
+                <span class="badge bg-warning me-3">Pending</span>
                 <button class="btn btn-outline-danger btn-sm" (click)="cancelOrder(order.id)">
                     <i class="bi bi-x-circle"></i> Cancel Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipped Orders -->
+    <div *ngFor="let order of shippedOrders" class="order-card card shadow-sm mb-3 border-0">
+        <div class="card-body d-flex align-items-center justify-content-between">
+            <div>
+                <h5>
+                    <a [routerLink]="['/order-details', order.id]" class="text-decoration-none">
+                        Order #{{ order.id }}
+                    </a>
+                </h5>
+                <p class="text-muted"><i class="bi bi-truck"></i> Shipped</p>
+                <p><strong>Estimated Delivery:</strong> {{ order.delivaryDate | date: 'medium' }}</p>
+                <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="badge bg-info me-3">Shipped</span>
+                <button class="btn btn-outline-danger btn-sm" (click)="cancelOrder(order.id)">
+                    <i class="bi bi-x-circle"></i> Cancel Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivered Orders -->
+    <div *ngFor="let order of deliveredOrders" class="order-card card shadow-sm mb-3 border-0">
+        <div class="card-body d-flex align-items-center justify-content-between">
+            <div>
+                <h5>
+                    <a [routerLink]="['/order-details', order.id]" class="text-decoration-none">
+                        Order #{{ order.id }}
+                    </a>
+                </h5>
+                <p class="text-muted"><i class="bi bi-box-seam"></i> Delivered</p>
+                <p><strong>Delivery Date:</strong> {{ order.delivaryDate | date: 'medium' }}</p>
+                <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
+            </div>
+            <span class="badge bg-success">Delivered</span>
+        </div>
+    </div>
+
+</div>
+
+
+    <!-- Buy Again Tab -->
+    <div *ngIf="activeTab === 'order-again'">
+        <div *ngIf="deliveredOrders.length === 0" class="text-center text-muted py-5">
+            <i class="bi bi-box"></i> No orders available to buy again.
+        </div>
+        <div *ngFor="let order of deliveredOrders" class="order-card card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                    <h5>
+                        <a [routerLink]="['/order-details', order.id]" class="text-decoration-none">
+                            Order #{{ order.id }}
+                        </a>
+                    </h5>
+                    <p class="text-muted"><i class="bi bi-calendar-check"></i> Delivered on {{ order.delivaryDate | date: 'medium' }}</p>
+                    <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
+                </div>
+                <button class="btn btn-primary btn-sm" (click)="reorder(order)">
+                    <i class="bi bi-arrow-repeat"></i> Order Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancelled Orders Tab -->
+    <div *ngIf="activeTab === 'cancelled'">
+        <div *ngIf="pendingOrders.length === 0 && shippedOrders.length === 0 && deliveredOrders.length === 0" class="text-center text-muted py-5">
+            <i class="bi bi-box"></i> We aren't finding any cancelled orders.
+        </div>
+        <div *ngFor="let order of cancelledOrders" class="order-card card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                    <h5>
+                        <a [routerLink]="['/order-details', order.id]" class="text-decoration-none">
+                            Order #{{ order.id }}
+                        </a>
+                    </h5>
+                    <p class="text-muted"><i class="bi bi-calendar-x"></i> {{ order.orderDate | date: 'medium' }}</p>
+                    <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" (click)="reorder(order)">
+                    <i class="bi bi-cart-plus"></i> Reorder
                 </button>
             </div>
         </div>

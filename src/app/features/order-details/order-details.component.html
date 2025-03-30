@@ -7,11 +7,18 @@
             <h4 class="text-dark"><strong>Order ID:</strong> <span class="text-muted">#{{ order.id }}</span></h4>
             <p><strong>Date:</strong> {{ order.orderDate | date }}</p>
             <p>
-                <strong>Status:</strong> 
+                <strong>Payment Status:</strong> 
                 <span class="badge" 
-                      [ngClass]="{ 'bg-warning': order.paymentStatus === 1, 'bg-success': order.paymentStatus !== 1 }">
-                    {{ order.paymentStatus === 1 ? 'Pending' : 'Paid' }}
-                </span>
+      [ngClass]="{
+        'bg-warning': order.paymentStatus === 0, 
+        'bg-success': order.paymentStatus === 1,
+        'bg-danger': order.paymentStatus === 2,
+        'bg-info': order.paymentStatus === 3,
+        'bg-secondary': order.paymentStatus === 4
+      }">
+    {{ getPaymentStatusText(order.paymentStatus) }}
+</span>
+
             </p>
             <p><strong>Total Price:</strong> <span class="text-success">{{ order.totalAmount | currency }}</span></p>
         </div>

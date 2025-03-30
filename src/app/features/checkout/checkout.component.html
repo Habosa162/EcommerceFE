@@ -36,49 +36,64 @@
   <div class="card p-4 mb-4">
     <h4 class="mb-3">Delivery Information</h4>
     
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" [(ngModel)]="billing.first_name" name="first_name" class="form-control" placeholder="Enter first name" required>
+    <form #billingForm="ngForm">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="first_name">First Name:</label>
+          <input type="text" id="first_name" [(ngModel)]="billing.first_name" name="first_name" class="form-control" placeholder="Enter first name" required #firstName="ngModel">
+          <div *ngIf="firstName.invalid && firstName.touched" class="text-danger">First name is required.</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="last_name">Last Name:</label>
+          <input type="text" id="last_name" [(ngModel)]="billing.last_name" name="last_name" class="form-control" placeholder="Enter last name" required #lastName="ngModel">
+          <div *ngIf="lastName.invalid && lastName.touched" class="text-danger">Last name is required.</div>
+        </div>
       </div>
-      <div class="col-md-6 mb-3">
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" [(ngModel)]="billing.last_name" name="last_name" class="form-control" placeholder="Enter last name" required>
-      </div>
-    </div>
 
-    <div class="mb-3">
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="billing.email" name="email" class="form-control" placeholder="Enter your email" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="street">Street:</label>
-      <input type="text" id="street" [(ngModel)]="billing.street" name="street" class="form-control" placeholder="Enter street address" required>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <label for="city">City:</label>
-        <input type="text" id="city" [(ngModel)]="billing.city" name="city" class="form-control" placeholder="Enter city" required>
+      <div class="mb-3">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="billing.email" name="email" class="form-control" placeholder="Enter your email" required email #email="ngModel">
+        <div *ngIf="email.invalid && email.touched" class="text-danger">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="email.errors?.['email']">Enter a valid email.</div>
+        </div>
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="gov">State/Governorate:</label>
-        <input type="text" id="gov" [(ngModel)]="billing.gov" name="gov" class="form-control" placeholder="Enter state/province" required>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label for="country">Country:</label>
-        <input type="text" id="country" [(ngModel)]="billing.country" name="country" class="form-control" placeholder="Enter country" required>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label for="phone_number">Phone Number:</label>
-        <input type="tel" id="phone_number" [(ngModel)]="billing.phone_number" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+      <div class="mb-3">
+        <label for="street">Street:</label>
+        <input type="text" id="street" [(ngModel)]="billing.street" name="street" class="form-control" placeholder="Enter street address" required #street="ngModel">
+        <div *ngIf="street.invalid && street.touched" class="text-danger">Street address is required.</div>
       </div>
-    </div>
 
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="city">City:</label>
+          <input type="text" id="city" [(ngModel)]="billing.city" name="city" class="form-control" placeholder="Enter city" required #city="ngModel">
+          <div *ngIf="city.invalid && city.touched" class="text-danger">City is required.</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="gov">State/Governorate:</label>
+          <input type="text" id="gov" [(ngModel)]="billing.gov" name="gov" class="form-control" placeholder="Enter state/province" required #gov="ngModel">
+          <div *ngIf="gov.invalid && gov.touched" class="text-danger">State/Governorate is required.</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="country">Country:</label>
+          <input type="text" id="country" [(ngModel)]="billing.country" name="country" class="form-control" placeholder="Enter country" required #country="ngModel">
+          <div *ngIf="country.invalid && country.touched" class="text-danger">Country is required.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="phone_number">Phone Number:</label>
+          <input type="tel" id="phone_number" [(ngModel)]="billing.phone_number" name="phone_number" class="form-control" placeholder="Enter phone number" required pattern="^[0-9]{10,15}$" #phone="ngModel">
+          <div *ngIf="phone.invalid && phone.touched" class="text-danger">
+            <div *ngIf="phone.errors?.['required']">Phone number is required.</div>
+            <div *ngIf="phone.errors?.['pattern']">Enter a valid phone number (10-15 digits).</div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
