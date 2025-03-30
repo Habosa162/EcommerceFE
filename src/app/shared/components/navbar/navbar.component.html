@@ -1,6 +1,9 @@
 <nav class="navbar bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand align-middle d-flex align-items-center me-lg-4" href="#">
+    <a
+      class="navbar-brand align-middle d-flex align-items-center me-lg-4"
+      href="#"
+    >
       <img width="50" src="/assets/imgs/shopping-bag.png" alt="" />
       <span class="fw-bold mainColor fs-4 d-none d-md-block">VerdiShop</span>
     </a>
@@ -12,30 +15,46 @@
 
       <!-- categories -->
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a
+          class="nav-link"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           Categories
           <i class="fa-solid fa-angle-down align-middle"></i>
         </a>
-        <ul class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white">
+        <ul
+          class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white"
+        >
           <li><a class="dropdown-item fs-4" href="#">Our Categories</a></li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
+          <li><hr class="dropdown-divider" /></li>
 
           <li>
             <div class="d-flex gap-4">
               <!-- Category Dropdown -->
-              <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#"><img class="rounded-1" width="50px"
+              <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#"
+                ><img
+                  class="rounded-1"
+                  width="50px"
                   height="50px"
                   src="https://img.freepik.com/free-photo/wireless-earbuds-with-neon-cyberpunk-style-lighting_23-2151074306.jpg?t=st=1742526720~exp=1742530320~hmac=d8c2f464f5da84729f1d04f54557e5056fbf346e708322ada83b3bec1cc3c086&w=1380"
-                  alt="" />
-                Electronics</a>
+                  alt=""
+                />
+                Electronics</a
+              >
               <!-- Category Dropdown -->
-              <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#"><img class="rounded-1" width="50px"
+              <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#"
+                ><img
+                  class="rounded-1"
+                  width="50px"
                   height="50px"
                   src="https://img.freepik.com/free-photo/gray-sofa-brown-living-room-with-copy-space_43614-954.jpg?uid=R132930234&ga=GA1.1.GA1.2.263481332.1694631472&semt=ais_hybrid"
-                  alt="" />
-                Furniture</a>
+                  alt=""
+                />
+                Furniture</a
+              >
             </div>
           </li>
         </ul>
@@ -48,11 +67,6 @@
     <!-- search  -->
     <!-- Search Form -->
     <form class="position-relative mx-auto d-none d-lg-flex" role="search">
-
-      <div class="search-container d-flex">
-        <input class="form-control me-2 rounded-pill" type="search" [(ngModel)]="searchQuery" (input)="onSearchInput()"
-          placeholder="Search products..." aria-label="Search" name="search" />
-
       <div class="search-container">
         <input
           class="form-control me-2 rounded-pill"
@@ -63,21 +77,11 @@
           aria-label="Search"
           name="search"
         />
-
         <button class="btn position-absolute end-0 me-2" type="button">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
 
         <!-- Search Results Dropdown -->
-
-        <div *ngIf="showSearchResults && searchQuery" class="search-results-dropdown">
-          <div *ngIf="searchResults.length > 0; else noResults">
-            <div *ngFor="let result of searchResults" class="search-result-item">
-              <a routerLink="/products/{{result.id}}" class="d-flex align-items-center p-2">
-                <div class="flex-grow-1">
-                  <div class="fw-bold">{{result.name}}</div>
-                  <small class="text-muted">{{result.category}}</small>
-
         <div
           *ngIf="showSearchResults && searchQuery"
           class="search-results-dropdown"
@@ -94,7 +98,6 @@
                 <div class="flex-grow-1">
                   <div class="fw-bold">{{ result.name }}</div>
                   <small class="text-muted">{{ result.category }}</small>
-
                 </div>
                 <i class="fa-solid fa-chevron-right ms-2"></i>
               </a>
@@ -102,28 +105,12 @@
           </div>
           <ng-template #noResults>
             <div class="p-3 text-center">
-
-              No results found for "{{searchQuery}}"
-
               No results found for "{{ searchQuery }}"
-
             </div>
           </ng-template>
         </div>
       </div>
     </form>
-<
-
-
-
-    
-    <!-- profile -->
-    <div class="dropdown">
-      <button (click)="profileBtn()" class="btn border-0 p-1" type="button" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        <img width="30" height="30" src="https://www.w3schools.com/HOWTO/img_avatar.png" alt=""
-          class="rounded-circle" />
-
     <!-- profile -->
     <div class="dropdown">
       <button
@@ -140,7 +127,6 @@
           alt=""
           class="rounded-circle"
         />
-
         @if(profileBtnClicked){
         <span class="align-middle ms-1">
           <i class="fa-solid fa-angle-up"></i>
@@ -169,40 +155,6 @@
           </button>
         </li>
       </ul>
-
-    </div>
-    <!-- wishList -->
-    <div class="">
-      <a href="" class="position-relative text-black-50 p-1"><i class="fa-solid fa-heart fs-4"></i>
-
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart">
-          5
-          <span class="visually-hidden">unread messages</span>
-        </span>
-      </a>
-    </div>
-    <!-- cart -->
-    <div>
-      <a routerLink="/cart" class="position-relative text-black-50 p-1"><i class="fa-solid fa-cart-shopping fs-4"> </i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart">
-          {{ cartCount() }}
-          <span class="visually-hidden">unread messages</span>
-        </span></a>
-    </div>
-  </div>
-
-  <!-- Offcanvas btn -->
-  <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-    aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-
     </div>
     <!-- wishList -->
     <div class="">
@@ -258,7 +210,6 @@
         aria-label="Close"
       ></button>
     </div>
-
     <div class="offcanvas-body">
       <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
         <li class="nav-item">
@@ -268,9 +219,6 @@
           <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item dropdown">
-
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -278,7 +226,6 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-
             Dropdown
           </a>
           <ul class="dropdown-menu">
@@ -292,20 +239,14 @@
         </li>
       </ul>
       <form class="d-flex mt-3" role="search">
-
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-
         <input
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
         />
-
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
   </div>
-
-
 </nav>
