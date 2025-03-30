@@ -1,5 +1,5 @@
 <section
-  id="home"
+  id="hero"
   class="d-flex justify-content-center flex-column position-relative"
 >
   <div class="container">
@@ -15,6 +15,33 @@
       <a class="btn mainBg text-white rounded-pill px-4 py-2 fs-5" href=""
         >Learn More</a
       >
+    </div>
+  </div>
+</section>
+<section id="catgerories" class="py-5">
+  <div class="container">
+    <h3 class="mb-4">Shop our top categories</h3>
+    <div class="row gy-4">
+      @for (category of categories; track $index) {
+      <div class="col-6 col-md-4 col-lg-2">
+        <div
+          class="categoryCard rounded-4 position-relative overflow-hidden shadow-sm"
+        >
+          <a routerLink="/Category-details/{{ category.id }}">
+            <img
+              height="200"
+              class="w-100 rounded-4 categoryImg"
+              src="{{ category.imgUrl }}"
+              alt=""
+            />
+            <span
+              class="position-absolute start-50 translate-middle-x mt-5 text-white fw-bold fs-5"
+              >{{ category.name }}</span
+            >
+          </a>
+        </div>
+      </div>
+      }
     </div>
   </div>
 </section>

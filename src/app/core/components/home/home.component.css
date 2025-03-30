@@ -1,4 +1,4 @@
-#home {
+#hero {
   min-height: 100vh;
   background-image: url("/assets/imgs/background.png");
   background-position: center;
@@ -7,4 +7,12 @@
 
 h1 {
   font-size: 60px;
+}
+
+.categoryImg {
+  transition: 0.3s ease-in-out all;
+  filter: brightness(0.7);
+}
+.categoryImg:hover {
+  transform: scale(1.2);
 }

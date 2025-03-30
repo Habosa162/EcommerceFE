@@ -1,0 +1,36 @@
+#Register {
+  background-image: linear-gradient(
+      to right,
+      hsla(0, 0%, 0%, 0.5),
+      hsla(0, 0%, 0%, 0.5)
+    ),
+    url("/assets/imgs/authImgs/close-up-view-online-shopping-concept.jpg");
+  height: 100vh;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.container {
+  min-height: 80vh;
+}
+.left-side {
+}
+
+input,
+select {
+  background-color: rgba(255, 255, 255, 0.419);
+  border-color: white;
+  margin-bottom: 0px !important;
+}
+.text-danger {
+  color: #410006 !important;
+}
+
+@media (max-width: 1200px) {
+  .formBox {
+    width: 80% !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}

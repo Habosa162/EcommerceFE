@@ -6,7 +6,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { ProductService } from '../../../core/services/product.service'; // Add this import
 import { Product } from '../../../core/models/product.model'; // Add this import
 import { CartService } from '../../../core/services/cart.service';
-
+import { AuthService } from '../../../Services/auth.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -14,18 +14,19 @@ import { CartService } from '../../../core/services/cart.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent  {
   profileBtnClicked: boolean = false;
   searchQuery: string = '';
   showSearchResults: boolean = false;
   searchResults: any[] = []; // Replace with your product type
+  isLoggedIn: boolean = false;
   private searchSubject = new Subject<string>();
 
 
   @Output() search = new EventEmitter<string>();
   // productService: any;
 
-  constructor(private productService: ProductService,private cartService: CartService) {
+  constructor(private productService: ProductService,private cartService: CartService,protected authService: AuthService) {
     this.setupSearch();
   }
 
