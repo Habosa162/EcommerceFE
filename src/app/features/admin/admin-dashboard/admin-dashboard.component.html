@@ -27,16 +27,16 @@
   <!-- Quick Actions -->
   <div class="mt-4">
     <h4>Quick Actions</h4>
-    <button class="btn btn-primary me-2" routerLink="/admin/products/add">
+    <button class="btn btn-primary me-2" [routerLink]="['/admin/createproduct']">
       <i class="bi bi-plus-circle"></i> Add Product
     </button>
-    <button class="btn btn-danger" (click)="deleteAllProducts()">
+    <!-- <button class="btn btn-danger" (click)="deleteAllProducts()">
       <i class="bi bi-trash"></i> Delete All Products
-    </button>
+    </button> -->
   </div>
 
   <!-- Recent Activity (Latest Products Added) -->
-  <div class="mt-4">
+  <div class="mt-4 ">
     <h4>Recently Added Products</h4>
     <table class="table table-striped">
       <thead>
@@ -57,4 +57,27 @@
       </tbody>
     </table>
   </div>
+</div>
+
+
+<div class="mt-4">
+  <h4>Recently Added Products</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Order Date</th>
+        <th>Price</th>
+        <th>paymentStatus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of recentorders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.orderDate }}</td>
+        <td>{{ order.totalAmount | currency }}</td>
+        <td>{{ getPaymentStatusText(order.paymentStatus) }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

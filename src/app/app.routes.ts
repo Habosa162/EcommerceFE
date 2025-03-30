@@ -12,6 +12,9 @@ import { OrderDetailsComponent } from './features/order-details/order-details.co
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 import { CategoryDetailsComponent } from './core/components/category-details/category-details.component';
+import { AdminProductsComponent } from './features/admin/admin-products/admin-products.component';
+import { AdminOrdersComponent } from './features/admin/admin-orders/admin-orders.component';
+import { CreateproductComponent } from './features/admin/createproduct/createproduct.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
@@ -36,6 +39,12 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'products', component: AdminProductsComponent },
+      { path: 'orders', component: AdminOrdersComponent },
+      { path: 'createproduct', component: CreateproductComponent },
+
+
+
       // Add more admin pages here if needed
     ],
   },

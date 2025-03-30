@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <h2 class="text-center">Add New Product</h2>
+
+    <form (ngSubmit)="createProduct()" class="p-4 shadow-sm rounded bg-light">
+        <!-- Product Name -->
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" [(ngModel)]="newProduct.name" name="name" required />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="newProduct.description" name="description"></textarea>
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+            <label class="form-label">Price ($)</label>
+            <input type="number" class="form-control" [(ngModel)]="newProduct.price" name="price" required />
+        </div>
+
+        <!-- Discount -->
+        <div class="mb-3">
+            <label class="form-label">Discount ($)</label>
+            <input type="number" class="form-control" [(ngModel)]="newProduct.discount" name="discount" />
+        </div>
+
+        <!-- Image URL -->
+        <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input type="text" class="form-control" [(ngModel)]="newProduct.image" name="image" required />
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" class="form-control" [(ngModel)]="newProduct.category" name="category" />
+        </div>
+
+        <!-- Submit & Reset Buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Create Product</button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+        </div>
+    </form>
+</div>

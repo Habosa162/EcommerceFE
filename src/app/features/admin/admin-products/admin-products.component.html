@@ -1,0 +1,56 @@
+<div class="container-fluid mb-4 p-3 bg-light rounded shadow-sm">
+    <div class="row g-3 align-items-center">
+
+        <!-- Sidebar for Filters -->
+        <div class="col-md-3">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <h5 class="fw-bold">Product Categories</h5>
+                <select class="form-select" [(ngModel)]="selectedCategory" (change)="filterProducts()">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+
+                </select>
+
+                <h5 class="fw-bold mt-3">Sort By</h5>
+                <select class="form-select" [(ngModel)]="selectedSort" (change)="sortProducts()">
+                    <option value="">Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Product List Section -->
+        <div class="col-md-9">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search products..." />
+                <button class="btn btn-primary" (click)="filterProducts()">Search</button>
+            </div>
+
+            <div class="row g-3">
+                <div *ngFor="let product of filteredProducts" class="col-md-4">
+                    <div class="card product-card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img [src]="product.image" [alt]="product.name" class="card-img-top p-3" />
+
+                            <!-- Action Buttons (Edit & Delete) -->
+                            <div class="product-actions">
+                                <!-- <button class="btn btn-warning" (click)="editProduct(product.id)"><i
+                                        class="bi bi-pencil"></i></button> -->
+                                <button class="btn btn-danger" (click)="deleteProduct(product.id)"><i
+                                        class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="text-danger fw-bold">${{ product.price }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p *ngIf="filteredProducts.length === 0">No products match your search.</p>
+        </div>
+    </div>
+</div>

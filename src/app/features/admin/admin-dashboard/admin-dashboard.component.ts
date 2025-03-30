@@ -5,10 +5,11 @@ import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
 import { AdminLayoutComponent } from "../../../layouts/admin-layout/admin-layout.component";
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [AdminLayoutComponent,CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -17,6 +18,11 @@ export class AdminDashboardComponent implements OnInit {
   totalCustomers: number = 0;
   totalOrders: number = 0;
   recentProducts: any[] = [];
+  recentorders: any[] = [];
+
+
+
+
 
   constructor(
     private productService: ProductService,
@@ -46,14 +52,27 @@ export class AdminDashboardComponent implements OnInit {
 
     // Fetch Total Orders
     this.orderService.getAllOrders().subscribe({
-      next: (orders) => this.totalOrders = orders.length,
+      next: (orders) => {
+        this.totalOrders = orders.length,
+          this.recentorders = orders.slice(-5);
+      },
+
       error: (err) => console.error('Error fetching orders:', err)
     });
   }
-
-  deleteAllProducts(): void {
+  getPaymentStatusText(status: number): string {
+    switch (status) {
+      case 0: return 'Pending';
+      case 1: return 'Paid';
+      case 2: return 'Failed';
+      case 3: return 'Refunded';
+      case 4: return 'Cancelled';
+      default: return 'Unknown';
+    }
+  }
+  deleteAllProducts(id: any): void {
     if (confirm("Are you sure you want to delete all products?")) {
-      this.productService.deleteAllProducts().subscribe({
+      this.productService.deleteProduct(id).subscribe({
         next: () => {
           alert("All products deleted!");
           this.fetchDashboardData(); // Refresh dashboard after deletion
@@ -62,4 +81,6 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
+
+
 }
