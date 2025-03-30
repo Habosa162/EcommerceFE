@@ -1,5 +1,5 @@
-<div class="container mt-5">
-    <h2 class="text-center" style="margin-top: 100px;">🛒 Shopping Cart</h2>
+<div class="container mt-2">
+    <h2 class="text-center" >🛒 Shopping Cart</h2>
   
     <div *ngIf="cartItems().length > 0; else emptyCart">
       <table class="table table-bordered table-striped text-center shadow-lg">
@@ -33,7 +33,7 @@
         </tbody>
       </table>
   
-      <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded shadow-sm">
+      <div class="d-flex justify-content-between align-items-center m-2 p-3 bg-light rounded shadow-sm">
         <h4>Total: <span class="text-success">${{ totalPrice().toFixed(2) }}</span></h4>
         <button class="btn btn-success btn-lg px-4" routerLink="/checkout">Proceed to Checkout</button>
       </div>

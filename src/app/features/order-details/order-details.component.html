@@ -26,7 +26,7 @@
         <!-- Order Items -->
         <h3 class="mb-3">Items in Order</h3>
         <div *ngFor="let item of order.orderItems" class="order-item d-flex align-items-center p-3 mb-3 border rounded shadow-sm">
-            <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="100">
+            <img [src]="item.productImg" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="100">
             <div>
                 <h5 class="mb-1">{{ item.name }}</h5>
                 <p class="mb-1"><strong>Price:</strong> {{ item.unitPrice | currency }}</p>
