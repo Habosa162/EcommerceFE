@@ -18,7 +18,7 @@ export class CreateproductComponent {
     name: '',
     price: 0,
     description: '',
-    image: '',
+    imageUrl: '',
     category: '',
     rating: 0,
     reviews: [],
@@ -30,7 +30,7 @@ export class CreateproductComponent {
   constructor(private productService: ProductService) { }
 
   createProduct(): void {
-    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.image) {
+    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.imageUrl) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -54,7 +54,7 @@ export class CreateproductComponent {
       name: '',
       price: 0,
       description: '',
-      image: '',
+      imageUrl: '',
       category: '',
       rating: 0,
       reviews: [],

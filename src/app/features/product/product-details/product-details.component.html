@@ -3,7 +3,7 @@
     <!-- Left Side: Product Image & Thumbnails -->
     <div class="col-lg-6">
       <div class="product-gallery">
-        <img [src]="product.image" [alt]="product.name" class="main-image" />
+        <img [src]="product.imageUrl" [alt]="product.name" class="main-image" />
 
         <!-- <div class="thumbnail-gallery">
           <img *ngFor="let img of product.additionalImages" [src]="img" class="thumbnail-img" />
@@ -19,11 +19,8 @@
       <!-- Rating -->
       <div class="d-flex align-items-center mb-3">
         <div class="rating-stars">
-          <span *ngFor="let star of [1,2,3,4,5]" class="bi"
-            [class.bi-star-fill]="star <= product.rating"
-            [class.bi-star]="star > product.rating"
-            [class.text-warning]="star <= product.rating"
-          ></span>
+          <span *ngFor="let star of [1,2,3,4,5]" class="bi" [class.bi-star-fill]="star <= product.rating"
+            [class.bi-star]="star > product.rating" [class.text-warning]="star <= product.rating"></span>
         </div>
         <span class="text-muted ms-2">({{ product.reviews.length }} Reviews)</span>
       </div>
@@ -70,11 +67,8 @@
     <div *ngFor="let review of product.reviews" class="review-card">
       <div class="review-header">
         <div class="rating-stars">
-          <span *ngFor="let star of [1,2,3,4,5]" class="bi"
-            [class.bi-star-fill]="star <= review.rating"
-            [class.bi-star]="star > review.rating"
-            [class.text-warning]="star <= review.rating"
-          ></span>
+          <span *ngFor="let star of [1,2,3,4,5]" class="bi" [class.bi-star-fill]="star <= review.rating"
+            [class.bi-star]="star > review.rating" [class.text-warning]="star <= review.rating"></span>
         </div>
         <span class="text-muted ms-2">{{ review.rating }}/5</span>
       </div>

@@ -1,46 +1,47 @@
 <div class="container-fluid mb-4 p-3 bg-light rounded shadow-sm">
   <div class="row g-3 align-items-center">
-        <!-- Sidebar for Filters -->
-        <div class="col-md-3">
-          <div class="bg-light p-3 rounded shadow-sm">
-            <h5 class="fw-bold">Product Categories</h5>
-            <div *ngFor="let category of categories">
-              <input type="checkbox" [value]="category" (change)="toggleCategoryFilter(category, $event)"> {{ category }}
-            </div>
-    
-            <h5 class="fw-bold mt-3">Brands</h5>
-            <div *ngFor="let brand of brands">
-              <input type="checkbox" [value]="brand" (change)="toggleBrandFilter(brand, $event)"> {{ brand }}
-            </div>
-    
-            <h5 class="fw-bold mt-3">Price</h5>
-            <div *ngFor="let range of priceRanges">
-              <input type="radio" name="priceRange" [value]="range" (change)="filterByPrice(range)"> {{ range }}
-            </div>
-          </div>
-        </div> 
-    
-        <!-- Product List Section -->
-      <div class="col-md-9"> 
-          <div class="row g-3">
-            <div *ngFor="let product of filteredProducts" class="col-md-4">
-              <div class="card product-card">
-                <img [src]="product.image" class="card-img-top">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.name }}</h5>
-                  <p class="text-danger">${{ product.price }}</p>
-                  <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
-                </div>
-              </div>
+    <!-- Sidebar for Filters -->
+    <div class="col-md-3">
+      <div class="bg-light p-3 rounded shadow-sm">
+        <h5 class="fw-bold">Product Categories</h5>
+        <div *ngFor="let category of categories">
+          <input type="checkbox" [value]="category" (change)="toggleCategoryFilter(category, $event)"> {{ category }}
+        </div>
+
+        <h5 class="fw-bold mt-3">Brands</h5>
+        <div *ngFor="let brand of brands">
+          <input type="checkbox" [value]="brand" (change)="toggleBrandFilter(brand, $event)"> {{ brand }}
+        </div>
+
+        <h5 class="fw-bold mt-3">Price</h5>
+        <div *ngFor="let range of priceRanges">
+          <input type="radio" name="priceRange" [value]="range" (change)="filterByPrice(range)"> {{ range }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Product List Section -->
+    <div class="col-md-9">
+      <div class="row g-3">
+        <div *ngFor="let product of filteredProducts" class="col-md-4">
+          <div class="card product-card">
+            <img [src]="product.imageUrl" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="text-danger">${{ product.price }}</p>
+              <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
             </div>
           </div>
-        </div> 
-     
-    
-    
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="col-md-4">
       <div class="input-group">
-        <input type="text" class="form-control border-primary" [(ngModel)]="searchQuery" placeholder="Search products..." />
+        <input type="text" class="form-control border-primary" [(ngModel)]="searchQuery"
+          placeholder="Search products..." />
         <button class="btn btn-primary" (click)="searchProducts()">
           <i class="bi bi-search"></i> Search
         </button>
@@ -70,7 +71,7 @@
     <div class="card product-card h-100 border-0 shadow-sm">
       <div class="position-relative">
         <a [routerLink]="['/products', product.id]">
-          <img [src]="product.image" [alt]="product.name" class="card-img-top p-3" />
+          <img [src]="product.imageUrl" [alt]="product.name" class="card-img-top p-3" />
         </a>
 
         <!-- Action Buttons (Cart & Wishlist) -->

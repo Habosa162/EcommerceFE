@@ -32,7 +32,7 @@ export class AdminProductsComponent implements OnInit {
         console.log(products);
         this.products = products;
         this.filteredProducts = products;
-        this.categories = [...new Set(products.map(p => p.category))];
+        this.categories = [...new Set(products.map(p => p.SubCategoryName))];
         this.brands = [...new Set(products.map(p => p.brand))];
       },
       error: (err) => console.error('Error fetching products:', err)
