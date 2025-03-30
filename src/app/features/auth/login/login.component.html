@@ -1,27 +1,56 @@
-  <div class="row justify-content-center align-items-center vh-100 my-5">
-    <div class="card p-4 shadow-lg col-lg-4 col-md-6 col-sm-12">
-      <h3 class="text-center mb-4">Login</h3>
-      <form [formGroup]="loginForm" (ngSubmit)="OnLogin()">
-        <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" formControlName="password" class="form-control" id="password" placeholder="Enter your password" required>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="rememberMe">
-          <label class="form-check-label" for="rememberMe">Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-      </form>
-      <div class="text-center mt-3">
-        <a href="#" class="text-decoration-none">Forgot Password?</a>
+<section
+  id="login"
+  class="min-vh-100 d-flex justify-content-center align-items-center"
+>
+  <div
+    class="card p-4 shadow-lg rounded-4"
+    style="background-color: rgba(255, 255, 255, 0.31)"
+  >
+    <h1 class="text-center mb-4 text-white">Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="OnLogin()">
+      <div class="mb-3">
+        <label for="email" class="form-label text-white">Email address</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter your email"
+          required
+        />
       </div>
-      <div class="text-center mt-2">
-        <p>Don't have an account? <a routerLink="/register" class="text-decoration-none">Sign up</a></p>
+      <div class="mb-3">
+        <label for="password" class="form-label text-white">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter your password"
+          required
+        />
       </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe" />
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Login</button>
+    </form>
+    <div class="text-center mt-3">
+      <a href="#" class="text-decoration-none" style="color: #10346a"
+        >Forgot Password?</a
+      >
+    </div>
+    <div class="text-center mt-2">
+      <p>
+        Don't have an account?
+        <a
+          routerLink="/register"
+          class="text-decoration-none"
+          style="color: #10346a"
+          >Sign up</a
+        >
+      </p>
     </div>
   </div>
-
+</section>

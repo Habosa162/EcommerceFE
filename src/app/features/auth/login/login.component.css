@@ -1,0 +1,30 @@
+#login {
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("/assets/imgs/authImgs/close-up-view-online-shopping-concept.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+input {
+  background-color: rgba(255, 255, 255, 0.419);
+  border-color: white;
+}
+
+.card {
+  width: 25%;
+}
+
+@media (max-width: 1200px) {
+  .card {
+    width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .card {
+    width: 85%;
+  }
+}
