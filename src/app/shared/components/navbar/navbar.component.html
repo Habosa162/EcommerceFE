@@ -1,7 +1,10 @@
 <nav class="navbar bg-white shadow-sm">
   <div class="container">
     <!-- Brand Logo -->
-    <a class="navbar-brand align-middle d-flex align-items-center me-lg-4" href="#">
+    <a
+      class="navbar-brand align-middle d-flex align-items-center me-lg-4"
+      href="#"
+    >
       <img width="50" src="/assets/imgs/shopping-bag.png" alt="" />
       <span class="fw-bold mainColor fs-4 d-none d-md-block">VerdiShop</span>
     </a>
@@ -14,22 +17,40 @@
 
       <!-- Categories Dropdown -->
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a
+          class="nav-link"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           Categories <i class="fa-solid fa-angle-down align-middle"></i>
         </a>
-        <ul class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white">
+        <ul
+          class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white"
+        >
           <li><a class="dropdown-item fs-4" href="#">Our Categories</a></li>
           <li><hr class="dropdown-divider" /></li>
           <li>
             <div class="d-flex gap-4">
               <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#">
-                <img class="rounded-1" width="50px" height="50px"
-                     src="https://img.freepik.com/free-photo/wireless-earbuds.jpg" alt=""/>
+                <img
+                  class="rounded-1"
+                  width="50px"
+                  height="50px"
+                  src="https://img.freepik.com/free-photo/wireless-earbuds.jpg"
+                  alt=""
+                />
                 Electronics
               </a>
               <a class="dropdown-item py-2 catdropdown rounded-1 pe-5" href="#">
-                <img class="rounded-1" width="50px" height="50px"
-                     src="https://img.freepik.com/free-photo/gray-sofa.jpg" alt=""/>
+                <img
+                  class="rounded-1"
+                  width="50px"
+                  height="50px"
+                  src="https://img.freepik.com/free-photo/gray-sofa.jpg"
+                  alt=""
+                />
                 Furniture
               </a>
             </div>
@@ -51,17 +72,33 @@
     <!-- Search Form -->
     <form class="position-relative mx-auto d-none d-lg-flex" role="search">
       <div class="search-container d-flex">
-        <input class="form-control me-2 rounded-pill" type="search" [(ngModel)]="searchQuery"
-               (input)="onSearchInput()" placeholder="Search products..." aria-label="Search" name="search" />
+        <input
+          class="form-control me-2 rounded-pill"
+          type="search"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput()"
+          placeholder="Search products..."
+          aria-label="Search"
+          name="search"
+        />
         <button class="btn position-absolute end-0 me-2" type="button">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
 
         <!-- Search Results Dropdown -->
-        <div *ngIf="showSearchResults && searchQuery" class="search-results-dropdown">
+        <div
+          *ngIf="showSearchResults && searchQuery"
+          class="search-results-dropdown"
+        >
           <div *ngIf="searchResults.length > 0; else noResults">
-            <div *ngFor="let result of searchResults" class="search-result-item">
-              <a routerLink="/products/{{ result.id }}" class="d-flex align-items-center p-2">
+            <div
+              *ngFor="let result of searchResults"
+              class="search-result-item"
+            >
+              <a
+                routerLink="/products/{{ result.id }}"
+                class="d-flex align-items-center p-2"
+              >
                 <div class="flex-grow-1">
                   <div class="fw-bold">{{ result.name }}</div>
                   <small class="text-muted">{{ result.category }}</small>
@@ -71,7 +108,9 @@
             </div>
           </div>
           <ng-template #noResults>
-            <div class="p-3 text-center">No results found for "{{ searchQuery }}"</div>
+            <div class="p-3 text-center">
+              No results found for "{{ searchQuery }}"
+            </div>
           </ng-template>
         </div>
       </div>
@@ -79,18 +118,42 @@
 
     <!-- Profile Dropdown -->
     <div class="dropdown">
-      <button (click)="profileBtnClicked = !profileBtnClicked" class="btn border-0 p-1">
-        <img width="30" height="30" src="https://www.w3schools.com/HOWTO/img_avatar.png" alt="" class="rounded-circle" />
+      <button
+        (click)="profileBtnClicked = !profileBtnClicked"
+        class="btn border-0 p-1"
+      >
+        <img
+          width="30"
+          height="30"
+          src="https://www.w3schools.com/HOWTO/img_avatar.png"
+          alt=""
+          class="rounded-circle"
+        />
         <span class="align-middle ms-1">
           <i *ngIf="profileBtnClicked" class="fa-solid fa-angle-up"></i>
           <i *ngIf="!profileBtnClicked" class="fa-solid fa-angle-down"></i>
         </span>
       </button>
       <ul class="dropdown-menu shadow" *ngIf="profileBtnClicked">
-        <li><button class="dropdown-item" type="button"><i class="fa-regular fa-circle-user"></i> Profile</button></li>
-        <li><button class="dropdown-item" type="button"><i class="fa-solid fa-gear"></i> Settings</button></li>
-        <li><button class="dropdown-item text-danger" (click)="authService.logout()" type="button">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout</button></li>
+        <li>
+          <button class="dropdown-item" type="button">
+            <i class="fa-regular fa-circle-user"></i> Profile
+          </button>
+        </li>
+        <li>
+          <button class="dropdown-item" type="button">
+            <i class="fa-solid fa-gear"></i> Settings
+          </button>
+        </li>
+        <li>
+          <button
+            class="dropdown-item text-danger"
+            (click)="authService.logout()"
+            type="button"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </li>
       </ul>
     </div>
 
@@ -98,7 +161,10 @@
     <div>
       <a href="" class="position-relative text-black-50 p-1">
         <i class="fa-solid fa-heart fs-4"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart">5</span>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
+          >5</span
+        >
       </a>
     </div>
 
@@ -106,15 +172,22 @@
     <div>
       <a routerLink="/cart" class="position-relative text-black-50 p-1">
         <i class="fa-solid fa-cart-shopping fs-4"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart">
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
+        >
           {{ cartCount() }}
         </span>
       </a>
     </div>
 
     <!-- Offcanvas Button (for mobile) -->
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+    <button
+      class="navbar-toggler d-lg-none"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -122,18 +195,27 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menu</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
           <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dropdown</a>
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              data-bs-toggle="dropdown"
+              >Dropdown</a
+            >
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Action</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
