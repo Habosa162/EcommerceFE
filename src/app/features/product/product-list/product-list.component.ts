@@ -4,7 +4,7 @@ import { Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CartService } from '../../../core/services/cart.service';
+import { CartService } from '../../../Services/cart.service';
 import { ProductService as ps } from '../../../Services/product.service';
 
 @Component({

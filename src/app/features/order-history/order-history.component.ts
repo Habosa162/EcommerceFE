@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { order } from '../../core/models/order.model';
-import { OrderService } from '../../core/services/order.service';
 import { jwtDecode } from 'jwt-decode';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ShippingService } from '../../core/services/shipping.service';
-import { CartService } from '../../core/services/cart.service';
+import { ShippingService } from '../../Services/shipping.service';
+import { CartService } from '../../Services/cart.service';
 import { ProductService } from '../../core/services/product.service';
 import { Product } from '../../core/models/product.model';
+import { OrderService } from '../../Services/order.service';
+
 @Component({
   selector: 'app-order-history',
   imports: [CommonModule,RouterModule],
@@ -22,7 +23,7 @@ export class OrderHistoryComponent implements OnInit {
   shippedOrders: order[] = [];
   cancelledOrders: order[] = [];
   activeTab: string = 'shipping';
-  customerId: string = ''; 
+  customerId: string = '';
 
   constructor(private orderService: OrderService, private shippingService: ShippingService ,private http:HttpClient,private cartService:CartService,private productService:ProductService) { }
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class OrderHistoryComponent implements OnInit {
       this.orderService.getUserOrders(this.customerId).subscribe({
         next: (data) => {
           this.orders = data;
-          
+
           console.log('Orders fetched successfully:', this.orders);
           this.categorizeOrders();
         },
@@ -43,7 +44,7 @@ export class OrderHistoryComponent implements OnInit {
           console.error('Error fetching orders:', err);
         }
       });
-      
+
     }
   }
   categorizeOrders() {
@@ -75,14 +76,14 @@ export class OrderHistoryComponent implements OnInit {
           );
           alert('Order has been canceled.');
         }
-        
+
       },
       error: () => {
         alert('Failed to cancel the order.');
       }
     });
   }
-  
+
   reorder(order: order) {
     order.orderItems.forEach((item) => {
       const product = {
@@ -94,11 +95,11 @@ export class OrderHistoryComponent implements OnInit {
       for (let i = 0; i < item.qty; i++) {
         this.cartService.addToCart(product);
       }
-      
+
     });
-  
+
     alert('Order added to cart! Proceed to checkout.');
   }
-  
-  
+
+
 }
