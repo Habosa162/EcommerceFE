@@ -1,96 +1,117 @@
-<div class="container-fluid mb-4 p-3 bg-light rounded shadow-sm">
-  <div class="row g-3 align-items-center">
-    <!-- Sidebar for Filters -->
+<div class="container-fluid mt-3">
+  <div class="row">
+    <!-- Sidebar Filters -->
     <div class="col-md-3">
-      <div class="bg-light p-3 rounded shadow-sm">
-        <h5 class="fw-bold">Product Categories</h5>
-        <div *ngFor="let category of categories">
-          <input type="checkbox" [value]="category" (change)="toggleCategoryFilter(category, $event)"> {{ category }}
+      <div class="card mb-3">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Product Categories</h5>
         </div>
-
-        <h5 class="fw-bold mt-3">Brands</h5>
-        <div *ngFor="let brand of brands">
-          <input type="checkbox" [value]="brand" (change)="toggleBrandFilter(brand, $event)"> {{ brand }}
-        </div>
-
-        <h5 class="fw-bold mt-3">Price</h5>
-        <div *ngFor="let range of priceRanges">
-          <input type="radio" name="priceRange" [value]="range" (change)="filterByPrice(range)"> {{ range }}
+        <div class="card-body">
+          <div *ngFor="let category of categories" class="form-check">
+            <input class="form-check-input" type="checkbox" [id]="'cat-'+category" 
+                   (change)="toggleCategoryFilter(category, $event)">
+            <label class="form-check-label" [for]="'cat-'+category">
+              {{ category }}
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Product List Section -->
-    <div class="col-md-9">
-      <div class="row g-3">
-        <div *ngFor="let product of filteredProducts" class="col-md-4">
-          <div class="card product-card">
-            <img [src]="product.imageUrl" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="text-danger">${{ product.price }}</p>
-              <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
-            </div>
+      <div class="card mb-3">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Brands</h5>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let brand of brands" class="form-check">
+            <input class="form-check-input" type="checkbox" [id]="'brand-'+brand" 
+                   (change)="toggleBrandFilter(brand, $event)">
+            <label class="form-check-label" [for]="'brand-'+brand">
+              {{ brand }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Price</h5>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let range of priceRanges" class="form-check">
+            <input class="form-check-input" type="radio" name="priceRange" [id]="'price-'+range" 
+                   (change)="filterByPrice(range)">
+            <label class="form-check-label" [for]="'price-'+range">
+              {{ range }}
+            </label>
           </div>
         </div>
       </div>
     </div>
 
-
-
-    <div class="col-md-4">
-      <div class="input-group">
-        <input type="text" class="form-control border-primary" [(ngModel)]="searchQuery"
-          placeholder="Search products..." />
-        <button class="btn btn-primary" (click)="searchProducts()">
-          <i class="bi bi-search"></i> Search
-        </button>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <select class="form-select border-primary" (change)="filterByCategory($any($event.target).value)">
-        <option value="">All Categories</option>
-        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-      </select>
-    </div>
-
-    <div class="col-md-2">
-      <select class="form-select border-primary" (change)="sortProducts($any($event.target).value)">
-        <option value="">Sort By</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-      </select>
-    </div>
-  </div>
-</div>
-
-<!-- PRODUCT GRID -->
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-  <div *ngFor="let product of filteredProducts" class="col">
-    <div class="card product-card h-100 border-0 shadow-sm">
-      <div class="position-relative">
-        <a [routerLink]="['/products', product.id]">
-          <img [src]="product.imageUrl" [alt]="product.name" class="card-img-top p-3" />
-        </a>
-
-        <!-- Action Buttons (Cart & Wishlist) -->
-        <div class="product-actions">
-          <button class="btn"><i class="bi bi-cart"></i></button>
-          <button class="btn"><i class="bi bi-heart"></i></button>
+    <!-- Product List -->
+    <div class="col-md-9">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search products...">
+            <button class="btn btn-primary" (click)="searchProducts()">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" (change)="filterByCategory($any($event.target).value)">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" (change)="sortProducts($any($event.target).value)">
+            <option value="">Sort By</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
         </div>
       </div>
 
-      <div class="card-body text-center">
-        <h5 class="card-title">{{ product.name }}</h5>
-        <p class="category-text">{{ product.category }}</p>
-
-        <!-- Rating Stars -->
-        <div class="rating">
-          <span *ngFor="let star of getStars(product.rating)" class="bi bi-star-fill text-warning"></span>
+      <div class="row">
+        <div *ngFor="let product of filteredProducts" class="col-md-4 mb-4">
+          <div class="card h-100">
+            <!-- Discount Badge -->
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" *ngIf="(product?.discountAmount ?? 0) > 0">
+              {{ (product?.discountAmount ?? 0) }}% OFF
+            </div>
+            <img class="card-img-top p-3" [src]="product.imageUrl" [alt]="product.name" style="height: 200px; object-fit: contain;">
+            <div class="card-body">
+              <div class="text-muted small mb-1">{{ product.category }}</div>
+              <h5 class="card-title">{{ product.name }}</h5>
+              <div class="mb-2">
+                <!-- Display Rating Stars -->
+                <span *ngFor="let star of getStars(product?.avgRate ?? 0)" class="text-warning">★</span>
+                <span class="small text-muted">({{ product?.reviewCount ?? 0 }} Reviews)</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-danger fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
+                  <span class="text-decoration-line-through text-muted small ms-2" *ngIf="product.discountAmount > 0">
+                    ${{ product.price | number:'1.2-2' }}
+                  </span>
+                </div>
+                <span class="badge bg-success" *ngIf="product.stock > 0">
+                  In Stock {{ product.stock }}
+                </span>
+                <span class="badge bg-danger" *ngIf="product.stock <= 0">
+                  Out of Stock
+                </span>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+              <button class="btn btn-primary w-100" (click)="addToCart(product)" [disabled]="product.stock <= 0">
+                Add to Cart
+              </button>
+            </div>
+          </div>
         </div>
-
-        <p class="text-danger fw-bold">${{ product.price }}</p>
       </div>
     </div>
   </div>

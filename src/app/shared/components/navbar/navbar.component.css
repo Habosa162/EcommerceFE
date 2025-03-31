@@ -85,3 +85,7 @@
   color: #6c757d;
   cursor: pointer;
 }
+.search-result-item img {
+  object-fit: cover;
+  border-radius: 5px;
+}

@@ -3,10 +3,23 @@
 
     <form (ngSubmit)="createProduct()" class="p-4 shadow-sm rounded bg-light">
         <!-- Product Name -->
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label class="form-label">Product Name</label>
             <input type="text" class="form-control" [(ngModel)]="newProduct.name" name="name" required />
-        </div>
+        </div> -->
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" 
+                   [(ngModel)]="newProduct.name" 
+                   name="name"
+                   #name="ngModel"
+                   required>
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              Product name is required
+            </div>
+          </div>
+
+        
 
         <!-- Description -->
         <div class="mb-3">
@@ -23,7 +36,7 @@
         <!-- Discount -->
         <div class="mb-3">
             <label class="form-label">Discount ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="newProduct.discount" name="discount" />
+            <input type="number" class="form-control" [(ngModel)]="newProduct.discountAmount" name="discountAmount" />
         </div>
 
         <!-- Image URL -->

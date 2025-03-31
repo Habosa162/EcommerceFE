@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-createproduct',
+  standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './createproduct.component.html',
-  styles: ``
 })
 export class CreateproductComponent {
   products: Product[] = [];
@@ -16,27 +16,36 @@ export class CreateproductComponent {
   newProduct: Product = {
     id: 0,
     name: '',
-    price: 0,
     description: '',
+    price: 0,
+    subCategoryId: 0,
+    subCategoryName: '',
     imageUrl: '',
+    stock: 0,
+    avgRate: 0,
+    brand: '',
+    discountAmount: 0,
+    isAccepted: false,
+    isDeleted: false,
+    color: '',
+    finalPrice: 0,
+    title: '',
     category: '',
-    rating: 0,
-    reviews: [],
-    discount: 0,
-    finalPrice: 0
-
+    reviewCount: 0,
+    priceRange: '',
+    stockQuantity: 0
   };
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {}
 
   createProduct(): void {
     if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.imageUrl) {
-      alert('Please fill in all required fields.');
+      alert('Please fill in all required fields (Name, Price, and Image URL).');
       return;
     }
 
-    // Calculate Final Price after Discount
-    this.newProduct.finalPrice = this.newProduct.price - (this.newProduct.discount ?? 0);
+    // Calculate final price
+    this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
 
     this.productService.createProduct(this.newProduct).subscribe({
       next: (product) => {
@@ -44,7 +53,10 @@ export class CreateproductComponent {
         alert('Product created successfully!');
         this.resetForm();
       },
-      error: (err) => console.error('Error creating product:', err),
+      error: (err) => {
+        console.error('Error creating product:', err);
+        alert('Failed to create product. Please try again.');
+      }
     });
   }
 
@@ -52,14 +64,24 @@ export class CreateproductComponent {
     this.newProduct = {
       id: 0,
       name: '',
-      price: 0,
       description: '',
+      price: 0,
+      subCategoryId: 0,
+      subCategoryName: '',
       imageUrl: '',
+      stock: 0,
+      avgRate: 0,
+      brand: '',
+      discountAmount: 0,
+      isAccepted: false,
+      isDeleted: false,
+      color: '',
+      finalPrice: 0,
+      title: '',
       category: '',
-      rating: 0,
-      reviews: [],
-      discount: 0,
-      finalPrice: 0
+      reviewCount: 0,
+      priceRange: '',
+      stockQuantity: 0
     };
   }
 }

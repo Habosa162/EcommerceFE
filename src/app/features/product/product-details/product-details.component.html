@@ -1,13 +1,9 @@
 <div *ngIf="product" class="container my-5">
   <div class="row">
-    <!-- Left Side: Product Image & Thumbnails -->
+    <!-- Left Side: Product Image -->
     <div class="col-lg-6">
       <div class="product-gallery">
         <img [src]="product.imageUrl" [alt]="product.name" class="main-image" />
-
-        <!-- <div class="thumbnail-gallery">
-          <img *ngFor="let img of product.additionalImages" [src]="img" class="thumbnail-img" />
-        </div> -->
       </div>
     </div>
 
@@ -17,25 +13,24 @@
       <p class="text-muted">{{ product.description }}</p>
 
       <!-- Rating -->
-      <div class="d-flex align-items-center mb-3">
-        <div class="rating-stars">
-          <span *ngFor="let star of [1,2,3,4,5]" class="bi" [class.bi-star-fill]="star <= product.rating"
-            [class.bi-star]="star > product.rating" [class.text-warning]="star <= product.rating"></span>
+      <div *ngFor="let review of product.reviews" class="review-card">
+        <div class="review-header">
+          <div class="rating-stars">
+            <span *ngFor="let star of [1,2,3,4,5]" class="bi"
+              [class.bi-star-fill]="star <= review.rating"
+              [class.bi-star]="star > review.rating"
+              [class.text-warning]="star <= review.rating">
+            </span>
+          </div>
+          <span class="text-muted ms-2">{{ review.rating }}/5</span>
         </div>
-        <span class="text-muted ms-2">({{ product.reviews.length }} Reviews)</span>
+        <p>{{ review.comment }}</p>
       </div>
-
-      <!-- Price & Discount -->
+      
+      <!-- Price -->
       <div class="mb-3">
         <span class="fs-3 fw-bold text-success">{{ product.price | currency }}</span>
-        <!-- <span class="text-decoration-line-through text-muted ms-2" *ngIf="product.oldPrice">
-          {{ product.oldPrice | currency }}
-        </span> -->
       </div>
-
-      <!-- Stock Status -->
-      <!-- <p *ngIf="product.inStock" class="text-success fw-bold">In Stock</p>
-      <p *ngIf="!product.inStock" class="text-danger fw-bold">Out of Stock</p> -->
 
       <!-- Action Buttons -->
       <div class="d-flex gap-2 mb-4">
@@ -46,13 +41,6 @@
           <i class="bi bi-heart"></i>
         </button>
       </div>
-
-      <!-- Additional Product Features -->
-      <!-- <ul class="list-unstyled">
-        <li><i class="bi bi-truck text-primary"></i> Free Delivery</li>
-        <li><i class="bi bi-arrow-repeat text-primary"></i> 30-Day Return Policy</li>
-        <li><i class="bi bi-share text-primary"></i> Share Product</li>
-      </ul> -->
     </div>
   </div>
 
@@ -60,15 +48,20 @@
   <div class="mt-5">
     <h3 class="border-bottom pb-2">Customer Reviews</h3>
 
-    <div *ngIf="product.reviews.length === 0" class="alert alert-info">
+    <div *ngIf="(!product?.reviews?.length || product?.reviews?.length === 0) && (!product?.reviewCount || product?.reviewCount === 0)">
       No reviews yet. Be the first to review!
     </div>
+    
+    
 
     <div *ngFor="let review of product.reviews" class="review-card">
       <div class="review-header">
         <div class="rating-stars">
-          <span *ngFor="let star of [1,2,3,4,5]" class="bi" [class.bi-star-fill]="star <= review.rating"
-            [class.bi-star]="star > review.rating" [class.text-warning]="star <= review.rating"></span>
+          <span *ngFor="let star of [1,2,3,4,5]" class="bi"
+            [class.bi-star-fill]="star <= review.rating"
+            [class.bi-star]="star > review.rating"
+            [class.text-warning]="star <= review.rating">
+          </span>
         </div>
         <span class="text-muted ms-2">{{ review.rating }}/5</span>
       </div>

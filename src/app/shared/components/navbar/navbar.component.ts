@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import { ProductService } from '../../../core/services/product.service'; // Add this import
-import { Product } from '../../../core/models/product.model'; // Add this import
+import { ProductService } from '../../../core/services/product.service';
+import { Product } from '../../../core/models/product.model';
 import { CartService } from '../../../core/services/cart.service';
 import { AuthService } from '../../../Services/auth.service';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -14,19 +15,22 @@ import { AuthService } from '../../../Services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent  {
+export class NavbarComponent {
   profileBtnClicked: boolean = false;
   searchQuery: string = '';
   showSearchResults: boolean = false;
-  searchResults: any[] = []; // Replace with your product type
+  searchResults: Product[] = []; // Changed to Product[] for type safety
   isLoggedIn: boolean = false;
+  isLoading: boolean = false;
   private searchSubject = new Subject<string>();
 
-
   @Output() search = new EventEmitter<string>();
-  // productService: any;
 
-  constructor(private productService: ProductService,private cartService: CartService,protected authService: AuthService) {
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    protected authService: AuthService
+  ) {
     this.setupSearch();
   }
 
@@ -40,19 +44,16 @@ export class NavbarComponent  {
 
   private setupSearch() {
     this.searchSubject.pipe(
-      debounceTime(300), // Wait 300ms after last keystroke
-      distinctUntilChanged() // Only emit if value changed
+      debounceTime(300),
+      distinctUntilChanged()
     ).subscribe(query => {
-      if (query.length > 2) { // Only search if query has at least 3 characters
+      if (query.length > 2) {
         this.performSearch(query);
       } else {
-        this.showSearchResults = false;
-        this.searchResults = [];
+        this.clearSearchResults();
       }
     });
   }
-
-  isLoading: boolean = false;
 
   private performSearch(query: string) {
     this.isLoading = true;
@@ -62,20 +63,24 @@ export class NavbarComponent  {
         this.showSearchResults = results.length > 0;
         this.isLoading = false;
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Search error:', err);
-        this.searchResults = [];
-        this.showSearchResults = false;
+        this.clearSearchResults();
         this.isLoading = false;
       }
     });
   }
 
+  private clearSearchResults() {
+    this.searchResults = [];
+    this.showSearchResults = false;
+  }
+
   clearSearch() {
     this.searchQuery = '';
-    this.showSearchResults = false;
-    this.searchResults = [];
+    this.clearSearchResults();
   }
+
   cartCount() {
     return this.cartService.getCartCount();
   }

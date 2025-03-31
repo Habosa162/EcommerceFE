@@ -1,21 +1,31 @@
 export interface Product {
   id: number;
   name: string;
-  price: number;
   description: string;
+  price: number;
+  subCategoryId: number;
+  subCategoryName: string;
   imageUrl: string;
+  stock: number;
+  avgRate: number;
+  brand: string;
+  discountAmount: number;
+  isAccepted: boolean;
+  isDeleted: boolean;
+  color: string;
+  finalPrice: number;
+  title: string;
   category: string;
-  rating: number;
-  reviews: Review[];
-  finalPrice?: number;
-  discount?: number;
-
+  reviewCount: number;
+  priceRange: string;
+  stockQuantity: number;
+  reviews?: Review[];
 }
 
 export interface Review {
-  id: number;
-  userId: number;
   productId: number;
-  rating: number;
   comment: string;
+  rating: number;
+  // createdAt: Date;
+  // userName: string;
 }

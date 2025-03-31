@@ -1,3 +1,228 @@
+.card {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  transition: all 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.form-check-label {
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.text-decoration-line-through {
+  text-decoration: line-through;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .col-md-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-img-top {
+    height: 150px;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Enhanced Sidebar Filter Styling */
+.sidebar-filters {
+  position: sticky;
+  top: 20px;
+  border: 1px solid #eaeaea;
+  background-color: #fff;
+}
+
+.filter-section {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filter-title {
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s ease;
+}
+
+.filter-title:hover {
+  color: #0d6efd;
+}
+
+.filter-title i {
+  transition: transform 0.2s ease;
+  font-size: 0.8rem;
+}
+
+.filter-options {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Custom scrollbar */
+.filter-options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filter-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.filter-options::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Checkbox and Radio Button Styling */
+.form-check-input {
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: 0.15em;
+  border: 1px solid #adb5bd;
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* Make the label blue when selected */
+.form-check-input:checked ~ .form-check-label {
+  color: #0d6efd;
+  font-weight: 500;
+}
+
+/* Radio Button Styling */
+.form-check-input[type="radio"] {
+  border-radius: 50%;
+}
+
+.form-check-label {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+  transition: background-color 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Highlight the entire filter item when selected */
+.form-check-input:checked ~ .form-check-label {
+  color: #0d6efd;
+}
+
+.form-check:hover {
+  background-color: #f8f9fa;
+}
+
+/* Make the whole filter item blue when selected */
+.form-check-input:checked ~ .form-check-label,
+.form-check-input:checked {
+  color: #0d6efd;
+}
+
+/* Product card enhancements */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-actions {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-actions {
+  opacity: 1;
+}
+
+.product-actions .btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.product-actions .btn:hover {
+  background: #0d6efd;
+}
+
 /* GENERAL PRODUCT CARD STYLING */
 .product-card {
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -79,6 +304,7 @@
   color: black;
   transform: scale(1.1);
 }
+
 .bg-light {
   padding: 15px;
   border-radius: 8px;
@@ -102,6 +328,36 @@ input[type="checkbox"], input[type="radio"] {
   transform: scale(1.05);
 }
 
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: contain;
+  padding: 20px;
+}
+
+.star {
+  color: gold;
+  font-size: 1.2rem;
+}
+
+.price {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.stock-status {
+  font-size: 0.9rem;
+}
 
 /* RESPONSIVENESS FOR MOBILE */
 @media (max-width: 768px) {
@@ -126,7 +382,7 @@ input[type="checkbox"], input[type="radio"] {
   /* Adjust Action Buttons */
   .product-actions {
     bottom: 10px;
-    opacity: 1; /* Ensure buttons are always visible on mobile */
+    opacity: 1;
   }
 
   .product-actions .btn {
