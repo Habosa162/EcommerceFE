@@ -21,6 +21,8 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   selectedFile!: File;
   isSubmitted = false;
+  error = false ;
+  errorMessage ="" ;
   constructor(
     private fb: FormBuilder,
     private authSerive: AuthService,
@@ -37,7 +39,6 @@ export class RegisterComponent {
         Email: ['', [Validators.required, Validators.email]],
         Password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
-        Role: ['', Validators.required],
         profileImage: [null, Validators.required],
       },
       { validator: this.passwordMatchValidator }
@@ -61,36 +62,44 @@ export class RegisterComponent {
   }
 
   OnRegister() {
-    console.log('iam here in OnRegister method');
 
 
-    if (this.registerForm.valid && this.selectedFile) {
+    if (this.registerForm.valid) {
 
-      
       const formData = new FormData();
       formData.append('FName', this.registerForm.get('FName')?.value);
       formData.append('LName', this.registerForm.get('LName')?.value);
       formData.append('Email', this.registerForm.get('Email')?.value);
       formData.append('Password', this.registerForm.get('Password')?.value);
-      formData.append('Role', this.registerForm.get('Role')?.value);
       formData.append('profileImage', this.selectedFile);
-      console.log('iam here in OnRegister method2');
       this.authSerive.register(formData).subscribe({
         next: (data: any) => {
           console.log('Register successful:', data);
-          this.router.navigate(['/login']);
+          if(data.token=='existed'){
+            this.markTouched('Email');
+            this.error = true;
+            this.errorMessage = "Email already exists";
+            this.registerForm.reset();
+          }else{
+            this.router.navigate(['/login']);
+          }
         },
         error: (err: any) => {
           console.error('Register error:', err);
+          this.error = true;
+          this.errorMessage = "Something went wrong, please try again later";
+          this.registerForm.markAllAsTouched();
+          this.registerForm.reset();
         },
       });
     }
     else {
       this.isSubmitted = true;
-      console.log(this.registerForm.valid);
-      console.log('Form is invalid or file not selected');
-      console.log(this.selectedFile);
+      this.error = true;
+      this.errorMessage = "Please fill all the fields correctly";
       this.registerForm.markAllAsTouched();
+      this.registerForm.reset();
+      console.log(this.registerForm.errors);
     }
   }
 }

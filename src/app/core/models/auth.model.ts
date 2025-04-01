@@ -4,12 +4,10 @@ export interface ILoginUser{
   Password:string
 }
 
-
 export interface IRegisterUser{
   FName : string,
   LName : string,
   Email : string,
   Password : string,
-  Role:string,
   ProfileImage:string
 }

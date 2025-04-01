@@ -8,7 +8,7 @@ import { environment } from './enviroment';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
 
   private LoginEndPoint = `${environment.apiUrl}/Auth/login`;
   private RegisterEndPoint = `${environment.apiUrl}/Auth/register`;
@@ -20,6 +20,7 @@ export class AuthService {
     return this.http.post(this.LoginEndPoint, LoginObj);
   }
   register(RegisterObj: FormData): Observable<any> {
+    console.log(RegisterObj);
     return this.http.post(this.RegisterEndPoint, RegisterObj);
   }
 
