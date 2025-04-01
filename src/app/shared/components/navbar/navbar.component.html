@@ -141,16 +141,22 @@
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-          <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown" >
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="" alt=""><i class="fa-regular fa-circle-user"></i>Profile
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" routerLink="myAcount">Acount</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><button class="dropdown-item"(click)="authService.logout()">Logout</button></li>
-            </ul>
-          </li>
+        <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <img *ngIf="authService.getUserData()?.ProfileImg" [src]="authService.getUserData().ProfileImg" class="rounded-circle" width="50px" height="50px" alt="User Profile">
+
+            <i *ngIf="!authService.getUserData()?.ProfileImg" class="fa-regular fa-circle-user fs-4"></i>
+
+            {{ authService.getUserData()?.Name }}
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="/myAccount">Account</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item" (click)="authService.logout()">Logout</button></li>
+          </ul>
+        </li>
         <li class="nav-item" *ngIf="!authService.isLoggedIn()">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>

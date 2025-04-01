@@ -45,7 +45,18 @@ export class AuthService {
       return null;
     }
   }
-
+getUserData(): any {
+const decodedToken = this.getDecodedToken();
+if (!decodedToken) return null;
+const userData = {
+  ID : decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null,
+  Name: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || null,
+  Email: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] || null,
+  ProfileImg: decodedToken['profileImg'] || null,
+  Role : decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || null,
+  };
+  return userData;
+}
 
   getUsername(): string | null {
     const token = this.getToken();
@@ -71,7 +82,7 @@ export class AuthService {
         console.log("______________________________________________________________________________________________________");
         console.log("______________________________________________________________________________________________________");
         console.log("______________________________________________________________________________________________________");
-        console.log(decodedToken);
+        console.log(this.getUserData());
         console.log(role);
         console.log("______________________________________________________________________________________________________");
         console.log("______________________________________________________________________________________________________");

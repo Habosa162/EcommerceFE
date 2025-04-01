@@ -40,6 +40,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCategories() ;
+    console.log(this.authService.getUserData());
   }
 
   getAllCategories() {
