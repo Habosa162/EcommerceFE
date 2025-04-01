@@ -33,21 +33,20 @@ export const routes: Routes = [
   { path: 'order-history', component: OrderHistoryComponent }, // Order history route
   { path: 'order-details/:id', component: OrderDetailsComponent }, // Order history route with ID parameter
   { path: 'Category-details/:id', component: CategoryDetailsComponent },
-  {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'products', component: AdminProductsComponent },
-      { path: 'orders', component: AdminOrdersComponent },
-      { path: 'createproduct', component: CreateproductComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
+  { path: 'dashboard', component: AdminDashboardComponent },
+  { path: 'products', component: AdminProductsComponent },
+  { path: 'orders', component: AdminOrdersComponent },
+  { path: 'createproduct', component: CreateproductComponent },
 
-
-      // Add more admin pages here if needed
-    ],
-  },
+  // {
+  //   path: 'admin',
+  //   component: AdminLayoutComponent,
+  //   children: [
+  //     // Add more admin pages here if needed
+  //   ],
+  // },
   { path: '**', redirectTo: 'admin/dashboard' },
 
   { path: '**', redirectTo: '/home' }, // Fallback route for 404path: 'products/:id', component: ProductDetailsComponent },

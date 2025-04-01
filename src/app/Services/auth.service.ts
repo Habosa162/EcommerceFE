@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from './enviroment';
 import {jwtDecode} from 'jwt-decode'
+import { routes } from '../app.routes';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,11 @@ export class AuthService {
   private LoginEndPoint = `${environment.apiUrl}/Auth/login`;
   private RegisterEndPoint = `${environment.apiUrl}/Auth/register`;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+    ,private routerService: Router
+
+  ) { }
 
   login(LoginObj: ILoginUser): Observable<any> {
     console.log(LoginObj);
@@ -33,6 +39,7 @@ export class AuthService {
   }
   logout(): void {
     localStorage.removeItem('token');
+    this.routerService.navigate(['/login']); 
   }
   getDecodedToken():any{
     const token  = this.getToken();
@@ -45,7 +52,7 @@ export class AuthService {
       return null;
     }
   }
-getUserData(): any {
+ getUserData(): any {
 const decodedToken = this.getDecodedToken();
 if (!decodedToken) return null;
 const userData = {

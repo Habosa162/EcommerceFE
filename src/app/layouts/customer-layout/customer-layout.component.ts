@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { AuthService } from '../../Services/auth.service';
+
 @Component({
   selector: 'app-customer-layout',
   imports: [RouterOutlet, NavbarComponent,FooterComponent],
@@ -10,4 +12,12 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 })
 export class CustomerLayoutComponent {
 
+  userRole :string | null = '';
+  constructor(private authService : AuthService) {
+    this.userRole = this.authService.getUserRole()=== null ? 'Customer' : this.authService.getUserRole();
+  }
+
+  isCustomer(): boolean {
+    return this.userRole=='Customer';
+  }
 }

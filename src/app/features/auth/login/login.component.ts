@@ -47,7 +47,12 @@ export class LoginComponent implements OnInit {
       next: (data: any) => {
         console.log('Login successful:', data);
         localStorage.setItem('token', data.token);
-        this.router.navigate(['/home']);
+        const role = this.authService.getUserRole();
+        if(role === 'Admin'){
+          this.router.navigate(['/admin']);
+        }else if(role === 'Customer'){
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         console.error('Login error:', err);

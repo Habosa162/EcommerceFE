@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule ,Router} from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { routes } from '../../app.routes';
 
@@ -15,7 +15,10 @@ import { routes } from '../../app.routes';
 export class AdminLayoutComponent {
   username: string | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService
+  ) 
+  { 
     this.username = this.authService.getUsername();
   }
   logout() {
