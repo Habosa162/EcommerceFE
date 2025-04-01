@@ -6,6 +6,7 @@ import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-customer-layout',
+  standalone : true,
   imports: [RouterOutlet, NavbarComponent,FooterComponent],
   templateUrl: './customer-layout.component.html',
   styleUrl: './customer-layout.component.css'

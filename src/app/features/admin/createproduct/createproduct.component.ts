@@ -38,37 +38,27 @@ export class CreateproductComponent {
 
   constructor(private productService: ProductService) { }
 
-  createProduct(): void {
-    if (!this.newProduct.name || !this.newProduct.price || !this.selectedFile) {
-      alert('Please fill in all required fields (Name, Price, and Image).');
-      return;
-    }
+  // createProduct(): void {
+  //   if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.imageUrl) {
+  //     alert('Please fill in all required fields (Name, Price, and Image URL).');
+  //     return;
+  //   }
 
-    // Prepare FormData
-    const formData = new FormData();
-    formData.append('name', this.newProduct.name);
-    formData.append('description', this.newProduct.description);
-    formData.append('price', this.newProduct.price.toString());
-    formData.append('subCategoryId', this.newProduct.subCategoryId.toString());
-    formData.append('brand', this.newProduct.brand);
-    formData.append('color', this.newProduct.color);
-    formData.append('stock', this.newProduct.stock.toString());
-    formData.append('discountAmount', this.newProduct.discountAmount.toString());
-    formData.append('finalPrice', (this.newProduct.price - this.newProduct.discountAmount).toString());
-    formData.append('productImage', this.selectedFile); // Attach file
+  //   // Calculate final price
+  //   this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
 
-    this.productService.createProduct(formData).subscribe({
-      next: (product) => {
-        this.products.push(product);
-        alert('Product created successfully!');
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error('Error creating product:', err);
-        alert('Failed to create product. Please try again.');
-      }
-    });
-  }
+  //   this.productService.createProduct(this.newProduct).subscribe({
+  //     next: (product) => {
+  //       this.products.push(product);
+  //       alert('Product created successfully!');
+  //       this.resetForm();
+  //     },
+  //     error: (err) => {
+  //       console.error('Error creating product:', err);
+  //       alert('Failed to create product. Please try again.');
+  //     }
+  //   });
+  // }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
@@ -104,4 +94,52 @@ export class CreateproductComponent {
       stockQuantity: 0
     };
   }
+
+  createProduct(): void {
+    console.log('Form submitted with data:', this.newProduct); // Debug log
+  
+    if (!this.newProduct.name || !this.newProduct.price || !this.selectedFile) {
+      console.warn('Validation failed - missing required fields');
+      alert('Please fill in all required fields (Name, Price, and Image).');
+      return;
+    }
+  
+    // Create FormData object
+    const formData = new FormData();
+    formData.append('name', this.newProduct.name);
+    formData.append('description', this.newProduct.description);
+    formData.append('price', this.newProduct.price.toString());
+    formData.append('subCategoryId', this.newProduct.subCategoryId.toString());
+    formData.append('subCategoryName', this.newProduct.subCategoryName);
+    formData.append('stock', this.newProduct.stock.toString());
+    formData.append('avgRate', this.newProduct.avgRate.toString());
+    formData.append('brand', this.newProduct.brand);
+    formData.append('discountAmount', this.newProduct.discountAmount.toString());
+    formData.append('isAccepted', this.newProduct.isAccepted.toString());
+    formData.append('isDeleted', this.newProduct.isDeleted.toString());
+    formData.append('color', this.newProduct.color);
+    formData.append('title', this.newProduct.title);
+    formData.append('category', this.newProduct.category);
+    formData.append('finalPrice', (this.newProduct.price - this.newProduct.discountAmount).toString());
+    formData.append('stockQuantity', this.newProduct.stockQuantity.toString());
+  
+    // Append the selected file
+    formData.append('image', this.selectedFile); 
+  
+    console.log('FormData being sent:', formData);
+  
+    this.productService.createProduct(formData).subscribe({
+      next: (product) => {
+        console.log('API Response:', product); // Debug log
+        this.products.push(product);
+        alert('Product created successfully!');
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error('Full error details:', err);
+        alert(`Failed to create product: ${err.message || 'Unknown error'}`);
+      }
+    });
+  }
+  
 }

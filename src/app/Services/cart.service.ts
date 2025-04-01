@@ -25,15 +25,22 @@ export class CartService {
     localStorage.removeItem('cart'); 
   }
 
-  addToCart(product: any) {
+  // Updated addToCart method to accept quantity
+  addToCart(product: any, quantity: number = 1) {
     const currentItems = this.cartItems();
     const existingItem = currentItems.find((item) => item.id === product.id);
 
     if (existingItem) {
-      existingItem.quantity++;
+      existingItem.quantity += quantity;
+      this.cartItems.set([...currentItems]);
     } else {
-      const updatedItems = [...currentItems, { ...product, quantity: 1 ,price: Number(product.price)}];
-      this.cartItems.set(updatedItems); 
+      const updatedItems = [...currentItems, { 
+        ...product, 
+        quantity: quantity,
+        price: Number(product.price),
+        finalPrice: Number(product.finalPrice) || Number(product.price)
+      }];
+      this.cartItems.set(updatedItems);
     }
 
     this.saveCart();

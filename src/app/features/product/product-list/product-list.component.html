@@ -1,117 +1,211 @@
 <div class="container-fluid mt-3">
-  <div class="row">
-    <!-- Sidebar Filters -->
-    <div class="col-md-3">
-      <div class="card mb-3">
-        <div class="card-header bg-white">
-          <h5 class="mb-0">Product Categories</h5>
-        </div>
-        <div class="card-body">
-          <div *ngFor="let category of categories" class="form-check">
-            <input class="form-check-input" type="checkbox" [id]="'cat-'+category"
-                   (change)="toggleCategoryFilter(category.name, $event)">
-
-            <label class="form-check-label" [for]="'cat-'+category">
-                {{ category.name }}
-            </label>
+  <!-- Toast Notification -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div #toastElement class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" style="min-width: 300px">
+      <div class="d-flex">
+        <div class="toast-body bg-light d-flex align-items-center">
+          <img [src]="toastProduct?.imageUrl" class="rounded me-3" style="width: 50px; height: 50px; object-fit: contain">
+          <div>
+            <div class="fw-bold">${{toastProduct?.finalPrice | number:'1.2-2'}}</div>
+            <small class="text-muted">{{toastMessage}}</small>
           </div>
         </div>
-      </div>
-
-      <!-- <div class="card mb-3">
-        <div class="card-header bg-white">
-          <h5 class="mb-0">Brands</h5>
-        </div>
-        <div class="card-body">
-          <div *ngFor="let brand of brands" class="form-check">
-            <input class="form-check-input" type="checkbox" [id]="'brand-'+brand"
-                   (change)="toggleBrandFilter(brand, $event)">
-            <label class="form-check-label" [for]="'brand-'+brand">
-              {{ brand }}
-            </label>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="card">
-        <div class="card-header bg-white">
-          <h5 class="mb-0">Price</h5>
-        </div>
-        <div class="card-body">
-          <div *ngFor="let range of priceRanges" class="form-check">
-            <input class="form-check-input" type="radio" name="priceRange" [id]="'price-'+range"
-                   (change)="filterByPrice(range)">
-            <label class="form-check-label" [for]="'price-'+range">
-              {{ range }}
-            </label>
-          </div>
-        </div>
+        <button type="button" class="btn-close me-2 m-auto" (click)="hideToast()"></button>
       </div>
     </div>
+  </div>
 
-    <!-- Product List -->
-    <div class="col-md-9">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search products...">
-            <button class="btn btn-primary" (click)="searchProducts()">
-              <i class="bi bi-search"></i>
-            </button>
+  <div class="row g-3">
+    <!-- Fixed Sidebar Filters Column -->
+    <div class="col-lg-3 position-sticky top-0" style="height: 100vh; overflow-y: auto; padding-top: 1rem;">
+      <!-- Categories Section -->
+      <div class="card">
+        <div class="card-header bg-white py-2">
+          <h6 class="mb-0 fw-bold">Categories</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="list-group list-group-flush">
+            <div *ngFor="let category of categories" class="list-group-item list-group-item-action p-1">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" 
+                       [id]="'cat-'+category" 
+                       [checked]="selectedCategories.includes(category)"
+                       (change)="toggleCategoryFilter(category, $event)">
+                <label class="form-check-label" [for]="'cat-'+category">
+                  {{ category }}
+                </label>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <select class="form-select" (change)="filterByCategory($any($event.target).value)">
-            <option value="">All Categories</option>
-            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <select class="form-select" (change)="sortProducts($any($event.target).value)">
-            <option value="">Sort By</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-          </select>
         </div>
       </div>
 
-      <div class="row">
-        <div *ngFor="let product of filteredProducts" class="col-md-4 mb-4">
-          <div class="card h-100">
-            <!-- Discount Badge -->
-            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" *ngIf="(product?.discountAmount ?? 0) > 0">
-              {{ (product?.discountAmount ?? 0) }}% OFF
-            </div>
-            <img class="card-img-top p-3" [src]="product.imageUrl" [alt]="product.name" style="height: 200px; object-fit: contain;">
-            <div class="card-body">
-              <div class="text-muted small mb-1">{{ product.category }}</div>
-              <h5 class="card-title">{{ product.name }}</h5>
-              <div class="mb-2">
-                <!-- Display Rating Stars -->
-                <span *ngFor="let star of getStars(product?.avgRate ?? 0)" class="text-warning">★</span>
-                <span class="small text-muted">({{ product?.reviewCount ?? 0 }} Reviews)</span>
+      <!-- Brands Section -->
+      <div class="card mt-3">
+        <div class="card-header bg-white py-2">
+          <h6 class="mb-0 fw-bold">Brands</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="list-group list-group-flush">
+            <div *ngFor="let brand of brands" class="list-group-item list-group-item-action p-1">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" 
+                       [id]="'brand-'+brand" 
+                       [checked]="selectedBrands.includes(brand)"
+                       (change)="toggleBrandFilter(brand, $event)">
+                <label class="form-check-label" [for]="'brand-'+brand">
+                  {{ brand }}
+                </label>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Section -->
+      <div class="card mt-3">
+        <div class="card-header bg-white py-2">
+          <h6 class="mb-0 fw-bold">Price Range</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="list-group list-group-flush">
+            <div *ngFor="let range of priceRanges" class="list-group-item list-group-item-action p-1">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" 
+                       name="priceRange" 
+                       [id]="'price-'+range" 
+                       [checked]="selectedPriceRange === range"
+                       (change)="filterByPrice(range)">
+                <label class="form-check-label" [for]="'price-'+range">
+                  {{ range }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary w-100 mt-2" (click)="clearPriceFilter()">
+            Clear Price Filter
+          </button>
+        </div>
+      </div>
+
+      <!-- Clear All Filters Button -->
+      <button class="btn btn-outline-danger w-100 mt-3 mb-3" (click)="clearAllFilters()">
+        <i class="bi bi-x-circle me-1"></i> Clear All Filters
+      </button>
+    </div>
+
+    <!-- Product List Column -->
+    <div class="col-lg-9">
+      <!-- Search and Sort Controls -->
+      <div class="card mb-3">
+        <div class="card-body p-2">
+          <div class="row g-2 align-items-center">
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm" 
+                       [(ngModel)]="searchQuery" 
+                       placeholder="Search products..." 
+                       (keyup.enter)="searchProducts()">
+                <button class="btn btn-primary btn-sm" (click)="searchProducts()">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select form-select-sm" (change)="viewMode = $any($event.target).value">
+                <option value="grid">Grid View</option>
+                <option value="list">List View</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select form-select-sm" (change)="sortProducts($any($event.target).value)">
+                <option value="">Sort By</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-desc">Highest Rated</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="row g-3">
+        <div *ngFor="let product of filteredProducts" class="col-6 col-md-4 col-lg-3">
+          <div class="card h-100 product-card">
+            <!-- Discount Badge -->
+            <div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem" 
+                 *ngIf="product.discountAmount > 0">
+              {{ product.discountAmount }}% OFF
+            </div>
+            
+            <!-- Product Image -->
+            <div class="position-relative" style="height: 180px; overflow: hidden;">
+  <a [routerLink]="['/products', product.id]" class="d-block h-100">
+    <img class="img-fluid p-3" 
+         [src]="product.imageUrl" 
+         [alt]="product.name"
+         style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;">
+  </a>
+  
+  <!-- Centered Action Buttons -->
+  <div class="product-actions position-absolute top-50 start-50 translate-middle d-flex gap-3">
+    <button class="btn btn-sm btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center" 
+            (click)="addToWishlist(product); $event.stopPropagation()"
+            [disabled]="product.stock <= 0"
+            [ngClass]="{'text-danger': isInWishlist(product)}"
+            style="width: 40px; height: 40px;">
+      <i class="bi fs-5" [class.bi-heart]="!isInWishlist(product)" [class.bi-heart-fill]="isInWishlist(product)"></i>
+    </button>
+    
+    <button class="btn btn-sm btn-primary rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
+            (click)="addToCart(product); $event.stopPropagation()"
+            [disabled]="product.stock <= 0"
+            style="width: 40px; height: 40px;">
+      <i class="bi bi-cart-plus fs-5"></i>
+    </button>
+  </div>
+</div>
+            
+
+            <!-- Product Info -->
+            <div class="card-body p-2">
+              <div class="text-muted small mb-1 text-truncate">{{ product.category }}</div>
+              <h6 class="card-title mb-1 text-truncate">{{ product.name }}</h6>
+              
+              <div class="mb-2">
+                <span *ngFor="let star of getStars(product.avgRate || 0)" class="text-warning">★</span>
+                <span class="small text-muted">({{ product.reviewCount || 0 }})</span>
+              </div>
+              
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <span class="text-danger fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
-                  <span class="text-decoration-line-through text-muted small ms-2" *ngIf="product.discountAmount > 0">
+                  <span class="text-dark fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
+                  <span class="text-decoration-line-through text-muted small ms-1" 
+                        *ngIf="product.discountAmount > 0">
                     ${{ product.price | number:'1.2-2' }}
                   </span>
                 </div>
-                <span class="badge bg-success" *ngIf="product.stock > 0">
-                  In Stock {{ product.stock }}
-                </span>
-                <span class="badge bg-danger" *ngIf="product.stock <= 0">
-                  Out of Stock
+                
+                <span class="badge bg-opacity-10" 
+                      [ngClass]="{'bg-success': product.stock > 0, 'bg-danger': product.stock <= 0}">
+                  {{ product.stock > 0 ? product.stock : 'Out' }}
                 </span>
               </div>
             </div>
-            <div class="card-footer bg-white border-top-0">
-              <button class="btn btn-primary w-100" (click)="addToCart(product)" [disabled]="product.stock <= 0">
-                Add to Cart
-              </button>
-            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- No Results Message -->
+      <div *ngIf="filteredProducts.length === 0" class="card mt-3">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-search text-muted" style="font-size: 2rem"></i>
+          <h5 class="mt-3">No products found</h5>
+          <p class="text-muted">Try adjusting your search or filter criteria</p>
+          <button class="btn btn-primary mt-2" (click)="clearAllFilters()">
+            Clear All Filters
+          </button>
         </div>
       </div>
     </div>

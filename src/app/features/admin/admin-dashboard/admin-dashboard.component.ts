@@ -70,7 +70,7 @@ export class AdminDashboardComponent implements OnInit {
       default: return 'Unknown';
     }
   }
-  deleteAllProducts(id: any): void {
+  deleteProducts(id: any): void {
     if (confirm("Are you sure you want to delete all products?")) {
       this.productService.deleteProduct(id).subscribe({
         next: () => {
