@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from './enviroment';
+import {jwtDecode} from 'jwt-decode'
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,18 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
+  getDecodedToken():any{
+    const token  = this.getToken();
+    if (!token) return null;
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
 
   getUsername(): string | null {
     const token = this.getToken();
@@ -45,4 +58,32 @@ export class AuthService {
       return null;
     }
   }
+
+
+    getUserRole(): string | null {
+      const decodedToken = this.getDecodedToken();
+      if (!decodedToken) return null;
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      if (!role) return "Customer";
+      try {
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log(decodedToken);
+        console.log(role);
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+        console.log("______________________________________________________________________________________________________");
+
+        return role ;
+      } catch (error) {
+        return null;
+      }
+    }
+
+
+
 }

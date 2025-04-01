@@ -1,3 +1,2 @@
-<app-customer-layout></app-customer-layout>
-
-<router-outlet></router-outlet>
+<app-customer-layout *ngIf="isCustomer()"></app-customer-layout>
+<app-admin-layout *ngIf="isAdmin()"></app-admin-layout>
