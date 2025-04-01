@@ -1,7 +1,7 @@
 import { Component, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { CartService } from '../../core/services/cart.service';
+import { CartService } from '../../Services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -28,17 +28,17 @@ export class CheckoutComponent {
     gov:'',
     country:'',
     phone_number: '',
-    
+
   };
 
   constructor(private cartService: CartService, private http: HttpClient, private router: Router) {  }
   ngOnInit(): void {
-    
+
     this.totalPrice = this.cartService.getTotalPrice();
   }
 
   processPayment() {
-    if (!this.billing.first_name || !this.billing.last_name || !this.billing.email || 
+    if (!this.billing.first_name || !this.billing.last_name || !this.billing.email ||
         !this.billing.street || !this.billing.city || !this.billing.phone_number) {
       alert('Please fill in all billing details.');
       return;
@@ -46,12 +46,12 @@ export class CheckoutComponent {
     localStorage.setItem('paymentMethod', this.paymentMethod);
     localStorage.setItem('billingDetails', JSON.stringify(this.billing));
     if (this.paymentMethod === 'Paymob') {
-      this.placeOrder(); 
+      this.placeOrder();
     } else {
-      window.location.href = 'http://localhost:4200/payment-success'; 
+      window.location.href = 'http://localhost:4200/payment-success';
     }
   }
-  
+
 
   placeOrder() {
     const orderData = {
@@ -77,13 +77,13 @@ export class CheckoutComponent {
       next: (response: any) => {
         const clientSecret = response.client_secret;
         const paymentUrl = `https://accept.paymob.com/unifiedcheckout/?publicKey=egy_pk_test_jrlnWL5oJX8IRTp9xpeHq5mmQhAMfXES&clientSecret=${clientSecret}`;
-        
+
         window.location.href = paymentUrl;  // Redirect to payment page
       },
       error: (error) => {
         console.error("Error in Paymob API request:", error);
         alert("Failed to process payment. Please try again.");
-        
+
       }
     });
 }

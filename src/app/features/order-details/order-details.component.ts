@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { OrderService } from '../../core/services/order.service';
+import { OrderService } from '../../Services/order.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

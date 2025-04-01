@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { order } from '../models/order.model';
+import { order } from '../core/models/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,8 @@ export class ShippingService {
     }
 
     updateShippingStatus(orderId: number, shippingStatus: number) {
-      
+
     }
 
-
-
-  
 
 }

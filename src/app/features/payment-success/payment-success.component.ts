@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from '../../core/services/cart.service';
-import { jwtDecode } from 'jwt-decode';
-
+import { CartService } from '../../Services/cart.service';
+import {jwtDecode} from 'jwt-decode';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-payment-success',
@@ -12,14 +11,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './payment-success.component.css'
 })
 export class PaymentSuccessComponent {
-  apiUrl: string = 'https://localhost:7280/api/Order'; 
+  apiUrl: string = 'https://localhost:7280/api/Order';
   shippingApiUrl: string = 'https://localhost:7280/api/Shipping';
   cartItems: any[] = [];
   totalPrice: number = 0;
-  customerId: string = ''; 
+  customerId: string = '';
   orderId : number = 0;
 
-  paymentMethod: string = ''; 
+  paymentMethod: string = '';
   billingDetails: any;
 
   constructor(private http: HttpClient, private router: Router, private cartService: CartService) {}
@@ -44,7 +43,7 @@ export class PaymentSuccessComponent {
       return;
     }
 
-     this.paymentMethod = localStorage.getItem('paymentMethod')??''; 
+     this.paymentMethod = localStorage.getItem('paymentMethod')??'';
     const storedBilling = localStorage.getItem('billingDetails');
 
     if (storedBilling) {
@@ -55,14 +54,14 @@ export class PaymentSuccessComponent {
     this.totalPrice = this.cartService.getTotalPrice();
     console.log("Cart items:", this.cartItems);
     const orderData = {
-      TotalAmount: this.totalPrice,  
-      CustomerId: this.customerId,       
-      PaymentStatus: this.paymentMethod === 'COD' ? 0 : 1, 
+      TotalAmount: this.totalPrice,
+      CustomerId: this.customerId,
+      PaymentStatus: this.paymentMethod === 'COD' ? 0 : 1,
       orderItems: this.cartItems.map((item: { id: any; name: any; quantity: any; finalPrice: any; }) => ({
-        ProductId: item.id,  
-        Name: item.name,      
-        Qty: item.quantity,         
-        UnitPrice: item.finalPrice  
+        ProductId: item.id,
+        Name: item.name,
+        Qty: item.quantity,
+        UnitPrice: item.finalPrice
       }))
     };
 
@@ -73,7 +72,7 @@ export class PaymentSuccessComponent {
         this.orderId = response.orderID;
         console.log("Order placed successfully:", response);
         this.createShipping();
-        
+
       },
       error: (error) => {
         console.error("Error placing order:", error);
@@ -97,8 +96,8 @@ export class PaymentSuccessComponent {
     }
     this.http.post(this.shippingApiUrl, shippingData).subscribe({
       next: (res) => {
-        this.cartService.clearCart(); 
-        localStorage.removeItem('paymentMethod'); 
+        this.cartService.clearCart();
+        localStorage.removeItem('paymentMethod');
         localStorage.removeItem('billingDetails')
         console.log("Shipping Created:", res);
       },

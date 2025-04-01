@@ -117,56 +117,58 @@
     </form>
 
     <!-- Profile Dropdown -->
-    <div class="dropdown">
-      <button
-        (click)="profileBtnClicked = !profileBtnClicked"
-        class="btn border-0 p-1"
-      >
-        <img
-          width="30"
-          height="30"
-          src="https://www.w3schools.com/HOWTO/img_avatar.png"
-          alt=""
-          class="rounded-circle"
-        />
-        <span class="align-middle ms-1">
-          <i *ngIf="profileBtnClicked" class="fa-solid fa-angle-up"></i>
-          <i *ngIf="!profileBtnClicked" class="fa-solid fa-angle-down"></i>
-        </span>
-      </button>
-      <ul class="dropdown-menu shadow" *ngIf="profileBtnClicked">
-        <li>
-          <button class="dropdown-item" type="button">
-            <i class="fa-regular fa-circle-user"></i> Profile
-          </button>
-        </li>
-        <li>
-          <button class="dropdown-item" type="button">
-            <i class="fa-solid fa-gear"></i> Settings
-          </button>
-        </li>
-        <li>
-          <button
-            class="dropdown-item text-danger"
-            (click)="authService.logout()"
-            type="button"
-          >
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Wishlist -->
-    <div>
-      <a href="" class="position-relative text-black-50 p-1">
-        <i class="fa-solid fa-heart fs-4"></i>
-        <span
-          class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
-          >5</span
+     @if(authService.isLoggedIn()){
+      <div class="dropdown">
+        <button
+          (click)="profileBtnClicked = !profileBtnClicked"
+          class="btn border-0 p-1"
         >
-      </a>
-    </div>
+          <img
+            width="30"
+            height="30"
+            src="https://www.w3schools.com/HOWTO/img_avatar.png"
+            alt=""
+            class="rounded-circle"
+          />
+          <span class="align-middle ms-1">
+            <i *ngIf="profileBtnClicked" class="fa-solid fa-angle-up"></i>
+            <i *ngIf="!profileBtnClicked" class="fa-solid fa-angle-down"></i>
+          </span>
+        </button>
+        <ul class="dropdown-menu shadow" *ngIf="profileBtnClicked">
+          <li>
+            <button class="dropdown-item" type="button">
+              <i class="fa-regular fa-circle-user"></i> Profile
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" type="button">
+              <i class="fa-solid fa-gear"></i> Settings
+            </button>
+          </li>
+          <li>
+            <button
+              class="dropdown-item text-danger"
+              (click)="authService.logout()"
+              type="button"
+            >
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Wishlist -->
+      <div>
+        <a href="" class="position-relative text-black-50 p-1">
+          <i class="fa-solid fa-heart fs-4"></i>
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
+            >5</span
+          >
+        </a>
+      </div>
+     }
 
     <!-- Cart -->
     <div>
