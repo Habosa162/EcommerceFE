@@ -21,7 +21,7 @@ export class AppComponent {
   title = 'EcommerceFE';
   userRole :string | null = '';
   constructor(private authService : AuthService ){
-    this.userRole = this.authService.getUserRole() ;
+    this.userRole = this.authService.getUserRole()=== null ? 'Customer' : this.authService.getUserRole();
   }
   isAdmin(): boolean {
     return this.userRole === 'Admin';
