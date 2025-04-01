@@ -20,7 +20,7 @@ export class ProductService {
     return this.http.delete(`${this.productApiUrl}/{id}`);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(`${this.productApiUrl}`, product);
+  createProduct(productData: FormData): Observable<Product> {
+    return this.http.post<Product>(`${this.productApiUrl}`, productData);
   }
 }

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CreateproductComponent {
   products: Product[] = [];
-
+  selectedFile!: File;
   newProduct: Product = {
     id: 0,
     name: '',
@@ -36,18 +36,28 @@ export class CreateproductComponent {
     stockQuantity: 0
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   createProduct(): void {
-    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.imageUrl) {
-      alert('Please fill in all required fields (Name, Price, and Image URL).');
+    if (!this.newProduct.name || !this.newProduct.price || !this.selectedFile) {
+      alert('Please fill in all required fields (Name, Price, and Image).');
       return;
     }
 
-    // Calculate final price
-    this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append('name', this.newProduct.name);
+    formData.append('description', this.newProduct.description);
+    formData.append('price', this.newProduct.price.toString());
+    formData.append('subCategoryId', this.newProduct.subCategoryId.toString());
+    formData.append('brand', this.newProduct.brand);
+    formData.append('color', this.newProduct.color);
+    formData.append('stock', this.newProduct.stock.toString());
+    formData.append('discountAmount', this.newProduct.discountAmount.toString());
+    formData.append('finalPrice', (this.newProduct.price - this.newProduct.discountAmount).toString());
+    formData.append('productImage', this.selectedFile); // Attach file
 
-    this.productService.createProduct(this.newProduct).subscribe({
+    this.productService.createProduct(formData).subscribe({
       next: (product) => {
         this.products.push(product);
         alert('Product created successfully!');
@@ -59,6 +69,16 @@ export class CreateproductComponent {
       }
     });
   }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+
+
 
   resetForm(): void {
     this.newProduct = {

@@ -1,60 +1,58 @@
-<div class="container mt-4">
-    <h2 class="text-center">Add New Product</h2>
-
-    <form (ngSubmit)="createProduct()" class="p-4 shadow-sm rounded bg-light">
-        <!-- Product Name -->
-        <!-- <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input type="text" class="form-control" [(ngModel)]="newProduct.name" name="name" required />
-        </div> -->
-        <div class="mb-3">
-            <label class="form-label">Product Name</label>
-            <input type="text" class="form-control" 
-                   [(ngModel)]="newProduct.name" 
-                   name="name"
-                   #name="ngModel"
-                   required>
-            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
-              Product name is required
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <h2 class="text-center text-primary mb-4">Create Product</h2>
+        <form (ngSubmit)="createProduct()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="newProduct.name" name="name" required>
             </div>
-          </div>
 
-        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" [(ngModel)]="newProduct.description"
+                    name="description"></textarea>
+            </div>
 
-        <!-- Description -->
-        <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" [(ngModel)]="newProduct.description" name="description"></textarea>
-        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" [(ngModel)]="newProduct.price" name="price"
+                        required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="discountAmount" class="form-label">Discount</label>
+                    <input type="number" class="form-control" id="discountAmount"
+                        [(ngModel)]="newProduct.discountAmount" name="discountAmount">
+                </div>
+            </div>
 
-        <!-- Price -->
-        <div class="mb-3">
-            <label class="form-label">Price ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="newProduct.price" name="price" required />
-        </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="image" (change)="onFileSelected($event)" name="image"
+                    required>
+            </div>
 
-        <!-- Discount -->
-        <div class="mb-3">
-            <label class="form-label">Discount ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="newProduct.discountAmount" name="discountAmount" />
-        </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="brand" class="form-label">Brand</label>
+                    <input type="text" class="form-control" id="brand" [(ngModel)]="newProduct.brand" name="brand">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="color" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="color" [(ngModel)]="newProduct.color" name="color">
+                </div>
+            </div>
 
-        <!-- Image URL -->
-        <div class="mb-3">
-            <label class="form-label">Image URL</label>
-            <input type="text" class="form-control" [(ngModel)]="newProduct.imageUrl" name="image" required />
-        </div>
+            <div class="mb-3">
+                <label for="stockQuantity" class="form-label">Stock Quantity</label>
+                <input type="number" class="form-control" id="stockQuantity" [(ngModel)]="newProduct.stockQuantity"
+                    name="stockQuantity">
+            </div>
 
-        <!-- Category -->
-        <div class="mb-3">
-            <label class="form-label">Category</label>
-            <input type="text" class="form-control" [(ngModel)]="newProduct.category" name="category" />
-        </div>
-
-        <!-- Submit & Reset Buttons -->
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-success">Create Product</button>
-            <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
-        </div>
-    </form>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary px-4 py-2">Create Product</button>
+                <button type="button" (click)="resetForm()" class="btn btn-secondary px-4 py-2">Reset</button>
+            </div>
+        </form>
+    </div>
 </div>
