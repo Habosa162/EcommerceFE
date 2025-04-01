@@ -1,2 +1,7 @@
-<app-customer-layout *ngIf="isCustomer()"></app-customer-layout>
-<app-admin-layout *ngIf="isAdmin()"></app-admin-layout>
+
+<ng-container  *ngIf="isCustomer()">
+  <app-customer-layout></app-customer-layout>
+</ng-container>
+<ng-container *ngIf="isAdmin()">
+  <app-admin-layout ></app-admin-layout>
+</ng-container >

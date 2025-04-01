@@ -19,9 +19,11 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'EcommerceFE';
-  userRole :string | null = '';
-  constructor(private authService : AuthService ){
-    this.userRole = this.authService.getUserRole()=== null ? 'Customer' : this.authService.getUserRole();
+
+  constructor(private authService : AuthService ){}
+
+  get userRole(): string {
+    return this.authService.getUserRole() || 'Customer';
   }
   isAdmin(): boolean {
     return this.userRole === 'Admin';
