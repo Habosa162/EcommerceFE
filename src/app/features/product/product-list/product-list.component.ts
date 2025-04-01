@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../Services/cart.service';
 import { ProductService as ps } from '../../../Services/product.service';
+import { CategoryService } from '../../../Services/category.service';
+import { Category } from '../../../core/models/category.model';
 
 @Component({
   selector: 'app-product-list',
@@ -22,7 +24,6 @@ export class ProductListComponent implements OnInit {
   searchQuery: string = '';
   // brands: string[] = ['Apple', 'Samsung', 'Sony', 'Canon', 'HP', 'LG'];
   // priceRanges: string[] = ['Under $100', '$100 - $200', '$200 - $300'];
-  
   // selectedCategories: string[] = [];
   // selectedBrands: string[] = [];
   // selectedPriceRange: string = '';
@@ -31,12 +32,9 @@ selectedCategories: string[] = [];
 selectedBrands: string[] = [];
 selectedPriceRange: string = '';
 priceRanges: string[] = ['Under $100', '$100 - $200', '$200 - $300'];
-brands: string[] = ['Hi-Tech Limited', 'hp limited', 'The Apple Limited', 'A4 Tech', 
+brands: string[] = ['Hi-Tech Limited', 'hp limited', 'The Apple Limited', 'A4 Tech',
                    'The Hitachi Limited', 'Huawei Company', 'KEA Limited', 'Sony Limited'];
-categories: string[] = ['Kitchen Appliances', 'Television', 'Refrigerators', 
-                       'Washing Machine', 'Tablets', 'Gadget Accessories', 
-                       'Appliances', 'Air Conditioners', 'Airbuds', 'Cameras', 
-                       'Smartphones', 'Mobiles', 'Smart Watches'];
+categories: Category[]=[];
 
 // Add these methods for filtering
 toggleCategoryFilter(category: string, event: any) {
@@ -64,9 +62,9 @@ filterByPrice(range: string) {
 
 applyFilters() {
     this.filteredProducts = this.products.filter(product => {
-        const matchesCategory = this.selectedCategories.length ? 
+        const matchesCategory = this.selectedCategories.length ?
             this.selectedCategories.includes(product.category) : true;
-        const matchesBrand = this.selectedBrands.length ? 
+        const matchesBrand = this.selectedBrands.length ?
             this.selectedBrands.includes(product.brand || '') : true;
         const matchesPrice = this.priceFilter(product.price);
         return matchesCategory && matchesBrand && matchesPrice;
@@ -80,13 +78,23 @@ priceFilter(price: number): boolean {
     if (this.selectedPriceRange === '$200 - $300') return price >= 200 && price <= 300;
     return true;
 }
-  constructor(private productService: ProductService, private cartService: CartService) {}
+getAllCategories() {
+  this.categoryService.getCategories().subscribe((categories)=>{
+    this.categories = categories;
+  })
+
+}
+  constructor(private productService: ProductService
+    , private cartService: CartService,
+    private categoryService: CategoryService,
+  ){}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
       this.filteredProducts = data;
-      this.categories = [...new Set(data.map((p) => p.category))];
+      // this.categories = [...new Set(data.map((p) => p.category))];
+      this.getAllCategories() ;
     });
   }
 
@@ -119,13 +127,6 @@ priceFilter(price: number): boolean {
 
 
 
-  
-   
-  
-    
-  
-    
-    
   }
 
 

@@ -8,10 +8,11 @@
         </div>
         <div class="card-body">
           <div *ngFor="let category of categories" class="form-check">
-            <input class="form-check-input" type="checkbox" [id]="'cat-'+category" 
-                   (change)="toggleCategoryFilter(category, $event)">
+            <input class="form-check-input" type="checkbox" [id]="'cat-'+category"
+                   (change)="toggleCategoryFilter(category.name, $event)">
+
             <label class="form-check-label" [for]="'cat-'+category">
-              {{ category }}
+                {{ category.name }}
             </label>
           </div>
         </div>
@@ -23,7 +24,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let brand of brands" class="form-check">
-            <input class="form-check-input" type="checkbox" [id]="'brand-'+brand" 
+            <input class="form-check-input" type="checkbox" [id]="'brand-'+brand"
                    (change)="toggleBrandFilter(brand, $event)">
             <label class="form-check-label" [for]="'brand-'+brand">
               {{ brand }}
@@ -38,7 +39,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let range of priceRanges" class="form-check">
-            <input class="form-check-input" type="radio" name="priceRange" [id]="'price-'+range" 
+            <input class="form-check-input" type="radio" name="priceRange" [id]="'price-'+range"
                    (change)="filterByPrice(range)">
             <label class="form-check-label" [for]="'price-'+range">
               {{ range }}

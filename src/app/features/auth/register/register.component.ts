@@ -62,7 +62,11 @@ export class RegisterComponent {
 
   OnRegister() {
     console.log('iam here in OnRegister method');
+
+
     if (this.registerForm.valid && this.selectedFile) {
+
+      
       const formData = new FormData();
       formData.append('FName', this.registerForm.get('FName')?.value);
       formData.append('LName', this.registerForm.get('LName')?.value);
@@ -80,7 +84,8 @@ export class RegisterComponent {
           console.error('Register error:', err);
         },
       });
-    } else {
+    }
+    else {
       this.isSubmitted = true;
       console.log(this.registerForm.valid);
       console.log('Form is invalid or file not selected');

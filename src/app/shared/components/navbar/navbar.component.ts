@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
@@ -7,6 +7,8 @@ import { ProductService } from '../../../core/services/product.service'; // Add 
 import { Product } from '../../../core/models/product.model'; // Add this import
 import { CartService } from '../../../Services/cart.service';
 import { AuthService } from '../../../Services/auth.service';
+import { CategoryService } from '../../../Services/category.service';
+import { Category } from '../../../core/models/category.model';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +17,12 @@ import { AuthService } from '../../../Services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   profileBtnClicked: boolean = false;
   searchQuery: string = '';
   showSearchResults: boolean = false;
   searchResults: Product[] = []; // Changed to Product[] for type safety
+  categories: Category[] = [];
   isLoggedIn: boolean = false;
   isLoading: boolean = false;
   private searchSubject = new Subject<string>();
@@ -29,9 +32,25 @@ export class NavbarComponent {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected categoryService: CategoryService
   ) {
     this.setupSearch();
+  }
+
+  ngOnInit(): void {
+    this.getAllCategories() ;
+  }
+
+  getAllCategories() {
+    this.categoryService.getCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
   }
 
   profileBtn() {
