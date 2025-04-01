@@ -1,6 +1,5 @@
-<nav class="navbar bg-white shadow-sm">
-  <div class="container">
-    <!-- Brand Logo -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="container ">
     <a
       class="navbar-brand align-middle d-flex align-items-center me-lg-4"
       href="#"
@@ -8,14 +7,18 @@
       <img width="50" src="/assets/imgs/shopping-bag.png" alt="" />
       <span class="fw-bold mainColor fs-4 d-none d-md-block">VerdiShop</span>
     </a>
-
-    <!-- Navbar Links -->
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row gap-4 d-none d-lg-flex">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-      </li>
-
-      <!-- Categories Dropdown -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/products">Products</a>
+        </li>
+              <!-- Categories Dropdown -->
       <li class="nav-item dropdown">
         <a
           class="nav-link"
@@ -26,7 +29,6 @@
         >
           Categories <i class="fa-solid fa-angle-down align-middle"></i>
         </a>
-
 
         <!-- Categories Dropdown -->
         <!-- Categories Dropdown -->
@@ -57,171 +59,106 @@
         </ul>
       </li>
 
-      <li class="nav-item"><a class="nav-link" href="#">What's New</a></li>
 
-      <!-- Authentication Links -->
-      <li class="nav-item" *ngIf="!authService.isLoggedIn()">
-        <a class="nav-link" routerLink="login">Login</a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/products">Products</a>
       </li>
-      <li class="nav-item" *ngIf="authService.isLoggedIn()">
-        <a class="nav-link btn" (click)="authService.logout()">Logout</a>
-      </li>
-    </ul>
 
-    <!-- Search Form -->
-    <form class="position-relative mx-auto d-none d-lg-flex" role="search">
-      <div class="search-container d-flex">
-        <input
-          class="form-control me-2 rounded-pill"
-          type="search"
-          [(ngModel)]="searchQuery"
-          (input)="onSearchInput()"
-          placeholder="Search products..."
-          aria-label="Search"
-          name="search"
-        />
-        <button class="btn position-absolute end-0 me-2" type="button">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
 
-        <!-- Search Results Dropdown -->
-        <div
-          *ngIf="showSearchResults && searchQuery"
-          class="search-results-dropdown"
-        >
-          <div *ngIf="searchResults.length > 0; else noResults">
-            <div
-              *ngFor="let result of searchResults"
-              class="search-result-item"
-            >
-              <a
-                routerLink="/products/{{ result.id }}"
-                class="d-flex align-items-center p-2"
-              >
-                <div class="flex-grow-1">
-                  <div class="fw-bold">{{ result.name }}</div>
-                  <small class="text-muted">{{ result.category }}</small>
-                </div>
-                <i class="fa-solid fa-chevron-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-          <ng-template #noResults>
-            <div class="p-3 text-center">
-              No results found for "{{ searchQuery }}"
-            </div>
-          </ng-template>
-        </div>
-      </div>
-    </form>
 
-    <!-- Profile Dropdown -->
-     @if(authService.isLoggedIn()){
-      <div class="dropdown">
-        <button
-          (click)="profileBtnClicked = !profileBtnClicked"
-          class="btn border-0 p-1"
-        >
-          <img
-            width="30"
-            height="30"
-            src="https://www.w3schools.com/HOWTO/img_avatar.png"
-            alt=""
-            class="rounded-circle"
-          />
-          <span class="align-middle ms-1">
-            <i *ngIf="profileBtnClicked" class="fa-solid fa-angle-up"></i>
-            <i *ngIf="!profileBtnClicked" class="fa-solid fa-angle-down"></i>
-          </span>
-        </button>
-        <ul class="dropdown-menu shadow" *ngIf="profileBtnClicked">
-          <li>
-            <button class="dropdown-item" type="button">
-              <i class="fa-regular fa-circle-user"></i> Profile
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item" type="button">
-              <i class="fa-solid fa-gear"></i> Settings
-            </button>
-          </li>
-          <li>
-            <button
-              class="dropdown-item text-danger"
-              (click)="authService.logout()"
-              type="button"
-            >
-              <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Wishlist -->
-      <div>
-        <a href="" class="position-relative text-black-50 p-1">
-          <i class="fa-solid fa-heart fs-4"></i>
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
-            >5</span
-          >
+  <!-- WhisList -->
+      <li class="nav-item  d-flex align-items-center WishList text-center">
+        <a href="" class="text-black-50 p-1 text-decoration-none" aria-current="page">
+          <i class="d-lg-none">WishList</i>
+          <i class="fa-solid fa-heart fs-4 px-2"></i>
         </a>
-      </div>
-     }
+      </li>
 
-    <!-- Cart -->
-    <div>
-      <a routerLink="/cart" class="position-relative text-black-50 p-1">
-        <i class="fa-solid fa-cart-shopping fs-4"></i>
-        <span
-          class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger cart"
-        >
-          {{ cartCount() }}
-        </span>
-      </a>
-    </div>
+            <!-- Cart -->
+            <li class="nav-item d-flex align-items-center Cart">
+              <a routerLink="/cart" class="position-relative text-black-50 p-1 text-decoration-none" aria-current="page">
+                <i class="d-lg-none">Cart</i>
+                <i class="fa-solid fa-cart-shopping fs-4 p-xs-2"></i>
+                <span
+                  class="position-absolute top-0 d-sm-none d-xs-none d-md-block  start-100 translate-middle badge rounded-circle bg-danger cart"
+                >
+                  {{ cartCount() }}
+                </span>
+              </a>
+            </li>
 
-    <!-- Offcanvas Button (for mobile) -->
-    <button
-      class="navbar-toggler d-lg-none"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      </ul>
+<!-- END OF THE FIRST UNORDERED LIST -->
 
-    <!-- Offcanvas Menu -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Menu</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-bs-toggle="dropdown"
-              >Dropdown</a
-            >
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+
+      <form class="position-relative mx-auto d-none d-lg-flex" role="search">
+        <div class="search-container d-flex">
+          <input
+            class="form-control me-2 rounded-pill"
+            type="search"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchInput()"
+            placeholder="Search products..."
+            aria-label="Search"
+            name="search"
+          />
+          <button class="btn position-absolute end-0 me-2" type="button">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+          <!-- Search Results Dropdown -->
+          <div
+            *ngIf="showSearchResults && searchQuery"
+            class="search-results-dropdown"
+          >
+            <div *ngIf="searchResults.length > 0; else noResults">
+              <div
+                *ngFor="let result of searchResults"
+                class="search-result-item"
+              >
+                <a
+                  routerLink="/products/{{ result.id }}"
+                  class="d-flex align-items-center p-2"
+                >
+                  <div class="flex-grow-1">
+                    <div class="fw-bold">{{ result.name }}</div>
+                    <small class="text-muted">{{ result.category }}</small>
+                  </div>
+                  <i class="fa-solid fa-chevron-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+            <ng-template #noResults>
+              <div class="p-3 text-center">
+                No results found for "{{ searchQuery }}"
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </form>
+
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+          <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown" >
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="" alt=""><i class="fa-regular fa-circle-user"></i>Profile
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="myAcount">Acount</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item"(click)="authService.logout()">Logout</button></li>
             </ul>
           </li>
-        </ul>
-      </div>
+        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+
+
+
+      </ul>
+
     </div>
   </div>
 </nav>
