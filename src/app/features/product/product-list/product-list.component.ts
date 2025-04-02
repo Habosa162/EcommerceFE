@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../core/services/product.service';
-import { Product } from '../../../core/models/product.model';
+import { IProduct, Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -159,8 +159,26 @@ addToWishlist(product: Product): void {
 }
 
 addToCart(product: Product): void {
+// convert product to IProduct here then send IProduct to addToCart 
+let IProduct : IProduct = {
+  id: product.id,
+  name: product.name,
+  imgUrl: product.imageUrl,
+  color: product.color,
+  description: product.description,
+  price: product.price,
+  stock: product.stock,
+  avgRate: product.avgRate,
+  subCategoryId: product.subCategoryId,
+  brand: product.brand,
+  discountAmount: product.discountAmount,
+  finalPrice: product.finalPrice,
+  isAccepted: product.isAccepted,
+  isDeleted: product.isDeleted,
+  subCategory: product.subCategoryName
+}
   const quantity = this.getProductQuantity(product);
-  this.cartService.addToCart(product, quantity);
+  this.cartService.addToCart(IProduct, quantity);
   this.showToast(product, 'added to cart');
 }
 
