@@ -2,9 +2,8 @@ import { IWishlist } from './../../core/models/wishlist.model';
 import { CommonModule, NgFor } from '@angular/common';
 import { CartService } from '../../Services/cart.service';
 import { IProduct } from './../../core/models/product.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { WishlistService } from '../../Services/wishlist.service';
-
 
 @Component({
   selector: 'app-wishlist',
@@ -12,46 +11,47 @@ import { WishlistService } from '../../Services/wishlist.service';
   styleUrl: './wishlist.component.css',
   imports: [CommonModule],
 })
-export class WishlistComponent implements OnInit{
+export class WishlistComponent implements OnInit,OnChanges{
 
+  wishList: IWishlist[] = [];
 
-  wishList:IWishlist[] =[] ;
+  products: IProduct[] = []; 
 
-  products:IProduct[]=[] ; 
+  constructor(private cartService: CartService, private wishListService: WishlistService , private cdr:ChangeDetectorRef) {}
 
-  constructor(private cartService:CartService ,private wishListService : WishlistService){}
+   ngOnChanges(changes: SimpleChanges): void {
+     this.getWishList();
+   }
+
   ngOnInit(): void {
-      this.wishListService.getWishList().subscribe((data)=>{
-        console.log("----------------------------------------------------------");
-        console.log("----------------------------------------------------------");
-        console.log("----------------------------------------------------------");
-        console.log(data);
-        this.wishList = data;
-        console.log("----------------------------------------------------------");
-        console.log("----------------------------------------------------------");
-        console.log("----------------------------------------------------------");
-        return data ; 
-      },(err)=>{
-        console.log(err);
-      })  
+    this.getWishList();
   }
 
-
-
-  // getStars(rating: number): number[] {
-  //   return Array(Math.round(rating)).fill(0);
-  // }
   getStars(rating: number): string[] {
     const fullStars = Math.floor(rating);
     return Array(fullStars).fill('★');
   }
-  
 
-addToCart(product: IProduct): void {
-  // const quantity = this.getProductQuantity(product);
-  this.cartService.addToCart(product, 2);
-  // this.showToast(product, 'added to cart');
-}
+  getWishList() {
+    this.wishListService.getWishList().subscribe((data) => {
+      this.wishList = data;
+      this.cdr.detectChanges() ; 
+    }, (err) => {
+      console.log(err);
+    });
+  }
 
+  addToCart(product: IProduct): void {
+    this.cartService.addToCart(product, 1);
+  }
 
+  removeFromWishList(wishListID: number) {
+    this.wishListService.removeFromWishList(wishListID).subscribe(() => {
+    }, (err) => {
+      console.log(err);
+    });
+    this.wishList = this.wishList.filter(item => item.id !== wishListID);
+    this.cdr.detectChanges() ; 
+    // window.location.reload();  
+  }
 }

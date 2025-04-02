@@ -30,8 +30,8 @@ export class WishlistService {
     const params = new HttpParams().set('productId', productID.toString());
     return this.http.post(this.baseUrl, {}, { headers,params });
   }
-  removeFromWishList(productID: number):Observable<any>{
+  removeFromWishList(wishListID: number):Observable<any>{
     const headers = this.getAuthHeaders() ;
-    return this.http.delete(`${this.baseUrl}/${productID}`,{headers});  
+    return this.http.delete(`${this.baseUrl}/${wishListID}`,{headers});  
   }
 }

@@ -4,7 +4,7 @@
       <div class="card h-100" *ngIf="item.product">
         <!-- Discount Badge -->
         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" *ngIf="(item.product?.discountAmount ?? 0) > 0">
-          {{ (item.product?.discountAmount ?? 0) }}% OFF
+          {{ (item.product?.discountAmount ?? 0)*100 }} % OFF
         </div>
         <img class="card-img-top p-3" [src]="item.product.imgUrl" [alt]="item.product.name" style="height: 200px; object-fit: contain;">
         <div class="card-body">
@@ -31,8 +31,11 @@
           </div>
         </div>
         <div class="card-footer bg-white border-top-0">
-          <button class="btn btn-primary w-100" (click)="addToCart(item.product)" [disabled]="item.product.stock <= 0">
+          <button class="btn btn-primary w-100 p-2 mb-1" (click)="addToCart(item.product)" [disabled]="item.product.stock <= 0">
             Add to Cart
+          </button>
+          <button class="btn btn-danger w-100 p-2" (click)="removeFromWishList(item.id)">
+            Remove
           </button>
         </div>
       </div>
