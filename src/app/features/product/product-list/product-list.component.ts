@@ -8,6 +8,7 @@ import { CartService } from '../../../Services/cart.service';
 import { ProductService as ps } from '../../../Services/product.service';
 import { CategoryService } from '../../../Services/category.service';
 import { Category } from '../../../core/models/category.model';
+import { WishlistService } from '../../../Services/wishlist.service';
 
 @Component({
   selector: 'app-product-list',
@@ -85,6 +86,7 @@ getAllCategories() {
   constructor(private productService: ProductService
     , private cartService: CartService,
     private categoryService: CategoryService,
+    private wishlistService:WishlistService
   ){}
 
   ngOnInit(): void {
@@ -103,6 +105,8 @@ getAllCategories() {
       this.brands = [...new Set(data.map(p => p.brand))].filter(b => b);
     });
   }
+
+
 
   filterByCategory(category: string): void {
     this.filteredProducts = category ? 
@@ -149,6 +153,7 @@ addToWishlist(product: Product): void {
     this.showToast(product, 'removed from wishlist');
   } else {
     this.wishlistItems.push(product);
+    this.wishlistService.addToWishList(product.id) ;
     this.showToast(product, 'added to wishlist');
   }
 }
