@@ -4,30 +4,47 @@
 >
   <div class="container">
     <div class="position-absolute top-50 translate-middle-y z-1">
-      <h1 class="mainColor text-capitalize fw-bold my-4">
+      <h1
+        class="mainColor text-capitalize fw-bold my-4 animate__animated animate__fadeInUp"
+      >
         shopping and <br />
         department store.
       </h1>
-      <p class="fs-4 my-4">
+      <p class="fs-4 my-4 animate__animated animate__fadeInUp">
         Shopping is a bit of a relaxing hobby for me, which<br />
         is sometimes troubling for the bank balance.
       </p>
-      <a class="btn mainBg text-white rounded-pill px-4 py-2 fs-5" href=""
+      <a
+        class="btn mainBg text-white rounded-pill px-4 py-2 fs-5 animate__animated animate__fadeInUp"
+        href=""
         >Learn More</a
       >
+    </div>
+    <div class="position-absolute z-0 top-0 end-0 d-none d-lg-block">
+      <div class="position-relative overflow-hidden">
+        <img class="w-100" src="/assets/imgs/stages.png" alt="" />
+        <img
+          class="position-absolute elecs-img animate__animated animate__fadeInUp"
+          src="/assets/imgs/elecs.png"
+          alt=""
+        />
+      </div>
     </div>
   </div>
 </section>
 <section id="catgerories" class="py-5">
   <div class="container">
-    <h3 class="mb-4">Shop our top categories</h3>
+    <h3 class="mb-5 fw-bold text-capitalize">Shop our top categories</h3>
     <div class="row gy-4">
-      @for (category of categories; track $index) {
+      @if(isLoading){
+      <app-loader></app-loader>
+      } @for (category of categories; track $index) {
       <div class="col-6 col-md-4 col-lg-2">
         <div
           class="categoryCard rounded-4 position-relative overflow-hidden shadow-sm"
+          data-aos="fade-up"
         >
-          <a routerLink="/Category-details/{{ category.id }}">
+          <a routerLink="/category-details/{{ category.id }}">
             <img
               height="200"
               class="w-100 rounded-4 categoryImg"
@@ -44,4 +61,7 @@
       }
     </div>
   </div>
+</section>
+<section id="logos">
+  <app-logo-slider></app-logo-slider>
 </section>

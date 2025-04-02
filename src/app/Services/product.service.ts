@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 import { Product } from '../core/models/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  private productApiUrl = `${environment.apiUrl}/Product`;
+  private productApiUrl = `${environment.apiUrl}/product`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getAllProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.productApiUrl}`);
   }
@@ -22,5 +22,10 @@ export class ProductService {
 
   createProduct(productData: FormData): Observable<Product> {
     return this.http.post<Product>(`${this.productApiUrl}`, productData);
+  }
+
+  //get product by subcategory id
+  getProductsBySubCategoryId(id: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.productApiUrl}/subcategory/${id}`);
   }
 }

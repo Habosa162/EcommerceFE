@@ -16,3 +16,8 @@ h1 {
 .categoryImg:hover {
   transform: scale(1.2);
 }
+
+.elecs-img {
+  top: 50%;
+  left: 70%;
+}

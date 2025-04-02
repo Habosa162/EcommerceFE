@@ -514,6 +514,7 @@ export class ProductService {
       ))
     );
   }
+  
 
   getProductsByPriceRange(min: number, max: number): Observable<Product[]> {
     return this.getProducts().pipe(

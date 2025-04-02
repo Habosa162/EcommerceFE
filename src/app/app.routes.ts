@@ -20,7 +20,6 @@ import { RoleGuard } from './guards/role.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 
-
 export const routes: Routes = [
   // 🌟 Customer Routes
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,16 +27,60 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'products', component: ProductListComponent, title: 'Products' },
-  { path: 'products/:id', component: ProductDetailsComponent, title: 'Product Details' },
+
+  {
+    path: 'products/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+  },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-  { path: 'payment-success', component: PaymentSuccessComponent, canActivate: [AuthGuard] },
-  { path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard] },
-  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-history',
+    component: OrderHistoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-details/:id',
+    component: OrderDetailsComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'category-details/:id', component: CategoryDetailsComponent },
   { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
 
-  
+  {
+    path: 'products/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+  },
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-history',
+    component: OrderHistoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-details/:id',
+    component: OrderDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'category-details/:id',
+    component: CategoryDetailsComponent,
+    title: 'Category Details',
+  },
+
   {
     path: 'admin',
     component: AdminLayoutComponent,
@@ -48,14 +91,15 @@ export const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'orders', component: AdminOrdersComponent },
       { path: 'createproduct', component: CreateproductComponent },
-    ]
+    ],
   },
 
   { path: '**', component: NotFoundComponent },
-  // go to from category to product 
 
-  // { 
-  //   path: 'products', 
+  // go to from category to product
+
+  // {
+  //   path: 'products',
   //   component: ProductListComponent,
   //   children: [
   //     { path: '', component: ProductListComponent }, // Base route (all products)

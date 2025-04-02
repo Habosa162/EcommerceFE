@@ -1,19 +1,24 @@
+import { ProductService } from '../../../Services/product.service';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-category-details',
-  imports: [],
+  imports: [RouterModule, CommonModule],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css',
 })
 export class CategoryDetailsComponent implements OnInit {
   categoryData: any;
+  productData: Product[] = [];
   categoryId: string | null = null;
   constructor(
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private ProductService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -28,9 +33,23 @@ export class CategoryDetailsComponent implements OnInit {
       (data) => {
         this.categoryData = data;
         console.log(this.categoryData);
+        if (this.categoryData?.subCategories?.length > 0) {
+          this.getSubCategoryProducts(this.categoryData.subCategories[0].id);
+        }
       },
       (error) => {
         console.error('Error fetching category data', error);
+      }
+    );
+  }
+  getSubCategoryProducts(id: number) {
+    this.ProductService.getProductsBySubCategoryId(id).subscribe(
+      (data) => {
+        this.productData = data;
+        console.log('Products:', this.productData);
+      },
+      (error) => {
+        console.error('Error fetching products', error);
       }
     );
   }

@@ -5,28 +5,55 @@
       src="{{ categoryData.imgUrl }}"
       alt=""
     />
-    <h1 class="position-absolute top-50 start-50 translate-middle">
-      {{ categoryData.name }}
-    </h1>
+
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <h1 class="text-white text-center fw-bold">
+        {{ categoryData.name }}
+      </h1>
+      <p class="text-center">
+        <a class="link-style-none" routerLink="/">Home</a>
+        <span class="text-white"> / {{ categoryData.name }}</span>
+      </p>
+    </div>
   </div>
   <div class="container">
     <div class="subcates my-5">
-      <div class="row">
-        @for (subcategory of categoryData.subCategories; track $index) {
-        <div class="col-4 col-md-3 col-lg-2">
-          <div class="text-center">
+      <!-- SUBCATEGORIES -->
+      <ul
+        class="nav nav-tabs border-0 justify-content-center"
+        id="myTab"
+        role="tablist"
+      >
+        <li
+          *ngFor="
+            let SubCategory of categoryData.subCategories;
+            let isFirst = first
+          "
+          class="nav-item border-0"
+          role="presentation"
+        >
+          <button
+            class="btn border-0"
+            (click)="getSubCategoryProducts(SubCategory.id)"
+          >
             <img
+              class="nav-link p-0 rounded-circle subCategory"
+              [ngClass]="{ active: isFirst }"
+              id="home-tab"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
               width="100"
               height="100"
-              class="mx-auto rounded-circle subCategory"
-              src="{{ subcategory.imgUrl }}"
+              [src]="SubCategory.imgUrl"
               alt=""
             />
-            <p>{{ subcategory.name }}</p>
-          </div>
-        </div>
-        }
-      </div>
+            <p>{{ SubCategory.name }}</p>
+          </button>
+        </li>
+      </ul>
     </div>
+
+    <!-- card -->
   </div>
 </section>
