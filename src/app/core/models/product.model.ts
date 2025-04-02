@@ -20,7 +20,9 @@ export interface Product {
   priceRange: string;
   stockQuantity: number;
   reviews?: Review[];
-}export interface ProductDto {
+};
+
+export interface ProductDto {
   Id: number;
   Name: string;
   Description: string;

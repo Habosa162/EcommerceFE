@@ -18,22 +18,24 @@ import { CreateproductComponent } from './features/admin/createproduct/createpro
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { WishlistComponent } from './features/wishlist/wishlist.component';
 
 
 export const routes: Routes = [
   // 🌟 Customer Routes
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, 
-  { path: 'home', component: HomeComponent }, 
-  { path: 'login', component: LoginComponent }, 
-  { path: 'register', component: RegisterComponent }, 
-  { path: 'products', component: ProductListComponent, title: 'Products' }, 
-  { path: 'products/:id', component: ProductDetailsComponent, title: 'Product Details' }, 
-  { path: 'cart', component: CartComponent }, 
-  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] }, 
-  { path: 'payment-success', component: PaymentSuccessComponent, canActivate: [AuthGuard] }, 
-  { path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard] }, 
-  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [AuthGuard] }, 
-  { path: 'category-details/:id', component: CategoryDetailsComponent }, 
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'products', component: ProductListComponent, title: 'Products' },
+  { path: 'products/:id', component: ProductDetailsComponent, title: 'Product Details' },
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'payment-success', component: PaymentSuccessComponent, canActivate: [AuthGuard] },
+  { path: 'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard] },
+  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'category-details/:id', component: CategoryDetailsComponent },
+  { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
 
   
   {
@@ -49,5 +51,5 @@ export const routes: Routes = [
     ]
   },
 
-  { path: '**', component: NotFoundComponent }, 
+  { path: '**', component: NotFoundComponent },
 ];
