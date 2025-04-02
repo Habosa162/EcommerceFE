@@ -1,40 +1,37 @@
 <div class="container">
-  <div class="row" >
-
-
-    <!-- <div class="col-md-4 p-5" *ngFor="let product in products"> -->
-      <div class="col-md-4 p-5" *ngFor="let product in TEST_PRODUCTS">
-      <div class="card h-100">
+  <div class="row">
+    <div class="col-md-4 p-5" *ngFor="let item of wishList">
+      <div class="card h-100" *ngIf="item.product">
         <!-- Discount Badge -->
-        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" *ngIf="(product?.discountAmount ?? 0) > 0">
-          {{ (product?.discountAmount ?? 0) }}% OFF
+        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" *ngIf="(item.product?.discountAmount ?? 0) > 0">
+          {{ (item.product?.discountAmount ?? 0) }}% OFF
         </div>
-        <img class="card-img-top p-3" [src]="product.imageUrl" [alt]="product.name" style="height: 200px; object-fit: contain;">
+        <img class="card-img-top p-3" [src]="item.product.imgUrl" [alt]="item.product.name" style="height: 200px; object-fit: contain;">
         <div class="card-body">
-          <div class="text-muted small mb-1">{{ product.category }}</div>
-          <h5 class="card-title">{{ product.name }}</h5>
+          <div class="text-muted small mb-1">Category: {{ item.product.subCategory?.name ?? 'N/A' }}</div>
+          <h5 class="card-title">{{ item.product.name }}</h5>
           <div class="mb-2">
             <!-- Display Rating Stars -->
-            <span *ngFor="let star of getStars(product?.avgRate ?? 0)" class="text-warning">★</span>
-            <span class="small text-muted">({{ product?.reviewCount ?? 0 }} Reviews)</span>
+            <span *ngFor="let star of getStars(item.product?.avgRate ?? 0)" class="text-warning">★</span>
+            <span class="small text-muted">(0 Reviews)</span>
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <span class="text-danger fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
-              <span class="text-decoration-line-through text-muted small ms-2" *ngIf="product.discountAmount > 0">
-                ${{ product.price | number:'1.2-2' }}
+              <span class="text-danger fw-bold">${{ item.product.finalPrice | number:'1.2-2' }}</span>
+              <span class="text-decoration-line-through text-muted small ms-2" *ngIf="item.product.discountAmount > 0">
+                ${{ item.product.price | number:'1.2-2' }}
               </span>
             </div>
-            <span class="badge bg-success" *ngIf="product.stock > 0">
-              In Stock {{ product.stock }}
+            <span class="badge bg-success" *ngIf="item.product.stock > 0">
+              In Stock ({{ item.product.stock }})
             </span>
-            <span class="badge bg-danger" *ngIf="product.stock <= 0">
+            <span class="badge bg-danger" *ngIf="item.product.stock <= 0">
               Out of Stock
             </span>
           </div>
         </div>
         <div class="card-footer bg-white border-top-0">
-          <button class="btn btn-primary w-100" (click)="addToCart(product)" [disabled]="product.stock <= 0">
+          <button class="btn btn-primary w-100" (click)="addToCart(item.product)" [disabled]="item.product.stock <= 0">
             Add to Cart
           </button>
         </div>

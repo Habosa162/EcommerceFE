@@ -22,22 +22,22 @@ export interface Product {
   reviews?: Review[];
 };
 
-export interface ProductDto {
-  Id: number;
-  Name: string;
-  Description: string;
-  Price: number;
-  SubCategoryId: number;
-  SubCategoryName: string;
-  ImageUrl: string;
-  Stock: number;
-  AvgRate: number;
-  Brand: string;
-  DiscountAmount: number;
-  IsAccepted: boolean;
-  IsDeleted: boolean;
-  color: string;
-  finalPrice: number;
+export interface IProduct {
+  id: number,
+  name: string,
+  color: string,
+  description:string,
+  price: number,
+  imgUrl: string,
+  stock: number,
+  avgRate: number,
+  subCategoryId: number,
+  brand: string,
+  discountAmount: number,
+  finalPrice: number,
+  isAccepted: boolean,
+  isDeleted: boolean,
+  subCategory: any
 }
 
 export interface Review {
