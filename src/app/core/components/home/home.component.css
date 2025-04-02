@@ -21,3 +21,7 @@ h1 {
   top: 50%;
   left: 70%;
 }
+
+.stages img:not(:first-child) {
+  filter: drop-shadow(0px 7px 6px black);
+}

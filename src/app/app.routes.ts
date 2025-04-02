@@ -18,6 +18,7 @@ import { CreateproductComponent } from './features/admin/createproduct/createpro
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 
 export const routes: Routes = [
