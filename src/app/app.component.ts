@@ -13,14 +13,14 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [CustomerLayoutComponent, RouterModule, AdminLayoutComponent ,CommonModule],
+  imports: [CustomerLayoutComponent, RouterModule, AdminLayoutComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'EcommerceFE';
 
-  constructor(private authService : AuthService ){}
+  constructor(private authService: AuthService) { }
 
   get userRole(): string {
     return this.authService.getUserRole() || 'Customer';
@@ -28,6 +28,7 @@ export class AppComponent {
   isAdmin(): boolean {
     return this.userRole === 'Admin';
   }
+
   isCustomer(): boolean {
     return this.userRole === 'Customer';
   }

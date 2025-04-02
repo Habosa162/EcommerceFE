@@ -18,6 +18,11 @@ import { CreateproductComponent } from './features/admin/createproduct/createpro
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+<<<<<<< Updated upstream
+=======
+import { WishlistComponent } from './features/wishlist/wishlist.component';
+import { AdminUserComponent } from './features/admin/admin-user/admin-user.component';
+>>>>>>> Stashed changes
 
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 
@@ -54,6 +59,7 @@ export const routes: Routes = [
   { path: 'category-details/:id', component: CategoryDetailsComponent },
   { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
 
+<<<<<<< Updated upstream
   {
     path: 'products/:id',
     component: ProductDetailsComponent,
@@ -81,6 +87,8 @@ export const routes: Routes = [
     component: CategoryDetailsComponent,
     title: 'Category Details',
   },
+=======
+>>>>>>> Stashed changes
 
   {
     path: 'admin',
@@ -92,6 +100,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'products', component: AdminProductsComponent },
       { path: 'orders', component: AdminOrdersComponent },
+      { path: 'users', component: AdminUserComponent },
       { path: 'createproduct', component: CreateproductComponent },
     ],
   },

@@ -1,0 +1,73 @@
+<div class="admin-users-container">
+    <h2>Manage Users</h2>
+
+    <!-- Button to open modal for adding a new user -->
+    <button class="btn btn-primary mb-4" (click)="openAddUserModal()">Add New User</button>
+
+    <!-- User List Cards -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let user of users">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="profile-img-container mb-3">
+                        <img *ngIf="user.profileImage" [src]="user.profileImage" alt="Profile Image"
+                            class="img-fluid rounded-circle" />
+                    </div>
+                    <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
+                    <p class="card-text">{{ user.email }}</p>
+                    <p class="card-text"><strong>Status:</strong> {{ user.isActive ? 'Active' : 'Inactive' }}</p>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-info me-2" (click)="openEditUserModal(user)">Edit</button>
+                        <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding a new user -->
+    <!-- Modal for adding/editing a user -->
+    <div *ngIf="showModal" class="modal fade show" tabindex="-1" style="display: block;"
+        aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">{{ isEditing ? 'Edit User' : 'Add New User' }}</h5>
+                    <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="isEditing ? updateUser() : addUser()">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" [(ngModel)]="newUser.firstName" name="firstName"
+                                class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" [(ngModel)]="newUser.lastName" name="lastName"
+                                class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" [(ngModel)]="newUser.email" name="email" class="form-control"
+                                required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileImage" class="form-label">Profile Image URL</label>
+                            <input type="text" id="profileImage" [(ngModel)]="newUser.profileImage" name="profileImage"
+                                class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthDate" class="form-label">Birth Date</label>
+                            <input type="date" id="birthDate" [(ngModel)]="newUser.birthDate" name="birthDate"
+                                class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-success">{{ isEditing ? 'Update User' : 'Add User'
+                            }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
