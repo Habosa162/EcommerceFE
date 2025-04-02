@@ -19,14 +19,8 @@ import { Category } from '../../../core/models/category.model';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
- // categories: string[] = [];
   viewMode: 'grid' | 'list' = 'grid';
   searchQuery: string = '';
-  // brands: string[] = ['Apple', 'Samsung', 'Sony', 'Canon', 'HP', 'LG'];
-  // priceRanges: string[] = ['Under $100', '$100 - $200', '$200 - $300'];
-  // selectedCategories: string[] = [];
-  // selectedBrands: string[] = [];
-  // selectedPriceRange: string = '';
 // Add these properties to your component
 selectedCategories: string[] = [];
 selectedBrands: string[] = [];
@@ -83,7 +77,7 @@ priceFilter(price: number): boolean {
 }
 getAllCategories() {
   this.categoryService.getCategories().subscribe((categories: Category[]) => {
-    this.categories = categories.map(c => c.name); // Assuming Category has a 'name' property
+    this.categories = categories.map(c => c.name);
   });
 }
 
@@ -94,9 +88,13 @@ getAllCategories() {
   ){}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
+    this.productService.getProducts().subscribe((data) => { 
+  
       this.products = data;
+
       this.filteredProducts = data;
+
+      this.getAllCategories() ; 
       
       // Extract unique categories from products
       this.categories = [...new Set(data.map(p => p.category))].filter(c => c);

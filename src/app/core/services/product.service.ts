@@ -456,18 +456,21 @@ import { environment } from '../../Services/enviroment';
 })
 export class ProductService {
   private baseUrl = environment.apiUrl;
-  private productsUrl = `${this.baseUrl}/products`;
+  private productsUrl = `${this.baseUrl}/product`;
   private categoriesUrl = `${this.baseUrl}/categories`;
   private reviewsUrl = `${this.baseUrl}/reviews`;
 
   constructor(private http: HttpClient) { }
 
   // ==================== CORE METHODS ====================
+  // getProducts(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.productsUrl).pipe(
+  //     map(products => products.map(this.mapToProductModel)),
+  //     catchError(this.handleError<any[]>('getProducts', []))
+  //   );
+  // }
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl).pipe(
-      map(products => products.map(this.mapToProductModel)),
-      catchError(this.handleError<Product[]>('getProducts', []))
-    );
+    return this.http.get<Product[]>(this.productsUrl);
   }
 
   getProductById(id: number): Observable<Product | undefined> {
