@@ -21,7 +21,10 @@
                       <h6 class="card-title">{{ related.name }}</h6>
                       <div class="d-flex justify-content-between align-items-center">
                         <span class="text-danger fw-bold">${{ related.finalPrice | number:'1.2-2' }}</span>
-                        <button class="btn btn-sm btn-outline-primary">View</button>
+                        <button [routerLink]="['/products', related.id]" class="btn btn-sm btn-outline-success">
+                          View
+                        </button>
+
                       </div>
                     </div>
                   </div>
@@ -63,21 +66,29 @@
               </div>
 
               <!-- Action Buttons -->
-              <div class="d-flex gap-3 mb-4">
-                <!-- Add to Cart Button -->
-                <button class="btn btn-primary btn-lg flex-grow-1 py-3 fw-bold"
-                        (click)="addToCart(product)">
-                  <i class="bi bi-cart-plus me-2"></i> Add to Cart
-                </button>
-                
-                <!-- Wishlist Button -->
-                <button class="btn btn-outline-secondary btn-lg px-3"
-                        (click)="addToWishlist(product)"
-                        [ngClass]="{'text-danger': isInWishlist(product)}"
-                        [title]="isInWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'">
-                  <i class="bi fs-4" [class.bi-heart]="!isInWishlist(product)" [class.bi-heart-fill]="isInWishlist(product)"></i>
-                </button>
-              </div>
+<div class="d-flex gap-3 mb-4">
+  <!-- Updated Add to Cart Button -->
+  <button class="btn flex-grow-1 py-3 fw-bold"
+          (click)="addToCart(product)"
+          [disabled]="product.stock <= 0"
+          [ngClass]="{
+            'btn-outline-success': !isInCart(product),
+            'btn-outline-danger': isInCart(product)
+          }">
+    <i class="bi me-2" 
+       [class.bi-cart-plus]="!isInCart(product)" 
+       [class.bi-cart-dash]="isInCart(product)"></i>
+    {{ isInCart(product) ? 'Remove from Cart' : (product.stock > 0 ? 'Add to Cart' : 'Out of Stock') }}
+  </button>
+  
+  <!-- Wishlist Button -->
+  <button class="btn btn-outline-success btn-lg px-3"
+          (click)="addToWishlist(product)"
+          [ngClass]="{'text-danger': isInWishlist(product)}"
+          [title]="isInWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'">
+    <i class="bi fs-4" [class.bi-heart]="!isInWishlist(product)" [class.bi-heart-fill]="isInWishlist(product)"></i>
+  </button>
+</div>
 
               <!-- Product Characteristics -->
               <div class="product-characteristics mb-4">

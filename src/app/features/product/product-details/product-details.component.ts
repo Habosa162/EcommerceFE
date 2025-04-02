@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
-import { Product, Review } from '../../../core/models/product.model';
+import {IProduct, Product, Review } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../Services/cart.service';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
@@ -26,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
     // userName: 'Anonymous' 
   };
   wishlistItems: Product[] = [];
+  cartItems = signal<any[]>([]); // Signal to track cart items
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +35,27 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.loadProductDetails(+productId);
-      this.loadRelatedProducts(+productId);
-      this.loadBrands();
-    }
+    this.route.paramMap.subscribe(params => {
+      const productId = +params.get('id')!;
+      if (productId) {
+        this.loadProductDetails(productId);
+        this.loadRelatedProducts(productId);
+        this.loadBrands();
+        this.loadCartItems(); // Load cart items on init
+      }
+    });
   }
+
+   // Load cart items from service
+   private loadCartItems(): void {
+    this.cartItems.set(this.cartService.getCart());
+  }
+
+  // Check if product is in cart
+  isInCart(product: Product): boolean {
+    return this.cartItems().some(item => item.id === product.id);
+  }
+  
 
   private loadProductDetails(productId: number): void {
     this.productService.getProductById(productId).subscribe({
@@ -151,13 +166,45 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-  // Cart functionality
+  // // Cart functionality
+  // addToCart(product: Product): void {
+  //   if (product.stock && product.stock > 0) {
+  //     this.cartService.addToCart(product, 1);
+  //   }
+  // }
+  
+  // Updated addToCart method to handle both add and remove
   addToCart(product: Product): void {
-    if (product.stock && product.stock > 0) {
-      this.cartService.addToCart(product, 1);
-    }
-  }
+    const cartProduct: any = {
+      id: product.id,
+      name: product.name,
+      imgUrl: product.imageUrl,
+      color: product.color,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      avgRate: product.avgRate,
+      subCategoryId: product.subCategoryId,
+      brand: product.brand,
+      discountAmount: product.discountAmount,
+      finalPrice: product.finalPrice || product.price,
+      isAccepted: product.isAccepted,
+      isDeleted: product.isDeleted,
+      subCategory: product.subCategoryName
+    };
 
+    if (this.isInCart(product)) {
+      // Remove from cart
+      this.cartService.updateQuantity(product.id, -1); // Decrease quantity by 1
+    } else {
+      // Add to cart
+      this.cartService.addToCart(cartProduct, 1);
+    }
+    
+    // Refresh cart items
+    this.loadCartItems();
+  }
+  
   // Rating helper
   getStars(rating: number): number[] {
     return Array(5).fill(0).map((_, i) => i + 1);

@@ -3,12 +3,13 @@ import { ProductService } from '../../../core/services/product.service';
 import { IProduct, Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CartService } from '../../../Services/cart.service';
 import { ProductService as ps } from '../../../Services/product.service';
 import { CategoryService } from '../../../Services/category.service';
 import { Category } from '../../../core/models/category.model';
 import { WishlistService } from '../../../Services/wishlist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -18,28 +19,35 @@ import { WishlistService } from '../../../Services/wishlist.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
-  viewMode: 'grid' | 'list' = 'grid';
-  searchQuery: string = '';
-// Add these properties to your component
+products: Product[] = [];
+filteredProducts: Product[] = [];
+viewMode: 'grid' | 'list' = 'grid';
+searchQuery: string = '';
 selectedCategories: string[] = [];
 selectedBrands: string[] = [];
 selectedPriceRange: string = '';
-priceRanges: string[] = ['Under $100', '$100 - $200', '$200 - $300'];
-// brands: string[] = ['Hi-Tech Limited', 'hp limited', 'The Apple Limited', 'A4 Tech',
-//                    'The Hitachi Limited', 'Huawei Company', 'KEA Limited', 'Sony Limited'];
-// categories: Category[]=[];
-categories: string[] = []; // Change from Category[] to string[]
-brands: string[] = []; // Remove hardcoded brands
+priceRanges: string[] = [
+  'Under $100',
+  '$100 - $200', 
+  '$200 - $300',
+  '$300 - $500',
+  'Over $500'
+];
+categories: string[] = []; 
+brands: string[] = []; 
 
 
 // Update your filter methods to work with strings
 toggleCategoryFilter(category: string, event: any) {
-  if (event.target.checked) {
-    this.selectedCategories.push(category);
+  if (event) {
+    if (event.target.checked) {
+      this.selectedCategories.push(category);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+    }
   } else {
-    this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+    // For programmatic selection (from query params)
+    this.selectedCategories = [category];
   }
   this.applyFilters();
 }
@@ -70,11 +78,22 @@ applyFilters() {
 }
 
 priceFilter(price: number): boolean {
-    if (!this.selectedPriceRange) return true;
-    if (this.selectedPriceRange === 'Under $100') return price < 100;
-    if (this.selectedPriceRange === '$100 - $200') return price >= 100 && price <= 200;
-    if (this.selectedPriceRange === '$200 - $300') return price >= 200 && price <= 300;
-    return true;
+  if (!this.selectedPriceRange) return true;
+  
+  switch(this.selectedPriceRange) {
+    case 'Under $100': 
+      return price < 100;
+    case '$100 - $200':
+      return price >= 100 && price <= 200;
+    case '$200 - $300':
+      return price >= 200 && price <= 300;
+    case '$300 - $500':
+      return price >= 300 && price <= 500;
+    case 'Over $500':
+      return price > 500;
+    default:
+      return true;
+  }
 }
 getAllCategories() {
   this.categoryService.getCategories().subscribe((categories: Category[]) => {
@@ -83,28 +102,33 @@ getAllCategories() {
 }
 
 
-  constructor(private productService: ProductService
-    , private cartService: CartService,
-    private categoryService: CategoryService,
-    private wishlistService:WishlistService
-  ){}
-
-  ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => { 
+constructor(
+  private productService: ProductService,
+  private cartService: CartService,
+  private categoryService: CategoryService,
+  private wishlistService: WishlistService,
+  private route: ActivatedRoute // Add this for category in nave par 
+) {}
   
-      this.products = data;
 
-      this.filteredProducts = data;
+ngOnInit(): void {
+  this.productService.getProducts().subscribe((data) => { 
+    this.products = data;
+    this.filteredProducts = data;
+    this.getAllCategories();
+    this.categories = [...new Set(data.map(p => p.category))].filter(c => c);
+    this.brands = [...new Set(data.map(p => p.brand))].filter(b => b);
 
-      this.getAllCategories() ; 
-      
-      // Extract unique categories from products
-      this.categories = [...new Set(data.map(p => p.category))].filter(c => c);
-      
-      // Extract unique brands from products
-      this.brands = [...new Set(data.map(p => p.brand))].filter(b => b);
+    // Check for category query parameter
+    this.route.queryParams.subscribe(params => {
+      if (params['category']) {
+        const category = params['category'];
+        this.selectedCategories = [category];
+        this.applyFilters();
+      }
     });
-  }
+  });
+}
 
 
 
@@ -157,6 +181,7 @@ addToWishlist(product: Product): void {
     this.showToast(product, 'added to wishlist');
   }
 }
+
 
 addToCart(product: Product): void {
 // convert product to IProduct here then send IProduct to addToCart 
@@ -265,14 +290,16 @@ clearPriceFilter(): void {
   this.applyFilters();
 }
 
+// In product-list.component.ts
 clearAllFilters(): void {
   this.selectedCategories = [];
   this.selectedBrands = [];
   this.selectedPriceRange = '';
   this.searchQuery = '';
   this.applyFilters();
-  // Reset any checkboxes in the UI
-  this.filteredProducts = [...this.products];
+  
+  // Optionally navigate without query params
+  //this.router.navigate(['/products']);
 }
 
 // In your component class

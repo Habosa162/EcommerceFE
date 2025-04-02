@@ -37,7 +37,8 @@ export interface IProduct {
   finalPrice: number,
   isAccepted: boolean,
   isDeleted: boolean,
-  subCategory: any
+  subCategory: any,
+  
 }
 
 export interface Review {

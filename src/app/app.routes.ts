@@ -52,4 +52,14 @@ export const routes: Routes = [
   },
 
   { path: '**', component: NotFoundComponent },
+  // go to from category to product 
+
+  // { 
+  //   path: 'products', 
+  //   component: ProductListComponent,
+  //   children: [
+  //     { path: '', component: ProductListComponent }, // Base route (all products)
+  //     { path: 'category/:categoryName', component: ProductListComponent } // Category filter
+  //   ]
+  // },
 ];

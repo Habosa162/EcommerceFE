@@ -473,13 +473,18 @@ export class ProductService {
     return this.http.get<Product[]>(this.productsUrl);
   }
 
-  getProductById(id: number): Observable<Product | undefined> {
+  // getProductById(id: number): Observable<Product | undefined> {
+  //   return this.http.get<Product>(`${this.productsUrl}/${id}`).pipe(
+  //     map(this.mapToProductModel),
+  //     catchError(this.handleError<Product | undefined>('getProductById', undefined))
+  //   );
+  // }
+  getProductById(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.productsUrl}/${id}`).pipe(
-      map(this.mapToProductModel),
-      catchError(this.handleError<Product | undefined>('getProductById', undefined))
+      catchError(this.handleError<Product>('getProductById'))
     );
   }
-
+  
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>(this.categoriesUrl).pipe(
       catchError(this.handleError<string[]>('getCategories', []))
@@ -617,7 +622,8 @@ export class ProductService {
     if (price < 100) return 'Under $100';
     if (price <= 200) return '$100 - $200';
     if (price <= 300) return '$200 - $300';
-    return 'Above $300';
+    if (price <= 500) return '$300 - $500';
+    return 'Over $500';
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

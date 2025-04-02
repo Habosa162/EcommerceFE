@@ -40,16 +40,13 @@
               <!-- Loop through categories -->
               <div *ngFor="let category of categories" class="dropdown-item-container w-100">
                 <!-- Category with image and name -->
-                <a class="dropdown-item catdropdown rounded-1 w-100" href="\products\{{ category.id }}">
-                  <img
-                    class="rounded-1"
-                    width="50px"
-                    height="50px"
-                    [src]="category.imgUrl"
-                    alt="{{ category.name }}"
-                  />
-                  {{ category.name }}
-                </a>
+                <a class="dropdown-item catdropdown rounded-1 w-100" 
+                [routerLink]="['/products']" 
+                [queryParams]="{category: category.name}">
+               <img [src]="category.imgUrl" [alt]="category.name" 
+                    width="50" height="50" class="rounded-1">
+               {{ category.name }}
+             </a>
               </div>
             </div>
           </li>
