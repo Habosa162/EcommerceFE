@@ -3,7 +3,6 @@ import { AuthService } from '../../../Services/auth.service';
 import { OrderService } from '../../../Services/order.service';
 import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
-import { AdminLayoutComponent } from "../../../layouts/admin-layout/admin-layout.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 

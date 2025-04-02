@@ -20,6 +20,22 @@ export interface Product {
   priceRange: string;
   stockQuantity: number;
   reviews?: Review[];
+}export interface ProductDto {
+  Id: number;
+  Name: string;
+  Description: string;
+  Price: number;
+  SubCategoryId: number;
+  SubCategoryName: string;
+  ImageUrl: string;
+  Stock: number;
+  AvgRate: number;
+  Brand: string;
+  DiscountAmount: number;
+  IsAccepted: boolean;
+  IsDeleted: boolean;
+  color: string;
+  finalPrice: number;
 }
 
 export interface Review {
