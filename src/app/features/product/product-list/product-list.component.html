@@ -27,8 +27,8 @@
           <div class="list-group list-group-flush">
             <div *ngFor="let category of categories" class="list-group-item list-group-item-action p-1">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" 
-                       [id]="'cat-'+category" 
+                <input class="form-check-input" type="checkbox"
+                       [id]="'cat-'+category"
                        [checked]="selectedCategories.includes(category)"
                        (change)="toggleCategoryFilter(category, $event)">
                 <label class="form-check-label" [for]="'cat-'+category">
@@ -45,12 +45,12 @@
         <div class="card-header bg-white py-2">
           <h6 class="mb-0 fw-bold">Brands</h6>
         </div>
-        <div class="card-body p-2">f
+        <div class="card-body p-2">
           <div class="list-group list-group-flush">
             <div *ngFor="let brand of brands" class="list-group-item list-group-item-action p-1">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" 
-                       [id]="'brand-'+brand" 
+                <input class="form-check-input" type="checkbox"
+                       [id]="'brand-'+brand"
                        [checked]="selectedBrands.includes(brand)"
                        (change)="toggleBrandFilter(brand, $event)">
                 <label class="form-check-label" [for]="'brand-'+brand">
@@ -71,9 +71,9 @@
           <div class="list-group list-group-flush">
             <div *ngFor="let range of priceRanges" class="list-group-item list-group-item-action p-1">
               <div class="form-check">
-                <input class="form-check-input" type="radio" 
-                       name="priceRange" 
-                       [id]="'price-'+range" 
+                <input class="form-check-input" type="radio"
+                       name="priceRange"
+                       [id]="'price-'+range"
                        [checked]="selectedPriceRange === range"
                        (change)="filterByPrice(range)">
                 <label class="form-check-label" [for]="'price-'+range">
@@ -102,9 +102,9 @@
           <div class="row g-2 align-items-center">
             <div class="col-md-6">
               <div class="input-group">
-                <input type="text" class="form-control form-control-sm" 
-                       [(ngModel)]="searchQuery" 
-                       placeholder="Search products..." 
+                <input type="text" class="form-control form-control-sm"
+                       [(ngModel)]="searchQuery"
+                       placeholder="Search products..."
                        (keyup.enter)="searchProducts()">
                 <button class="btn btn-primary btn-sm" (click)="searchProducts()">
                   <i class="bi bi-search"></i>
@@ -134,30 +134,30 @@
         <div *ngFor="let product of filteredProducts" class="col-6 col-md-4 col-lg-3">
           <div class="card h-100 product-card">
             <!-- Discount Badge -->
-            <div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem" 
+            <div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem"
                  *ngIf="product.discountAmount > 0">
               {{ product.discountAmount }}% OFF
             </div>
-            
+
             <!-- Product Image -->
             <div class="position-relative" style="height: 180px; overflow: hidden;">
   <a [routerLink]="['/products', product.id]" class="d-block h-100">
-    <img class="img-fluid p-3" 
-         [src]="product.imageUrl" 
+    <img class="img-fluid p-3"
+         [src]="product.imageUrl"
          [alt]="product.name"
          style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;">
   </a>
-  
+
   <!-- Centered Action Buttons -->
   <div class="product-actions position-absolute top-50 start-50 translate-middle d-flex gap-3">
-    <button class="btn btn-sm btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center" 
+    <button class="btn btn-sm btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
             (click)="addToWishlist(product); $event.stopPropagation()"
             [disabled]="product.stock <= 0"
             [ngClass]="{'text-danger': isInWishlist(product)}"
             style="width: 40px; height: 40px;">
       <i class="bi fs-5" [class.bi-heart]="!isInWishlist(product)" [class.bi-heart-fill]="isInWishlist(product)"></i>
     </button>
-    
+
     <button class="btn btn-sm btn-primary rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
             (click)="addToCart(product); $event.stopPropagation()"
             [disabled]="product.stock <= 0"
@@ -166,28 +166,28 @@
     </button>
   </div>
 </div>
-            
+
 
             <!-- Product Info -->
             <div class="card-body p-2">
               <div class="text-muted small mb-1 text-truncate">{{ product.category }}</div>
               <h6 class="card-title mb-1 text-truncate">{{ product.name }}</h6>
-              
+
               <div class="mb-2">
                 <span *ngFor="let star of getStars(product.avgRate || 0)" class="text-warning">★</span>
                 <span class="small text-muted">({{ product.reviewCount || 0 }})</span>
               </div>
-              
+
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <span class="text-dark fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
-                  <span class="text-decoration-line-through text-muted small ms-1" 
+                  <span class="text-decoration-line-through text-muted small ms-1"
                         *ngIf="product.discountAmount > 0">
                     ${{ product.price | number:'1.2-2' }}
                   </span>
                 </div>
-                
-                <span class="badge bg-opacity-10" 
+
+                <span class="badge bg-opacity-10"
                       [ngClass]="{'bg-success': product.stock > 0, 'bg-danger': product.stock <= 0}">
                   {{ product.stock > 0 ? product.stock : 'Out' }}
                 </span>
