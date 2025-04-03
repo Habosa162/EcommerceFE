@@ -10,8 +10,8 @@
 /* Card spacing*/
 /* .card {
   margin: 0.75rem 0;
-  border: 1px solid #eee; Optional: subtle border 
-}  
+  border: 1px solid #eee; Optional: subtle border
+}
 */
 /* Card body padding */
 .card-body {
@@ -211,6 +211,7 @@
 .badge {
   font-size: 0.8rem;
   font-weight: 500;
+  z-index: 10;
 }
 
 /* Rating Stars */
@@ -275,11 +276,11 @@
   .col-md-4 {
     margin-bottom: 1.5rem;
   }
-  
+
   .card-img-top {
     height: 150px;
   }
-  
+
   .card-body {
     padding: 1rem;
   }
@@ -432,6 +433,7 @@ button:disabled .bi-cart-plus {
 /* Product card enhancements */
 .product-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #F6F6F6 !important;
 }
 
 .product-card:hover {

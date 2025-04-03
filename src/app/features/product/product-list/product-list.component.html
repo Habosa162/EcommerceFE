@@ -134,9 +134,9 @@
         <div *ngFor="let product of filteredProducts" class="col-6 col-md-4 col-lg-3">
           <div class="card h-100 product-card">
             <!-- Discount Badge -->
-            <div class="badge bg-danger position-absolute" style="top: 0.5rem; right: 0.5rem"
+            <div class="badge bg-danger position-absolute discountBadge" style="top: 0.5rem; right: 0.5rem"
                  *ngIf="product.discountAmount > 0">
-              {{ product.discountAmount }}% OFF
+              {{ product.discountAmount }} EGP OFF
             </div>
 
             <!-- Product Image -->

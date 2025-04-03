@@ -27,11 +27,11 @@ export class ProductListComponent implements OnInit {
   selectedBrands: string[] = [];
   selectedPriceRange: string = '';
   priceRanges: string[] = [
-    'Under $100',
-    '$100 - $200',
-    '$200 - $300',
-    '$300 - $500',
-    'Over $500',
+    'Under 100 EGP',
+    '100 EGP - 200 EGP',
+    '200 EGP - 300 EGP',
+    '300 EGP - 500 EGP',
+    'Over 500 EGP',
   ];
   categories: string[] = [];
   brands: string[] = [];
@@ -115,6 +115,8 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
+      console.log(data);
+
       this.filteredProducts = data;
       this.getAllCategories();
       this.categories = [...new Set(data.map((p) => p.category))].filter(
