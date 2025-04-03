@@ -20,25 +20,24 @@ export interface Product {
   priceRange: string;
   stockQuantity: number;
   reviews?: Review[];
-};
+}
 
 export interface IProduct {
-  id: number,
-  name: string,
-  color: string,
-  description:string,
-  price: number,
-  imgUrl: string,
-  stock: number,
-  avgRate: number,
-  subCategoryId: number,
-  brand: string,
-  discountAmount: number,
-  finalPrice: number,
-  isAccepted: boolean,
-  isDeleted: boolean,
-  subCategory: any,
-  
+  id: number;
+  name: string;
+  color: string;
+  description: string;
+  price: number;
+  imgUrl: string;
+  stock: number;
+  avgRate: number;
+  subCategoryId: number;
+  brand: string;
+  discountAmount: number;
+  finalPrice: number;
+  isAccepted: boolean;
+  isDeleted: boolean;
+  subCategory: any;
 }
 
 export interface Review {

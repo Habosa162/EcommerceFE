@@ -589,6 +589,7 @@ export class ProductService {
       })
     );
   }
+  
 
   // ==================== PRIVATE HELPERS ====================
   private mapToProductModel(product: any): Product {

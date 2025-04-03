@@ -32,4 +32,11 @@ export class ProductService {
   getProductsBySubCategoryId(id: number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.productApiUrl}/subcategory/${id}`);
   }
+
+  //get product top-selled products
+  getTopSellingProducts(count: number): Observable<Product[]> {
+    return this.http.get<Product[]>(
+      `${this.productApiUrl}/top-sold?count=${count}`
+    );
+  }
 }

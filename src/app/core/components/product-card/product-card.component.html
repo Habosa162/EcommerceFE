@@ -1,0 +1,46 @@
+<div class="card shadow border-0 rounded-4">
+  <div class="position-relative overflow-hidden">
+    <img
+      [src]="product.imageUrl"
+      class="card-img-top rounded-top-4"
+      alt="..."
+    />
+    <span
+      *ngIf="product.discountAmount > 0"
+      class="badge text-bg-danger position-absolute top-0 end-0 m-3"
+      >Sale</span
+    >
+  </div>
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="card-title">{{ product.name }}</h5>
+      <div>
+        <span class="text-decoration-line-through mx-1 text-danger"
+          >${{ product.price }}
+        </span>
+        <span class="mx-1 fs-5 fw-bold">${{ product.finalPrice }} </span>
+      </div>
+    </div>
+    <p class="card-text">
+      {{ product.description }}
+    </p>
+    <div class="mb-3">
+      <span *ngFor="let star of starArray">
+        <i *ngIf="star === 'full'" class="fa fa-star text-yellow-500"></i>
+        <i
+          *ngIf="star === 'half'"
+          class="fa fa-star-half-alt text-yellow-500"
+        ></i>
+        <i *ngIf="star === 'empty'" class="fa fa-star text-gray-300"></i>
+      </span>
+      <span>({{ product.avgRate }})</span>
+    </div>
+
+    <button
+      (click)="addToCart(product)"
+      class="btn btn-outline-main rounded-pill"
+    >
+      <i class="fa-solid fa-cart-plus"></i> Add To Cart
+    </button>
+  </div>
+</div>

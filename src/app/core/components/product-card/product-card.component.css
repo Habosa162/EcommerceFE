@@ -1,0 +1,17 @@
+.btn-outline-main {
+  border: 1px solid #003d29;
+  color: #003d29;
+}
+
+.btn-outline-main:hover {
+  background-color: #003d29;
+  color: white;
+}
+
+.text-yellow-500 {
+  color: gold;
+}
+.text-gray-300 {
+  color: gray;
+}
+@import "ngx-toastr/toastr.css";
