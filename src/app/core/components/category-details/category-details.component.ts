@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Product } from '../../models/product.model';
+import { ProductCardComponent } from "../product-card/product-card.component";
 
 @Component({
   selector: 'app-category-details',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, ProductCardComponent],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css',
 })
