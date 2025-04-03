@@ -22,6 +22,9 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 =======
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 import { AdminUserComponent } from './features/admin/admin-user/admin-user.component';
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 import { WishlistComponent } from './features/wishlist/wishlist.component';
@@ -60,6 +63,7 @@ export const routes: Routes = [
   { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   {
     path: 'products/:id',
     component: ProductDetailsComponent,
@@ -87,6 +91,8 @@ export const routes: Routes = [
     component: CategoryDetailsComponent,
     title: 'Category Details',
   },
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
