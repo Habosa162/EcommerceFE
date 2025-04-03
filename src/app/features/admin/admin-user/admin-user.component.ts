@@ -82,7 +82,7 @@ export class AdminUserComponent {
       console.error('User ID is missing!');
       return;  // Prevent further action if id is missing
     }
-  
+
     this.userService.updateUser(this.newUser.id, this.newUser).subscribe((updatedUser: User) => {
       console.log('Updated user received from API:', updatedUser);  // Check the response from API
       const index = this.users.findIndex(u => u.id === updatedUser.id);
