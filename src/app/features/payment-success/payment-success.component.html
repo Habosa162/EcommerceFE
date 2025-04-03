@@ -11,7 +11,7 @@
     <div class="order-summary-card card shadow-sm p-4 mt-4 mx-auto" style="max-width: 500px;">
         <h4 class="mb-3">Order Summary</h4>
         <div *ngFor="let item of cartItems" class="order-item d-flex align-items-center border-bottom pb-2 mb-3">
-            <img [src]="item.image" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="80">
+            <img [src]="item.imgUrl" alt="{{ item.name }}" class="img-thumbnail rounded me-3" width="80">
             <div>
                 <p class="mb-1"><strong>{{ item.name }}</strong></p>
                 <p class="mb-1"><strong>Quantity:</strong> {{ item.quantity }}</p>
