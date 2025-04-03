@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule,AdminLayoutComponent,CustomerLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
