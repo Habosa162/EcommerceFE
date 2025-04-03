@@ -3,6 +3,8 @@ import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CategoryService } from '../../../Services/category.service';
+import { SubCategoryService } from '../../../Services/sub-category.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -13,37 +15,67 @@ import { CommonModule } from '@angular/common';
 export class AdminProductsComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  categories: string[] = [];
+  categories: any[] = [];
   brands: string[] = [];
   searchQuery: string = '';
   selectedCategory: string = '';
   selectedSort: string = '';
-
-
-  constructor(private productservice: ProductService) { }
+  isModalOpen: boolean = false;
+  selectedProduct: any = {
+    id: 0,
+    name: '',
+    description: '',
+    price: 0,
+    subCategoryId: 0,
+    subCategoryName: '',
+    imageUrl: '',
+    stock: 0,
+    avgRate: 0,
+    brand: '',
+    discountAmount: 0,
+    isAccepted: false,
+    isDeleted: false,
+    color: '',
+    finalPrice: 0,
+    title: '',
+    category: '',
+    reviewCount: 0,
+    priceRange: '',
+    stockQuantity: 0,
+  };
+  constructor(private productservice: ProductService, private subcategoriesservice: SubCategoryService) { }
 
   ngOnInit(): void {
     this.fetchProducts();
+    this.fetchsubcategories();
   }
 
   fetchProducts(): void {
     this.productservice.getAllProducts().subscribe({
       next: (products) => {
-        console.log(products);
-        this.products = products;
-        this.filteredProducts = products;
-        this.categories = [...new Set(products.map(p => p.SubCategoryName))];
-        this.brands = [...new Set(products.map(p => p.brand))];
+        this.products = products.map(product => ({
+          ...product,
+          id: Number(product.id)
+        }));
+        this.filteredProducts = this.products;
       },
       error: (err) => console.error('Error fetching products:', err)
     });
   }
 
+  fetchsubcategories(): void {
+    this.subcategoriesservice.getsubCategories().subscribe({
+      next: (subcategories) => {
+        this.categories = subcategories;
+      },
+      error: (err) => console.error('Error fetching categories:', err)
+    });
+  }
 
   filterProducts(): void {
     this.filteredProducts = this.products.filter(product =>
       product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-      (this.selectedCategory ? product.category === this.selectedCategory : true)
+      (this.selectedCategory ? product.subCategoryName === this.selectedCategory : true)
     );
   }
 
@@ -54,6 +86,51 @@ export class AdminProductsComponent implements OnInit {
       this.filteredProducts.sort((a, b) => b.price - a.price);
     }
   }
+
+  editProduct(product: Product): void {
+    this.selectedProduct = { ...product };
+    this.isModalOpen = true;
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];  
+    if (file) {
+      this.selectedProduct.imageUrl = file;  
+    }
+  }
+
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
+  updateProduct(): void {
+    const formData = new FormData();
+
+    // Append all product fields to the FormData
+    formData.append('name', this.selectedProduct.name);
+    formData.append('price', this.selectedProduct.price.toString());
+    formData.append('description', this.selectedProduct.description);
+    formData.append('subCategoryId', this.selectedProduct.subCategoryId.toString());  
+
+    // Check if the image is a file and append it to the FormData
+    if (this.selectedProduct.imageUrl instanceof File) {
+      formData.append('imageUrl', this.selectedProduct.imageUrl);  
+    }
+
+    
+    this.productservice.updateProduct(formData, this.selectedProduct.id).subscribe(
+      (response: any) => {
+        console.log('Product updated successfully:', response.message);
+        this.fetchProducts();  
+        this.closeModal(); 
+      },
+      (error) => {
+        console.error('Error updating product:', error);
+      }
+    );
+  }
+
 
   deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
@@ -68,3 +145,4 @@ export class AdminProductsComponent implements OnInit {
     }
   }
 }
+

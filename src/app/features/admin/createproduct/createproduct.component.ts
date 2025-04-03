@@ -123,7 +123,7 @@ export class CreateproductComponent {
     formData.append('finalPrice', (this.newProduct.price - this.newProduct.discountAmount).toString());
     formData.append('stockQuantity', this.newProduct.stockQuantity.toString());
   
-    // Append the selected file
+    
     formData.append('image', this.selectedFile); 
   
     console.log('FormData being sent:', formData);

@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminUserComponent {
   users: User[] = [];
+  activeUsers: any[] = [];
+  inactiveUsers: any[] = [];
   showModal: boolean = false;
   isEditing: boolean = false;
   currentUserId: string = '';
@@ -30,12 +32,16 @@ export class AdminUserComponent {
 
   ngOnInit(): void {
     this.loadUsers();
+
+
   }
 
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe((data: User[]) => {
       this.users = data;
+      this.activeUsers = this.users.filter(user => user.isActive);
+      this.inactiveUsers = this.users.filter(user => !user.isActive);
     });
   }
 
@@ -68,30 +74,13 @@ export class AdminUserComponent {
   }
 
 
-  addUser(): void {
-    this.userService.createUser(this.newUser, 'defaultPassword').subscribe((createdUser: User) => {
-      this.users.push(createdUser);
-      this.closeModal();
-    });
-  }
+  // addUser(): void {
+  //   this.userService.createUser(this.newUser, 'defaultPassword').subscribe((createdUser: User) => {
+  //     this.users.push(createdUser);
+  //     this.closeModal();
+  //   });
+  // }
 
-
-  updateUser(): void {
-    console.log('Updating user:', this.newUser);  // Check if newUser contains a valid id
-    if (!this.newUser.id) {
-      console.error('User ID is missing!');
-      return;  // Prevent further action if id is missing
-    }
-
-    this.userService.updateUser(this.newUser.id, this.newUser).subscribe((updatedUser: User) => {
-      console.log('Updated user received from API:', updatedUser);  // Check the response from API
-      const index = this.users.findIndex(u => u.id === updatedUser.id);
-      if (index !== -1) {
-        this.users[index] = updatedUser;
-      }
-      this.closeModal();
-    });
-  }
 
   deleteUser(userId: string): void {
     if (confirm('Are you sure you want to delete this user?')) {

@@ -10,7 +10,7 @@ import { AdminNavbarComponent } from "../../shared/components/admin-navbar/admin
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule, AdminSidebarComponent, AdminNavbarComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css',
 })

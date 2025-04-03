@@ -1,17 +1,15 @@
 <div class="container-fluid mb-4 p-3 bg-light rounded shadow-sm">
-    <div class="row g-3 align-items-center">
-
+    <div class="row g-3">
         <!-- Sidebar for Filters -->
         <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <h5 class="fw-bold">Product Categories</h5>
-                <select class="form-select" [(ngModel)]="selectedCategory" (change)="filterProducts()">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <h5 class="fw-bold text-primary mb-3">Filter by Category</h5>
+                <select class="form-select mb-3" [(ngModel)]="selectedCategory" (change)="filterProducts()">
                     <option value="">All Categories</option>
-                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-
+                    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
                 </select>
 
-                <h5 class="fw-bold mt-3">Sort By</h5>
+                <h5 class="fw-bold text-primary mb-3">Sort By</h5>
                 <select class="form-select" [(ngModel)]="selectedSort" (change)="sortProducts()">
                     <option value="">Default</option>
                     <option value="price-asc">Price: Low to High</option>
@@ -23,34 +21,110 @@
         <!-- Product List Section -->
         <div class="col-md-9">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search products..." />
-                <button class="btn btn-primary" (click)="filterProducts()">Search</button>
+                <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="filterProducts()"
+                    placeholder="Search products..." />
             </div>
 
-            <div class="row g-3">
+            <div class="row g-4">
                 <div *ngFor="let product of filteredProducts" class="col-md-4">
-                    <div class="card product-card h-100 border-0 shadow-sm">
+                    <div class="card product-card h-100 border-0 shadow-lg rounded-3"
+                        style="transition: all 0.3s ease-in-out;">
                         <div class="position-relative">
-                            <img [src]="product.imageUrl" [alt]="product.name" class="card-img-top p-3" />
+                            <!-- Image (use a placeholder if no image is available) -->
+                            <img [src]="product.imageUrl || 'assets/images/placeholder.png'" [alt]="product.name"
+                                class="card-img-top p-3 rounded-3 product-image" />
 
                             <!-- Action Buttons (Edit & Delete) -->
-                            <div class="product-actions">
-                                <!-- <button class="btn btn-warning" (click)="editProduct(product.id)"><i
-                                        class="bi bi-pencil"></i></button> -->
+                            <div class="product-actions position-absolute top-0 end-0 p-3">
+                                <button class="btn btn-warning me-2" (click)="editProduct(product)"><i
+                                        class="bi bi-pencil"></i></button>
                                 <button class="btn btn-danger" (click)="deleteProduct(product.id)"><i
                                         class="bi bi-trash"></i></button>
                             </div>
                         </div>
 
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h5 class="card-title text-truncate" style="max-width: 100%; overflow: hidden;">{{
+                                product.name }}</h5>
                             <p class="text-danger fw-bold">${{ product.price }}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <p *ngIf="filteredProducts.length === 0">No products match your search.</p>
+            <p *ngIf="filteredProducts.length === 0" class="text-center mt-4">No products match your search.</p>
         </div>
     </div>
 </div>
+
+<!-- Edit Product Modal -->
+<div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog" (click)="closeModal()">
+    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="close" (click)="closeModal()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for editing the product -->
+                <!-- Edit Product Modal -->
+                <div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog"
+                    (click)="closeModal()">
+                    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
+                        <div class="modal-content rounded-3 shadow-lg">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title">Edit Product</h5>
+                                <button type="button" class="btn-close" (click)="closeModal()"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form (ngSubmit)="updateProduct()">
+                                    <!-- Product Name Field -->
+                                    <div class="mb-3">
+                                        <label for="productName" class="form-label">Product Name</label>
+                                        <input type="text" id="productName" class="form-control"
+                                            [(ngModel)]="selectedProduct.name" name="name" required>
+                                    </div>
+
+                                    <!-- Price Field -->
+                                    <div class="mb-3">
+                                        <label for="productPrice" class="form-label">Price</label>
+                                        <input type="number" id="productPrice" class="form-control"
+                                            [(ngModel)]="selectedProduct.price" name="price" required>
+                                    </div>
+
+                                    <!-- Description Field -->
+                                    <div class="mb-3">
+                                        <label for="productDescription" class="form-label">Description</label>
+                                        <textarea id="productDescription" class="form-control"
+                                            [(ngModel)]="selectedProduct.description" name="description" rows="3"
+                                            required></textarea>
+                                    </div>
+
+                                    <!-- Image Field -->
+                                    <div class="mb-3">
+                                        <label for="productImageUrl" class="form-label">Product Image</label>
+                                        <input type="file" id="productImageUrl" class="form-control"
+                                            (change)="onFileChange($event)" name="imageUrl">
+                                    </div>
+
+                                    <!-- Subcategory Field -->
+                                    <div class="mb-3">
+                                        <label for="productSubCategory" class="form-label">Subcategory</label>
+                                        <input type="text" id="productSubCategory" class="form-control"
+                                            [(ngModel)]="selectedProduct.subCategoryName" name="subCategoryName"
+                                            required>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <button type="submit" class="btn btn-primary w-100">Update Product</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

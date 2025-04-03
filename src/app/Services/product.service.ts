@@ -10,7 +10,7 @@ import { Product } from '../core/models/product.model';
 export class ProductService {
   private productApiUrl = `${environment.apiUrl}/product`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getAllProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.productApiUrl}`);
   }
@@ -22,6 +22,10 @@ export class ProductService {
 
   createProduct(productData: FormData): Observable<Product> {
     return this.http.post<Product>(`${this.productApiUrl}`, productData);
+  }
+
+  updateProduct(productData: FormData, productId: number): Observable<Product> {
+    return this.http.put<Product>(`${this.productApiUrl}/${productId}`, productData);
   }
 
   //get product by subcategory id

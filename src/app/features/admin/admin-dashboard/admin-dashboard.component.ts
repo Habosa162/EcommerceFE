@@ -5,6 +5,8 @@ import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../../../Services/user.service';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -25,13 +27,54 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    // private customerService: AuthService,
+    private customerService: UserService,
     private orderService: OrderService
   ) { }
 
   ngOnInit(): void {
     this.fetchDashboardData();
   }
+
+
+
+  // ngAfterViewInit(): void {
+  //   // Initialize the charts here
+  //   this.initializeCharts();
+  // }
+
+  // initializeCharts(): void {
+  //   // Chart setup
+  //   new Chart('productChart', {
+  //     type: 'bar',  // The chart type
+  //     data: {
+  //       labels: ['Product 1', 'Product 2', 'Product 3'],
+  //       datasets: [{
+  //         label: 'Product Sales',
+  //         data: [12, 19, 3],
+  //         backgroundColor: 'rgba(54, 162, 235, 0.2)',
+  //         borderColor: 'rgba(54, 162, 235, 1)',
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+
+  //         y: {
+  //           type: 'linear',  
+  //           beginAtZero: true 
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
+
+
+
+
+
+
+
 
   fetchDashboardData(): void {
     // Fetch Total Products
@@ -44,10 +87,11 @@ export class AdminDashboardComponent implements OnInit {
     });
 
     // Fetch Total Customers
-    // this.customerService.getAllCustomers().subscribe({
-    //   next: (customers) => this.totalCustomers = customers.length,
-    //   error: (err) => console.error('Error fetching customers:', err)
-    // });
+    this.customerService.getAllUsers().subscribe({
+      next: (customers) => this.totalCustomers = customers.length,
+      error: (err) => console.error('Error fetching customers:', err)
+    });
+
 
     // Fetch Total Orders
     this.orderService.getAllOrders().subscribe({
@@ -80,6 +124,7 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
+
 
 
 }

@@ -26,7 +26,7 @@ export class WishlistComponent implements OnInit, OnChanges {
     private cartService: CartService,
     private wishListService: WishlistService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getWishList();

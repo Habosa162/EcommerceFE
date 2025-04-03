@@ -1,12 +1,8 @@
-<section
-  id="hero"
-  class="d-flex justify-content-center flex-column position-relative"
->
+<app-navbar></app-navbar>
+<section id="hero" class="d-flex justify-content-center flex-column position-relative">
   <div class="container">
     <div class="position-absolute top-50 translate-middle-y z-1">
-      <h1
-        class="mainColor text-capitalize fw-bold my-4 animate__animated animate__fadeInLeft"
-      >
+      <h1 class="mainColor text-capitalize fw-bold my-4 animate__animated animate__fadeInLeft">
         shopping and <br />
         department store.
       </h1>
@@ -14,38 +10,20 @@
         Shopping is a bit of a relaxing hobby for me, which<br />
         is sometimes troubling for the bank balance.
       </p>
-      <a
-        class="btn mainBg text-white rounded-pill px-4 py-2 fs-5 animate__animated animate__fadeInLeft"
-        href=""
-        >Learn More</a
-      >
+      <a class="btn mainBg text-white rounded-pill px-4 py-2 fs-5 animate__animated animate__fadeInLeft" href="">Learn
+        More</a>
     </div>
     <div class="position-absolute z-0 top-0 end-0 d-none d-lg-block">
       <div class="position-relative overflow-hidden stages">
         <img class="w-100" src="/assets/imgs/stages.png" alt="" />
-        <img
-          class="position-absolute elecs-img animate__animated animate__fadeInDown"
-          src="/assets/imgs/elecs.png"
-          alt=""
-        />
-        <img
-          style="top: 14%; left: 72%"
-          class="animate__animated animate__fadeInDown position-absolute cloth-img"
-          src="/assets/imgs/cloth.png"
-          alt=""
-        />
-        <img
-          style="top: 57%; left: 45%"
-          class="animate__animated animate__fadeInDown position-absolute grocery-img"
-          src="/assets/imgs/grocery.png"
-          alt=""
-        />
-        <img
-          style="top: 26%; left: 57%"
-          class="animate__animated animate__fadeInDown position-absolute bag-img"
-          src="/assets/imgs/bag.png"
-          alt=""
-        />
+        <img class="position-absolute elecs-img animate__animated animate__fadeInDown" src="/assets/imgs/elecs.png"
+          alt="" />
+        <img style="top: 14%; left: 72%" class="animate__animated animate__fadeInDown position-absolute cloth-img"
+          src="/assets/imgs/cloth.png" alt="" />
+        <img style="top: 57%; left: 45%" class="animate__animated animate__fadeInDown position-absolute grocery-img"
+          src="/assets/imgs/grocery.png" alt="" />
+        <img style="top: 26%; left: 57%" class="animate__animated animate__fadeInDown position-absolute bag-img"
+          src="/assets/imgs/bag.png" alt="" />
       </div>
     </div>
   </div>
@@ -58,21 +36,11 @@
       <app-loader></app-loader>
       } @for (category of categories; track $index) {
       <div class="col-6 col-md-4 col-lg-2">
-        <div
-          class="categoryCard rounded-4 position-relative overflow-hidden shadow-sm"
-          data-aos="fade-up"
-        >
+        <div class="categoryCard rounded-4 position-relative overflow-hidden shadow-sm" data-aos="fade-up">
           <a routerLink="/category-details/{{ category.id }}">
-            <img
-              height="200"
-              class="w-100 rounded-4 categoryImg"
-              src="{{ category.imgUrl }}"
-              alt=""
-            />
-            <span
-              class="position-absolute start-50 translate-middle-x mt-5 text-white fw-bold fs-5"
-              >{{ category.name }}</span
-            >
+            <img height="200" class="w-100 rounded-4 categoryImg" src="{{ category.imgUrl }}" alt="" />
+            <span class="position-absolute start-50 translate-middle-x mt-5 text-white fw-bold fs-5">{{ category.name
+              }}</span>
           </a>
         </div>
       </div>
