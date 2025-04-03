@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { Product } from '../../../core/models/product.model';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../Services/product.service';
+import { SubCategoryService } from '../../../Services/sub-category.service';
+import { SubCategory } from './../../../core/models/subCategory.model';
+import { IProductCreate } from './../../../core/models/product.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -10,127 +12,107 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
   templateUrl: './createproduct.component.html',
 })
-export class CreateproductComponent {
-  products: Product[] = [];
+export class CreateproductComponent implements OnInit {
+
+  products: any[] = [];
   selectedFile!: File;
-  newProduct: Product = {
-    id: 0,
+  subCategories!: SubCategory[];
+  newProduct: IProductCreate = {
     name: '',
     description: '',
     price: 0,
     subCategoryId: 0,
-    subCategoryName: '',
-    imageUrl: '',
     stock: 0,
     avgRate: 0,
     brand: '',
     discountAmount: 0,
-    isAccepted: false,
-    isDeleted: false,
     color: '',
     finalPrice: 0,
-    title: '',
-    category: '',
-    reviewCount: 0,
-    priceRange: '',
-    stockQuantity: 0
   };
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private subCategoryService: SubCategoryService
+  ) {}
 
-  // createProduct(): void {
-  //   if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.imageUrl) {
-  //     alert('Please fill in all required fields (Name, Price, and Image URL).');
-  //     return;
-  //   }
-
-  //   // Calculate final price
-  //   this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
-
-  //   this.productService.createProduct(this.newProduct).subscribe({
-  //     next: (product) => {
-  //       this.products.push(product);
-  //       alert('Product created successfully!');
-  //       this.resetForm();
-  //     },
-  //     error: (err) => {
-  //       console.error('Error creating product:', err);
-  //       alert('Failed to create product. Please try again.');
-  //     }
-  //   });
-  // }
+  ngOnInit(): void {
+    this.subCategoryService.getsubCategories().subscribe((data) => {
+      this.subCategories = data;
+    });
+  }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        return;
+      }
       this.selectedFile = file;
     }
   }
 
-
-
-
   resetForm(): void {
     this.newProduct = {
-      id: 0,
       name: '',
       description: '',
       price: 0,
       subCategoryId: 0,
-      subCategoryName: '',
-      imageUrl: '',
       stock: 0,
       avgRate: 0,
       brand: '',
       discountAmount: 0,
-      isAccepted: false,
-      isDeleted: false,
       color: '',
       finalPrice: 0,
-      title: '',
-      category: '',
-      reviewCount: 0,
-      priceRange: '',
-      stockQuantity: 0
     };
+    this.selectedFile = null!;
+  }
+
+  calculateFinalPrice(): void {
+    // Recalculate final price whenever price or discount changes
+    this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
+    if (this.newProduct.finalPrice < 0) {
+      this.newProduct.finalPrice = 0; // Prevent negative final price
+    }
+  }
+
+  onPriceChange(): void {
+    this.calculateFinalPrice();
+  }
+
+  onDiscountChange(): void {
+    this.calculateFinalPrice();
   }
 
   createProduct(): void {
-    console.log('Form submitted with data:', this.newProduct); // Debug log
-  
+    console.log('Form submitted with data:', this.newProduct);
+
     if (!this.newProduct.name || !this.newProduct.price || !this.selectedFile) {
       console.warn('Validation failed - missing required fields');
       alert('Please fill in all required fields (Name, Price, and Image).');
       return;
     }
-  
+    this.calculateFinalPrice();
+
     // Create FormData object
     const formData = new FormData();
-    formData.append('name', this.newProduct.name);
-    formData.append('description', this.newProduct.description);
-    formData.append('price', this.newProduct.price.toString());
-    formData.append('subCategoryId', this.newProduct.subCategoryId.toString());
-    formData.append('subCategoryName', this.newProduct.subCategoryName);
-    formData.append('stock', this.newProduct.stock.toString());
-    formData.append('avgRate', this.newProduct.avgRate.toString());
-    formData.append('brand', this.newProduct.brand);
-    formData.append('discountAmount', this.newProduct.discountAmount.toString());
-    formData.append('isAccepted', this.newProduct.isAccepted.toString());
-    formData.append('isDeleted', this.newProduct.isDeleted.toString());
+    formData.append('Name', this.newProduct.name);
+    formData.append('Description', this.newProduct.description);
+    formData.append('Price', this.newProduct.price.toString());
+    formData.append('SubCategoryId', this.newProduct.subCategoryId.toString());
+    formData.append('Stock', this.newProduct.stock.toString());
+    formData.append('AvgRate', this.newProduct.avgRate.toString());
+    formData.append('Brand', this.newProduct.brand);
+    formData.append('DiscountAmount', this.newProduct.discountAmount.toString());
     formData.append('color', this.newProduct.color);
-    formData.append('title', this.newProduct.title);
-    formData.append('category', this.newProduct.category);
-    formData.append('finalPrice', (this.newProduct.price - this.newProduct.discountAmount).toString());
-    formData.append('stockQuantity', this.newProduct.stockQuantity.toString());
-  
-    
-    formData.append('image', this.selectedFile); 
-  
+    formData.append('finalPrice', this.newProduct.finalPrice.toString());
+    formData.append('productImage', this.selectedFile);
+
     console.log('FormData being sent:', formData);
-  
+
     this.productService.createProduct(formData).subscribe({
       next: (product) => {
-        console.log('API Response:', product); // Debug log
+        console.log('API Response:', product);
         this.products.push(product);
         alert('Product created successfully!');
         this.resetForm();
@@ -138,8 +120,7 @@ export class CreateproductComponent {
       error: (err) => {
         console.error('Full error details:', err);
         alert(`Failed to create product: ${err.message || 'Unknown error'}`);
-      }
+      },
     });
   }
-  
 }

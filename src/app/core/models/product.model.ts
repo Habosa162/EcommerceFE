@@ -40,6 +40,19 @@ export interface IProduct {
   subCategory: any;
 }
 
+export interface IProductCreate{
+  name: string;
+  description: string;
+  price: number;
+  subCategoryId: number;
+  stock: number;
+  avgRate: number;
+  brand: string;
+  discountAmount: number;
+  color: string;
+  finalPrice:number;
+}
+
 export interface Review {
   productId: number;
   comment: string;
