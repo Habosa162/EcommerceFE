@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.token);
         const role = this.authService.getUserRole();
         if(role === 'Admin'){
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/dashboard']);
         }else if(role === 'Customer'){
           this.router.navigate(['/home']);
         }

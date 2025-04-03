@@ -88,20 +88,27 @@ export const routes: Routes = [
   },
 
 
-  {
-    path: 'admin',
-    component: AdminLayoutComponent,
 
-    canActivate: [AuthGuard, RoleGuard],
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'products', component: AdminProductsComponent },
-      { path: 'orders', component: AdminOrdersComponent },
-      { path: 'users', component: AdminUserComponent },
-      { path: 'createproduct', component: CreateproductComponent },
-    ],
-  },
+  { path: 'dashboard', component: AdminDashboardComponent ,canActivate:[AuthGuard, RoleGuard]},
+  { path: 'manageproducts', component: AdminProductsComponent ,canActivate: [AuthGuard, RoleGuard]},
+  { path: 'orders', component: AdminOrdersComponent ,canActivate: [AuthGuard, RoleGuard]},
+  { path: 'users', component: AdminUserComponent ,canActivate: [AuthGuard, RoleGuard]},
+  { path: 'createproduct', component: CreateproductComponent ,canActivate: [AuthGuard, RoleGuard]},
+
+  // {
+  //   path: 'admin',
+  //   component: AdminLayoutComponent,
+  //   // pathMatch:'full',
+  //   canActivate: [AuthGuard, RoleGuard],
+  //   children: [
+  //     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  //     { path: 'dashboard', component: AdminDashboardComponent },
+  //     { path: 'products', component: AdminProductsComponent },
+  //     { path: 'orders', component: AdminOrdersComponent },
+  //     { path: 'users', component: AdminUserComponent },
+  //     { path: 'createproduct', component: CreateproductComponent },
+  //   ],
+  // },
 
   { path: '**', component: NotFoundComponent },
 
