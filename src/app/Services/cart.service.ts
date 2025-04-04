@@ -1,28 +1,41 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, OnInit, signal } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class CartService implements OnInit {
   private cartItems = signal<any[]>(this.loadCart()); 
+  private userId: string | null = null;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
+  ngOnInit(): void {
+    this.setUser(this.authService.getUserData()?.ID);
+  }
+  setUser(userId: string | null) {
+    this.userId = userId;
+    this.cartItems.set(this.loadCart());
+  }
+  private getCartStorageKey(): string {
+    return this.userId ? `cart_${this.userId}` : 'cart_guest';
+  }
 
   private loadCart(): any[] {
-    const storedCart = localStorage.getItem('cart');
+    const storedCart = localStorage.getItem(this.getCartStorageKey());
     return storedCart ? JSON.parse(storedCart) : [];
   }
 
   private saveCart(): void {
-    localStorage.setItem('cart', JSON.stringify(this.cartItems()));
+    localStorage.setItem(this.getCartStorageKey(), JSON.stringify(this.cartItems()));
   }
 
   getCart() {
+
     return this.cartItems();
   }
   clearCart(){
     this.cartItems.set([]); 
-    localStorage.removeItem('cart'); 
+    localStorage.removeItem(this.getCartStorageKey()); 
   }
 
   // Updated addToCart method to accept quantity

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../../Services/auth.service';
 import { ILoginUser } from './../../../core/models/auth.model';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../../Services/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         }else if(role === 'Customer'){
           this.router.navigate(['/home']);
+          this.cartService.setUser(this.authService.getUserData()?.ID);
         }
       },
       error: (err) => {
