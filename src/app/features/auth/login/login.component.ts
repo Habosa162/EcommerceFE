@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
         }else if(role === 'Customer'){
           this.router.navigate(['/home']);
           this.cartService.setUser(this.authService.getUserData()?.ID);
+          this.cartService.saveCart(); // Save the cart when the component initializes
+
         }
       },
       error: (err) => {

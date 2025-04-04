@@ -4,14 +4,12 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CartService implements OnInit {
+export class CartService  {
   private cartItems = signal<any[]>(this.loadCart()); 
   private userId: string | null = null;
 
   constructor(private authService: AuthService) { }
-  ngOnInit(): void {
-    this.setUser(this.authService.getUserData()?.ID);
-  }
+  
   setUser(userId: string | null) {
     this.userId = userId;
     this.cartItems.set(this.loadCart());
@@ -25,9 +23,37 @@ export class CartService implements OnInit {
     return storedCart ? JSON.parse(storedCart) : [];
   }
 
-  private saveCart(): void {
-    localStorage.setItem(this.getCartStorageKey(), JSON.stringify(this.cartItems()));
-  }
+   saveCart(): void {
+    const guestCart = localStorage.getItem('cart_guest');
+    const userCartKey = this.getCartStorageKey();
+    const existingUserCart = localStorage.getItem(userCartKey);
+
+    if (guestCart) {
+        let mergedCart = JSON.parse(guestCart);
+        
+        // if (existingUserCart) {
+        //     const userCart = JSON.parse(existingUserCart);
+            
+        //     // Merge guest cart items into the user cart
+        //     mergedCart.forEach(guestItem => {
+        //         const existingItem = userCart.find(item => item.id === guestItem.id);
+        //         if (existingItem) {
+        //             existingItem.quantity += guestItem.quantity;
+        //         } else {
+        //             userCart.push(guestItem);
+        //         }
+        //     });
+
+        //     mergedCart = userCart; // Use the merged cart
+        // }
+
+        localStorage.setItem(userCartKey, JSON.stringify(mergedCart));
+        localStorage.removeItem('cart_guest'); // Remove guest cart after migration
+    } else {
+        localStorage.setItem(userCartKey, JSON.stringify(this.cartItems()));
+    }
+}
+
 
   getCart() {
 
