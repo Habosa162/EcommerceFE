@@ -11,13 +11,19 @@ export class ProductService {
   private productApiUrl = `${environment.apiUrl}/product`;
 
   constructor(private http: HttpClient) { }
+
+
   getAllProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.productApiUrl}`);
   }
 
+
+  getProductById(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.productApiUrl}/${id}`);
+  }
   // Delete  products
   deleteProduct(id: any): Observable<any> {
-    return this.http.delete(`${this.productApiUrl}/{id}`);
+    return this.http.delete(`${this.productApiUrl}/${id}`);
   }
 
   createProduct(productData: FormData): Observable<Product> {

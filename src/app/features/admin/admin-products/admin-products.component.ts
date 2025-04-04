@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../../Services/category.service';
 import { SubCategoryService } from '../../../Services/sub-category.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-products',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './admin-products.component.html',
   styleUrl: './admin-products.component.css'
 })
@@ -43,7 +44,8 @@ export class AdminProductsComponent implements OnInit {
     priceRange: '',
     stockQuantity: 0,
   };
-  constructor(private productservice: ProductService, private subcategoriesservice: SubCategoryService) { }
+  constructor(private productservice: ProductService, private subcategoriesservice: SubCategoryService,
+    private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -93,9 +95,9 @@ export class AdminProductsComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
-    const file = event.target.files[0];  
+    const file = event.target.files[0];
     if (file) {
-      this.selectedProduct.imageUrl = file;  
+      this.selectedProduct.imageUrl = file;
     }
   }
 
@@ -111,19 +113,21 @@ export class AdminProductsComponent implements OnInit {
     formData.append('name', this.selectedProduct.name);
     formData.append('price', this.selectedProduct.price.toString());
     formData.append('description', this.selectedProduct.description);
-    formData.append('subCategoryId', this.selectedProduct.subCategoryId.toString());  
+    formData.append('subCategoryId', this.selectedProduct.subCategoryId.toString());
+    formData.append('stock', this.selectedProduct.stock.toString());
+
 
     // Check if the image is a file and append it to the FormData
     if (this.selectedProduct.imageUrl instanceof File) {
-      formData.append('imageUrl', this.selectedProduct.imageUrl);  
+      formData.append('imageUrl', this.selectedProduct.imageUrl);
     }
 
-    
+
     this.productservice.updateProduct(formData, this.selectedProduct.id).subscribe(
       (response: any) => {
         console.log('Product updated successfully:', response.message);
-        this.fetchProducts();  
-        this.closeModal(); 
+        this.fetchProducts();
+        this.closeModal();
       },
       (error) => {
         console.error('Error updating product:', error);
@@ -139,6 +143,7 @@ export class AdminProductsComponent implements OnInit {
           this.products = this.products.filter(p => p.id !== id);
           this.filteredProducts = this.filteredProducts.filter(p => p.id !== id);
           alert('Product deleted successfully!');
+          this.changeDetectorRef.detectChanges();
         },
         error: (err) => console.error('Error deleting product:', err)
       });

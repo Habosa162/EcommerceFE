@@ -15,6 +15,14 @@
                     <option value="price-asc">Price: Low to High</option>
                     <option value="price-desc">Price: High to Low</option>
                 </select>
+                <div class="mt-4">
+                    <h4>Quick Actions</h4>
+                    <button class="btn btn-primary me-2" routerLink="/createproduct">
+                        <i class="bi bi-plus-circle"></i> Add Product
+                    </button>
+
+                </div>
+
             </div>
         </div>
 
@@ -31,22 +39,25 @@
                         style="transition: all 0.3s ease-in-out;">
                         <div class="position-relative">
                             <!-- Image (use a placeholder if no image is available) -->
-                            <img [src]="product.imageUrl || 'assets/images/placeholder.png'" [alt]="product.name"
+                            <img [src]="product.imageUrl " [alt]="product.name"
                                 class="card-img-top p-3 rounded-3 product-image" />
 
                             <!-- Action Buttons (Edit & Delete) -->
-                            <div class="product-actions position-absolute top-0 end-0 p-3">
+                            <!-- <div class="product-actions position-absolute top-0 end-0 p-3">
                                 <button class="btn btn-warning me-2" (click)="editProduct(product)"><i
                                         class="bi bi-pencil"></i></button>
                                 <button class="btn btn-danger" (click)="deleteProduct(product.id)"><i
                                         class="bi bi-trash"></i></button>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="card-body text-center">
                             <h5 class="card-title text-truncate" style="max-width: 100%; overflow: hidden;">{{
                                 product.name }}</h5>
-                            <p class="text-danger fw-bold">${{ product.price }}</p>
+                            <p class="text-danger fw-bold">${{ product.finalPrice }}</p>
+                            <!-- See Details Button -->
+                            <a [routerLink]="['/product-details', product.id]" class="btn btn-info w-100">See
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -56,75 +67,3 @@
         </div>
     </div>
 </div>
-
-<!-- Edit Product Modal -->
-<div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog" (click)="closeModal()">
-    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Product</h5>
-                <button type="button" class="close" (click)="closeModal()">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Form for editing the product -->
-                <!-- Edit Product Modal -->
-                <div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog"
-                    (click)="closeModal()">
-                    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
-                        <div class="modal-content rounded-3 shadow-lg">
-                            <div class="modal-header border-0">
-                                <h5 class="modal-title">Edit Product</h5>
-                                <button type="button" class="btn-close" (click)="closeModal()"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form (ngSubmit)="updateProduct()">
-                                    <!-- Product Name Field -->
-                                    <div class="mb-3">
-                                        <label for="productName" class="form-label">Product Name</label>
-                                        <input type="text" id="productName" class="form-control"
-                                            [(ngModel)]="selectedProduct.name" name="name" required>
-                                    </div>
-
-                                    <!-- Price Field -->
-                                    <div class="mb-3">
-                                        <label for="productPrice" class="form-label">Price</label>
-                                        <input type="number" id="productPrice" class="form-control"
-                                            [(ngModel)]="selectedProduct.price" name="price" required>
-                                    </div>
-
-                                    <!-- Description Field -->
-                                    <div class="mb-3">
-                                        <label for="productDescription" class="form-label">Description</label>
-                                        <textarea id="productDescription" class="form-control"
-                                            [(ngModel)]="selectedProduct.description" name="description" rows="3"
-                                            required></textarea>
-                                    </div>
-
-                                    <!-- Image Field -->
-                                    <div class="mb-3">
-                                        <label for="productImageUrl" class="form-label">Product Image</label>
-                                        <input type="file" id="productImageUrl" class="form-control"
-                                            (change)="onFileChange($event)" name="imageUrl">
-                                    </div>
-
-                                    <!-- Subcategory Field -->
-                                    <div class="mb-3">
-                                        <label for="productSubCategory" class="form-label">Subcategory</label>
-                                        <input type="text" id="productSubCategory" class="form-control"
-                                            [(ngModel)]="selectedProduct.subCategoryName" name="subCategoryName"
-                                            required>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <button type="submit" class="btn btn-primary w-100">Update Product</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
