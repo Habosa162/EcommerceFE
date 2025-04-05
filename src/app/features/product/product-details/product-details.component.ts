@@ -61,8 +61,6 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getProductById(productId).subscribe({
       next: (data) => {
         if (data) {
-          console.log(data);
-
           this.product = data;
           this.initializeProductData();
           this.newReview.productId = data.id;
