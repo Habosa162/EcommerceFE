@@ -1,187 +1,290 @@
 <div *ngIf="product">
-    <div class="container p-4 bg-light rounded shadow-sm">
-        <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold; color: #343a40;">{{ product.name }}</h2>
+  <div class="container p-4 bg-light rounded shadow-sm">
+    <h2
+      class="text-center mb-4"
+      style="font-size: 2rem; font-weight: bold; color: #343a40"
+    >
+      {{ product.name }}
+    </h2>
 
-        <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid rounded product-image"
-            style="width: 100%; max-width: 300px; height: 200px; object-fit: cover;" />
-        <div class="row">
-
-            <!-- Product Description -->
-            <div class="mb-4">
-                <div class="card p-4 shadow-sm border-light rounded">
-                    <h5 class="card-title mb-3" style="font-weight: bold;">Description</h5>
-                    <p class="card-text" style="font-size: 1.1rem; color: #555;">{{ product.description }}</p>
-                </div>
-            </div>
-            <!-- Price Card -->
-            <div class="col-md-4 mb-3">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-dollar-sign fa-2x text-primary mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">${{ product.price }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Price</p>
-                </div>
-            </div>
-
-            <!-- Stock Card -->
-            <div class="col-md-4 mb-3">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-box-open fa-2x text-success mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">{{ product.stock }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Stock Available</p>
-                </div>
-            </div>
-
-            <!-- Category Card -->
-            <div class="col-md-4 mb-3">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-tags fa-2x text-info mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">{{ product.subCategoryName }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Sub Category</p>
-                </div>
-            </div>
+    <img
+      [src]="product.imageUrl"
+      [alt]="product.name"
+      class="img-fluid rounded product-image"
+      style="width: 100%; max-width: 300px; height: 200px; object-fit: cover"
+    />
+    <div class="row">
+      <!-- Product Description -->
+      <div class="mb-4">
+        <div class="card p-4 shadow-sm border-light rounded">
+          <h5 class="card-title mb-3" style="font-weight: bold">Description</h5>
+          <p class="card-text" style="font-size: 1.1rem; color: #555">
+            {{ product.description }}
+          </p>
         </div>
-
-        <!-- Brand & Discount Cards -->
-        <div class="row">
-            <!-- Brand Card -->
-            <div class="col-md-6 mb-3">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-cogs fa-2x text-warning mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">{{ product.brand }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Brand</p>
-                </div>
-            </div>
-
-            <!-- Discount Card -->
-            <div class="col-md-6 mb-3">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-percent fa-2x text-danger mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">${{ product.discountAmount }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Discount Amount</p>
-                </div>
-            </div>
+      </div>
+      <!-- Price Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-dollar-sign fa-2x text-primary mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              ${{ product.price }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Price</p>
         </div>
+      </div>
 
-        <!-- Final Price Card -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="card p-3 shadow-sm border-light rounded">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-credit-card fa-2x text-secondary mr-3"></i>
-                        <h5 class="card-title mb-0" style="font-weight: bold;">${{ product.finalPrice }}</h5>
-                    </div>
-                    <p class="card-text text-muted">Final Price</p>
-                </div>
-            </div>
+      <!-- Stock Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-box-open fa-2x text-success mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              {{ product.stock }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Stock Available</p>
         </div>
+      </div>
 
-        <div class="d-flex justify-content-between mb-4">
-            <button class="btn btn-warning" (click)="editProduct(product)"
-                style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease;">
-                Edit
-            </button>
-            <button class="btn btn-danger" (click)="deleteProduct()"
-                style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease;">
-                Delete
-            </button>
+      <!-- Category Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-tags fa-2x text-info mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              {{ product.subCategoryName }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Sub Category</p>
         </div>
-        <button class="btn btn-secondary mt-3" routerLink="/manageproducts"
-            style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease;">
-            Back to Products
-        </button>
+      </div>
     </div>
+
+    <!-- Brand & Discount Cards -->
+    <div class="row">
+      <!-- Brand Card -->
+      <div class="col-md-6 mb-3">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-cogs fa-2x text-warning mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              {{ product.brand }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Brand</p>
+        </div>
+      </div>
+
+      <!-- Discount Card -->
+      <div class="col-md-6 mb-3">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-percent fa-2x text-danger mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              ${{ product.discountAmount }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Discount Amount</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Price Card -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="card p-3 shadow-sm border-light rounded">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-credit-card fa-2x text-secondary mr-3"></i>
+            <h5 class="card-title mb-0" style="font-weight: bold">
+              ${{ product.finalPrice }}
+            </h5>
+          </div>
+          <p class="card-text text-muted">Final Price</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mb-4">
+      <button
+        class="btn btn-warning"
+        (click)="editProduct(product)"
+        style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease"
+      >
+        Edit
+      </button>
+      <button
+        class="btn btn-danger"
+        (click)="deleteProduct()"
+        style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease"
+      >
+        Delete
+      </button>
+    </div>
+    <button
+      class="btn btn-secondary mt-3"
+      routerLink="/manageproducts"
+      style="border-radius: 5px; font-weight: bold; transition: all 0.3s ease"
+    >
+      Back to Products
+    </button>
+  </div>
 </div>
 <!-- Edit Product Modal -->
-<div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog" (click)="closeModal()">
-    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
-        <div class="modal-content">
-            <div class="modal-header">
+<div
+  class="modal fade show"
+  [ngClass]="{ 'd-block': isModalOpen }"
+  tabindex="-1"
+  role="dialog"
+  (click)="closeModal()"
+>
+  <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Product</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form for editing the product -->
+        <!-- Edit Product Modal -->
+        <div
+          class="modal fade show"
+          [ngClass]="{ 'd-block': isModalOpen }"
+          tabindex="-1"
+          role="dialog"
+          (click)="closeModal()"
+        >
+          <div
+            class="modal-dialog"
+            role="document"
+            (click)="$event.stopPropagation()"
+          >
+            <div class="modal-content rounded-3 shadow-lg">
+              <div class="modal-header border-0">
                 <h5 class="modal-title">Edit Product</h5>
-                <button type="button" class="close" (click)="closeModal()">
-                    <span>&times;</span>
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="closeModal()"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="updateProduct()">
+                  <!-- Product Name Field -->
+                  <div class="mb-3">
+                    <label for="productName" class="form-label"
+                      >Product Name</label
+                    >
+                    <input
+                      type="text"
+                      id="productName"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.name"
+                      name="name"
+                      required
+                    />
+                  </div>
+
+                  <!-- Price Field -->
+                  <div class="mb-3">
+                    <label for="productPrice" class="form-label">Price</label>
+                    <input
+                      type="number"
+                      id="productPrice"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.price"
+                      name="price"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="productDA" class="form-label"
+                      >Discount Amount</label
+                    >
+                    <textarea
+                      id="productDA"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.discountAmount"
+                      name="discountamount"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <!-- Description Field -->
+                  <div class="mb-3">
+                    <label for="productDescription" class="form-label"
+                      >Description</label
+                    >
+                    <textarea
+                      id="productDescription"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.description"
+                      name="description"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="productbrand" class="form-label">brand</label>
+                    <textarea
+                      id="productbrand"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.brand"
+                      name="brand"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="productcolor" class="form-label">color</label>
+                    <textarea
+                      id="productcolor"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.color"
+                      name="color"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="productstock" class="form-label">stock</label>
+                    <textarea
+                      id="productstock"
+                      class="form-control"
+                      [(ngModel)]="selectedProduct.stock"
+                      name="stock"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <!-- Submit Button -->
+                  <button type="submit" class="btn btn-primary w-100">
+                    Update Product
+                  </button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="closeModal()"
+                >
+                  Close
                 </button>
+              </div>
             </div>
-            <div class="modal-body">
-                <!-- Form for editing the product -->
-                <!-- Edit Product Modal -->
-                <div class="modal fade show" [ngClass]="{'d-block': isModalOpen}" tabindex="-1" role="dialog"
-                    (click)="closeModal()">
-                    <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
-                        <div class="modal-content rounded-3 shadow-lg">
-                            <div class="modal-header border-0">
-                                <h5 class="modal-title">Edit Product</h5>
-                                <button type="button" class="btn-close" (click)="closeModal()"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form (ngSubmit)="updateProduct()">
-                                    <!-- Product Name Field -->
-                                    <div class="mb-3">
-                                        <label for="productName" class="form-label">Product Name</label>
-                                        <input type="text" id="productName" class="form-control"
-                                            [(ngModel)]="selectedProduct.name" name="name" required>
-                                    </div>
-
-                                    <!-- Price Field -->
-                                    <div class="mb-3">
-                                        <label for="productPrice" class="form-label">Price</label>
-                                        <input type="number" id="productPrice" class="form-control"
-                                            [(ngModel)]="selectedProduct.price" name="price" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="productDA" class="form-label">Discount Amount</label>
-                                        <textarea id="productDA" class="form-control"
-                                            [(ngModel)]="selectedProduct.discountAmount " name="discountamount" rows="3"
-                                            required></textarea>
-                                    </div>
-                                    <!-- Description Field -->
-                                    <div class="mb-3">
-                                        <label for="productDescription" class="form-label">Description</label>
-                                        <textarea id="productDescription" class="form-control"
-                                            [(ngModel)]="selectedProduct.description" name="description" rows="3"
-                                            required></textarea>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="productbrand" class="form-label">brand</label>
-                                        <textarea id="productbrand" class="form-control"
-                                            [(ngModel)]="selectedProduct.brand" name="brand" rows="3"
-                                            required></textarea>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="productcolor" class="form-label">color</label>
-                                        <textarea id="productcolor" class="form-control"
-                                            [(ngModel)]="selectedProduct.color " name="color" rows="3"
-                                            required></textarea>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="productstock" class="form-label">stock</label>
-                                        <textarea id="productstock" class="form-control"
-                                            [(ngModel)]="selectedProduct.stock " name="stock" rows="3"
-                                            required></textarea>
-                                    </div>
-                                    <!-- Submit Button -->
-                                    <button type="submit" class="btn btn-primary w-100">Update Product</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

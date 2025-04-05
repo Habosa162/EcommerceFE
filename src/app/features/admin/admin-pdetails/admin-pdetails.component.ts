@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  OnInit,
+} from '@angular/core';
 import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../Services/product.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -36,7 +42,13 @@ export class AdminPDetailsComponent implements OnInit {
     stockQuantity: 0,
   };
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private zone: NgZone,
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const productId = +this.route.snapshot.paramMap.get('id')!;
@@ -45,10 +57,9 @@ export class AdminPDetailsComponent implements OnInit {
         this.product = product;
         this.calculateFinalPrice();
       },
-      error: (err) => console.error('Error fetching product details:', err)
+      error: (err) => console.error('Error fetching product details:', err),
     });
   }
-
 
   editProduct(product: Product): void {
     this.selectedProduct = { ...product };
@@ -64,31 +75,42 @@ export class AdminPDetailsComponent implements OnInit {
     // Append all product fields to the FormData
     formData.append('name', this.selectedProduct.name);
     formData.append('price', this.selectedProduct.price.toString());
-    formData.append('discountamount', this.selectedProduct.discountAmount.toString());
+    formData.append(
+      'discountamount',
+      this.selectedProduct.discountAmount.toString()
+    );
     formData.append('description', this.selectedProduct.description);
-    formData.append('subCategoryId', this.selectedProduct.subCategoryId.toString());
+    formData.append(
+      'subCategoryId',
+      this.selectedProduct.subCategoryId.toString()
+    );
     formData.append('stock', this.selectedProduct.stock);
     formData.append('color', this.selectedProduct.color);
     formData.append('brand', this.selectedProduct.brand);
-
-
-
 
     // Check if the image is a file and append it to the FormData
     if (this.selectedProduct.imageUrl instanceof File) {
       formData.append('imageUrl', this.selectedProduct.imageUrl);
     }
 
-    this.productService.updateProduct(formData, this.selectedProduct.id).subscribe(
-      (response: any) => {
-        alert('Product updated successfully:');
-        this.changeDetectorRef.detectChanges();
-        this.closeModal();
-      },
-      (error) => {
-        console.error('Error updating product:', error);
-      }
-    );
+    this.productService
+      .updateProduct(formData, this.selectedProduct.id)
+      .subscribe(
+        (response: any) => {
+          alert('Product updated successfully:');
+
+          // this.zone.run(() => {
+          //   this.selectedProduct = response.updatedProduct; // Update the product in your local state
+          this.closeModal(); // Close the modal
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 10);
+        },
+        (error) => {
+          console.error('Error updating product:', error);
+        }
+      );
   }
 
   calculateFinalPrice(): void {
@@ -100,17 +122,17 @@ export class AdminPDetailsComponent implements OnInit {
   }
 
   deleteProduct(): void {
-    if (this.product && confirm('Are you sure you want to delete this product?')) {
-
+    if (
+      this.product &&
+      confirm('Are you sure you want to delete this product?')
+    ) {
       this.productService.deleteProduct(this.product.id).subscribe({
         next: () => {
           alert('Product deleted successfully!');
           this.router.navigate(['/manageproducts']);
         },
-        error: (err) => console.error('Error deleting product:', err)
+        error: (err) => console.error('Error deleting product:', err),
       });
     }
   }
 }
-
-

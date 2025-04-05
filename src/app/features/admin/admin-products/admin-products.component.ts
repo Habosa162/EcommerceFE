@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-admin-products',
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './admin-products.component.html',
-  styleUrl: './admin-products.component.css'
+  styleUrl: './admin-products.component.css',
 })
 export class AdminProductsComponent implements OnInit {
   products: Product[] = [];
@@ -44,8 +44,11 @@ export class AdminProductsComponent implements OnInit {
     priceRange: '',
     stockQuantity: 0,
   };
-  constructor(private productservice: ProductService, private subcategoriesservice: SubCategoryService,
-    private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private productservice: ProductService,
+    private subcategoriesservice: SubCategoryService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -55,13 +58,13 @@ export class AdminProductsComponent implements OnInit {
   fetchProducts(): void {
     this.productservice.getAllProducts().subscribe({
       next: (products) => {
-        this.products = products.map(product => ({
+        this.products = products.map((product) => ({
           ...product,
-          id: Number(product.id)
+          id: Number(product.id),
         }));
         this.filteredProducts = this.products;
       },
-      error: (err) => console.error('Error fetching products:', err)
+      error: (err) => console.error('Error fetching products:', err),
     });
   }
 
@@ -70,14 +73,17 @@ export class AdminProductsComponent implements OnInit {
       next: (subcategories) => {
         this.categories = subcategories;
       },
-      error: (err) => console.error('Error fetching categories:', err)
+      error: (err) => console.error('Error fetching categories:', err),
     });
   }
 
   filterProducts(): void {
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
-      (this.selectedCategory ? product.subCategoryName === this.selectedCategory : true)
+    this.filteredProducts = this.products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+        (this.selectedCategory
+          ? product.subCategoryName === this.selectedCategory
+          : true)
     );
   }
 
@@ -86,6 +92,8 @@ export class AdminProductsComponent implements OnInit {
       this.filteredProducts.sort((a, b) => a.price - b.price);
     } else if (this.selectedSort === 'price-desc') {
       this.filteredProducts.sort((a, b) => b.price - a.price);
+    } else if (this.selectedSort === '') {
+      this.filteredProducts.sort((a, b) => b.stock - a.stock);
     }
   }
 
@@ -101,7 +109,6 @@ export class AdminProductsComponent implements OnInit {
     }
   }
 
-
   closeModal(): void {
     this.isModalOpen = false;
   }
@@ -113,41 +120,44 @@ export class AdminProductsComponent implements OnInit {
     formData.append('name', this.selectedProduct.name);
     formData.append('price', this.selectedProduct.price.toString());
     formData.append('description', this.selectedProduct.description);
-    formData.append('subCategoryId', this.selectedProduct.subCategoryId.toString());
+    formData.append(
+      'subCategoryId',
+      this.selectedProduct.subCategoryId.toString()
+    );
     formData.append('stock', this.selectedProduct.stock.toString());
-
 
     // Check if the image is a file and append it to the FormData
     if (this.selectedProduct.imageUrl instanceof File) {
       formData.append('imageUrl', this.selectedProduct.imageUrl);
     }
 
-
-    this.productservice.updateProduct(formData, this.selectedProduct.id).subscribe(
-      (response: any) => {
-        console.log('Product updated successfully:', response.message);
-        this.fetchProducts();
-        this.closeModal();
-      },
-      (error) => {
-        console.error('Error updating product:', error);
-      }
-    );
+    this.productservice
+      .updateProduct(formData, this.selectedProduct.id)
+      .subscribe(
+        (response: any) => {
+          console.log('Product updated successfully:', response.message);
+          this.fetchProducts();
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error updating product:', error);
+        }
+      );
   }
-
 
   deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productservice.deleteProduct(id).subscribe({
         next: () => {
-          this.products = this.products.filter(p => p.id !== id);
-          this.filteredProducts = this.filteredProducts.filter(p => p.id !== id);
+          this.products = this.products.filter((p) => p.id !== id);
+          this.filteredProducts = this.filteredProducts.filter(
+            (p) => p.id !== id
+          );
           alert('Product deleted successfully!');
           this.changeDetectorRef.detectChanges();
         },
-        error: (err) => console.error('Error deleting product:', err)
+        error: (err) => console.error('Error deleting product:', err),
       });
     }
   }
 }
-

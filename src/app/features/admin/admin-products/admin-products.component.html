@@ -1,69 +1,96 @@
 <div class="container-fluid mb-4 p-3 bg-light rounded shadow-sm">
-    <div class="row g-3">
-        <!-- Sidebar for Filters -->
-        <div class="col-md-3">
-            <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold text-primary mb-3">Filter by Category</h5>
-                <select class="form-select mb-3" [(ngModel)]="selectedCategory" (change)="filterProducts()">
-                    <option value="">All Categories</option>
-                    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
-                </select>
+  <div class="row g-3">
+    <!-- Sidebar for Filters -->
+    <div class="col-md-3">
+      <div class="bg-white p-4 rounded shadow-sm">
+        <h5 class="fw-bold text-primary mb-3">Filter by Category</h5>
+        <select
+          class="form-select mb-3"
+          [(ngModel)]="selectedCategory"
+          (change)="filterProducts()"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.name">
+            {{ category.name }}
+          </option>
+        </select>
 
-                <h5 class="fw-bold text-primary mb-3">Sort By</h5>
-                <select class="form-select" [(ngModel)]="selectedSort" (change)="sortProducts()">
-                    <option value="">Default</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                </select>
-                <div class="mt-4">
-                    <h4>Quick Actions</h4>
-                    <button class="btn btn-primary me-2" routerLink="/createproduct">
-                        <i class="bi bi-plus-circle"></i> Add Product
-                    </button>
-
-                </div>
-
-            </div>
+        <h5 class="fw-bold text-primary mb-3">Sort By</h5>
+        <select
+          class="form-select"
+          [(ngModel)]="selectedSort"
+          (change)="sortProducts()"
+        >
+          <option value="">Default</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+        </select>
+        <div class="mt-4">
+          <h4>Quick Actions</h4>
+          <button class="btn btn-primary me-2" routerLink="/createproduct">
+            <i class="bi bi-plus-circle"></i> Add Product
+          </button>
         </div>
+      </div>
+    </div>
 
-        <!-- Product List Section -->
-        <div class="col-md-9">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="filterProducts()"
-                    placeholder="Search products..." />
-            </div>
+    <!-- Product List Section -->
+    <div class="col-md-9">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="filterProducts()"
+          placeholder="Search products..."
+        />
+      </div>
 
-            <div class="row g-4">
-                <div *ngFor="let product of filteredProducts" class="col-md-4">
-                    <div class="card product-card h-100 border-0 shadow-lg rounded-3"
-                        style="transition: all 0.3s ease-in-out;">
-                        <div class="position-relative">
-                            <!-- Image (use a placeholder if no image is available) -->
-                            <img [src]="product.imageUrl " [alt]="product.name"
-                                class="card-img-top p-3 rounded-3 product-image" />
+      <div class="row g-4">
+        <div *ngFor="let product of filteredProducts" class="col-md-4">
+          <div
+            class="card product-card h-100 border-0 shadow-lg rounded-3"
+            style="transition: all 0.3s ease-in-out"
+          >
+            <div class="position-relative">
+              <!-- Image (use a placeholder if no image is available) -->
+              <img
+                [src]="product.imageUrl"
+                [alt]="product.name"
+                class="card-img-top p-3 rounded-3 product-image"
+              />
 
-                            <!-- Action Buttons (Edit & Delete) -->
-                            <!-- <div class="product-actions position-absolute top-0 end-0 p-3">
+              <!-- Action Buttons (Edit & Delete) -->
+              <!-- <div class="product-actions position-absolute top-0 end-0 p-3">
                                 <button class="btn btn-warning me-2" (click)="editProduct(product)"><i
                                         class="bi bi-pencil"></i></button>
                                 <button class="btn btn-danger" (click)="deleteProduct(product.id)"><i
                                         class="bi bi-trash"></i></button>
                             </div> -->
-                        </div>
-
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-truncate" style="max-width: 100%; overflow: hidden;">{{
-                                product.name }}</h5>
-                            <p class="text-danger fw-bold">${{ product.finalPrice }}</p>
-                            <!-- See Details Button -->
-                            <a [routerLink]="['/product-details', product.id]" class="btn btn-info w-100">See
-                                Details</a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <p *ngIf="filteredProducts.length === 0" class="text-center mt-4">No products match your search.</p>
+            <div class="card-body text-center">
+              <h5
+                class="card-title text-truncate"
+                style="max-width: 100%; overflow: hidden"
+              >
+                {{ product.name }}
+              </h5>
+              <p class="text-danger fw-bold">${{ product.finalPrice }}</p>
+              <!-- See Details Button -->
+              <a
+                [routerLink]="['/product-details', product.id]"
+                class="btn btn-info w-100"
+                >See Details</a
+              >
+            </div>
+          </div>
         </div>
+      </div>
+
+      <p *ngIf="filteredProducts.length === 0" class="text-center mt-4">
+        No products match your search.
+      </p>
     </div>
+  </div>
 </div>
