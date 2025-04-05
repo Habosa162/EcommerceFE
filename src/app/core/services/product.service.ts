@@ -177,8 +177,8 @@
 //         const updatedProduct = {
 //           ...this.faceProducts[index],
 //           ...product,
-//           finalPrice: product.price ? 
-//             (product.price - (product.discountAmount || this.faceProducts[index].discountAmount)) : 
+//           finalPrice: product.price ?
+//             (product.price - (product.discountAmount || this.faceProducts[index].discountAmount)) :
 //             this.faceProducts[index].finalPrice
 //         };
 //         this.faceProducts[index] = updatedProduct;
@@ -212,8 +212,8 @@
 //   // ==================== FILTERING METHODS ====================
 //   getProductsByCategory(category: string): Observable<Product[]> {
 //     if (this.useMockData) {
-//       const filtered = this.faceProducts.filter(p => 
-//         p.category.toLowerCase() === category.toLowerCase() || 
+//       const filtered = this.faceProducts.filter(p =>
+//         p.category.toLowerCase() === category.toLowerCase() ||
 //         p.subCategoryName.toLowerCase() === category.toLowerCase()
 //       );
 //       return of(filtered).pipe(delay(400));
@@ -227,7 +227,7 @@
 
 //   getProductsByPriceRange(min: number, max: number): Observable<Product[]> {
 //     if (this.useMockData) {
-//       const filtered = this.faceProducts.filter(p => 
+//       const filtered = this.faceProducts.filter(p =>
 //         p.finalPrice >= min && p.finalPrice <= max
 //       );
 //       return of(filtered).pipe(delay(400));
@@ -241,7 +241,7 @@
 
 //   getProductsByBrand(brand: string): Observable<Product[]> {
 //     if (this.useMockData) {
-//       const filtered = this.faceProducts.filter(p => 
+//       const filtered = this.faceProducts.filter(p =>
 //         p.brand.toLowerCase() === brand.toLowerCase()
 //       );
 //       return of(filtered).pipe(delay(400));
@@ -256,7 +256,7 @@
 //   // ==================== REVIEW METHODS ====================
 //   addReview(productId: number, review: Omit<Review, 'productId'>): Observable<Review> {
 //     const fullReview: Review = { ...review, productId };
-    
+
 //     if (this.useMockData) {
 //       const product = this.faceProducts.find(p => p.id === productId);
 //       if (product) {
@@ -293,8 +293,8 @@
 
 //     if (this.useMockData) {
 //       const searchTerm = query.toLowerCase();
-//       const filtered = this.faceProducts.filter(p => 
-//         p.name.toLowerCase().includes(searchTerm) || 
+//       const filtered = this.faceProducts.filter(p =>
+//         p.name.toLowerCase().includes(searchTerm) ||
 //         p.description.toLowerCase().includes(searchTerm) ||
 //         p.brand.toLowerCase().includes(searchTerm)
 //       );
@@ -353,12 +353,12 @@
 //     // Mock implementation - gets products from same category excluding current product
 //     const currentProduct = this.faceProducts.find(p => p.id === productId);
 //     if (!currentProduct) return of([]);
-    
-//     const related = this.faceProducts.filter(p => 
-//       p.category === currentProduct.category && 
+
+//     const related = this.faceProducts.filter(p =>
+//       p.category === currentProduct.category &&
 //       p.id !== productId
 //     ).slice(0, 4); // Return max 4 related products
-    
+
 //     return of(related).pipe(delay(300));
 //   }
 
@@ -386,7 +386,7 @@
 //   // ==================== PRIVATE HELPERS ====================
 //   private mapToProductModel(product: any): Product {
 //     const finalPrice = product.price - (product.discountAmount || 0);
-    
+
 //     return {
 //       id: product.id,
 //       name: product.name,
@@ -428,31 +428,35 @@
 //   private handleError<T>(operation = 'operation', result?: T) {
 //     return (error: HttpErrorResponse): Observable<T> => {
 //       console.error(`${operation} failed:`, error);
-      
+
 //       let userMessage = 'An error occurred';
 //       if (error.error instanceof ErrorEvent) {
 //         userMessage = `A client error occurred: ${error.error.message}`;
 //       } else {
 //         userMessage = `Server returned code ${error.status}: ${error.message}`;
 //       }
-      
+
 //       // In a real app, you might send the error to remote logging infrastructure
 //       // and display a user-friendly message
-      
+
 //       return of(result as T);
 //     };
 //   }
 // }
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Product, Review } from '../models/product.model';
 import { environment } from '../../Services/enviroment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private baseUrl = environment.apiUrl;
@@ -460,7 +464,7 @@ export class ProductService {
   private categoriesUrl = `${this.baseUrl}/categories`;
   private reviewsUrl = `${this.baseUrl}/reviews`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // ==================== CORE METHODS ====================
   // getProducts(): Observable<any[]> {
@@ -480,57 +484,63 @@ export class ProductService {
   //   );
   // }
   getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.productsUrl}/${id}`).pipe(
-      catchError(this.handleError<Product>('getProductById'))
-    );
+    return this.http
+      .get<Product>(`${this.productsUrl}/${id}`)
+      .pipe(catchError(this.handleError<Product>('getProductById')));
   }
-  
+
   getCategories(): Observable<string[]> {
-    return this.http.get<string[]>(this.categoriesUrl).pipe(
-      catchError(this.handleError<string[]>('getCategories', []))
-    );
+    return this.http
+      .get<string[]>(this.categoriesUrl)
+      .pipe(catchError(this.handleError<string[]>('getCategories', [])));
   }
 
   // ==================== REVIEW METHODS ====================
   addReview(review: Review): Observable<Review> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Review>(this.reviewsUrl, review, { headers }).pipe(
-      catchError(this.handleError<Review>('addReview'))
-    );
+    return this.http
+      .post<Review>(this.reviewsUrl, review, { headers })
+      .pipe(catchError(this.handleError<Review>('addReview')));
   }
 
   getReviewsByProductId(productId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.reviewsUrl}/${productId}`).pipe(
-      catchError(this.handleError<Review[]>('getReviewsByProductId', []))
-    );
+    return this.http
+      .get<Review[]>(`${this.reviewsUrl}/${productId}`)
+      .pipe(
+        catchError(this.handleError<Review[]>('getReviewsByProductId', []))
+      );
   }
 
   // ==================== FRONTEND FILTERING METHODS ====================
   getProductsByCategory(category: string): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => products.filter(p => 
-        p.category.toLowerCase() === category.toLowerCase() || 
-        p.subCategoryName.toLowerCase() === category.toLowerCase()
-      ))
+      map((products) =>
+        products.filter(
+          (p) =>
+            p.category.toLowerCase() === category.toLowerCase() ||
+            p.subCategoryName.toLowerCase() === category.toLowerCase()
+        )
+      )
     );
   }
-  
 
   getProductsByPriceRange(min: number, max: number): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => products.filter(p => 
-        p.finalPrice >= min && p.finalPrice <= max
-      ))
+      map((products) =>
+        products.filter((p) => p.finalPrice >= min && p.finalPrice <= max)
+      )
     );
   }
 
   getProductsByBrand(brand: string): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => products.filter(p => 
-        p.brand.toLowerCase() === brand.toLowerCase()
-      ))
+      map((products) =>
+        products.filter((p) => p.brand.toLowerCase() === brand.toLowerCase())
+      )
     );
   }
+
+
 
   searchProducts(query: string): Observable<Product[]> {
     if (!query.trim()) {
@@ -539,62 +549,67 @@ export class ProductService {
 
     const searchTerm = query.toLowerCase();
     return this.getProducts().pipe(
-      map(products => products.filter(p => 
-        p.name.toLowerCase().includes(searchTerm) || 
-        p.description.toLowerCase().includes(searchTerm) ||
-        (p.brand && p.brand.toLowerCase().includes(searchTerm))
-      ))
+      map((products) =>
+        products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(searchTerm) ||
+            p.description.toLowerCase().includes(searchTerm) ||
+            (p.brand && p.brand.toLowerCase().includes(searchTerm))
+        )
+      )
     );
   }
 
   getFeaturedProducts(): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => products.filter(p => p.avgRate >= 4.5).slice(0, 4))
+      map((products) => products.filter((p) => p.avgRate >= 4.5).slice(0, 4))
     );
   }
 
   getDiscountedProducts(): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => products.filter(p => p.discountAmount > 0))
+      map((products) => products.filter((p) => p.discountAmount > 0))
     );
   }
 
   getNewArrivals(): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => [...products]
-        .sort((a, b) => b.id - a.id) // Assuming newer products have higher IDs
-        .slice(0, 4))
+      map((products) =>
+        [...products]
+          .sort((a, b) => b.id - a.id) // Assuming newer products have higher IDs
+          .slice(0, 4)
+      )
     );
   }
 
   getRelatedProducts(productId: number): Observable<Product[]> {
     return this.getProducts().pipe(
-      map(products => {
-        const currentProduct = products.find(p => p.id === productId);
+      map((products) => {
+        const currentProduct = products.find((p) => p.id === productId);
         if (!currentProduct) return [];
-        
-        return products.filter(p => 
-          p.category === currentProduct.category && 
-          p.id !== productId
-        ).slice(0, 4);
+
+        return products
+          .filter(
+            (p) => p.category === currentProduct.category && p.id !== productId
+          )
+          .slice(0, 4);
       })
     );
   }
 
   getBrands(): Observable<string[]> {
     return this.getProducts().pipe(
-      map(products => {
-        const brands = [...new Set(products.map(p => p.brand))];
-        return brands.filter(brand => brand !== null && brand !== undefined);
+      map((products) => {
+        const brands = [...new Set(products.map((p) => p.brand))];
+        return brands.filter((brand) => brand !== null && brand !== undefined);
       })
     );
   }
-  
 
   // ==================== PRIVATE HELPERS ====================
   private mapToProductModel(product: any): Product {
     const finalPrice = product.price - (product.discountAmount || 0);
-    
+
     return {
       id: product.id,
       name: product.name,
@@ -616,7 +631,7 @@ export class ProductService {
       reviewCount: product.reviewCount || 0,
       priceRange: this.getPriceRange(finalPrice),
       stockQuantity: product.stockQuantity || product.stock,
-      reviews: product.reviews || []
+      reviews: product.reviews || [],
     };
   }
 
@@ -631,14 +646,14 @@ export class ProductService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: HttpErrorResponse): Observable<T> => {
       console.error(`${operation} failed:`, error);
-      
+
       let userMessage = 'An error occurred';
       if (error.error instanceof ErrorEvent) {
         userMessage = `A client error occurred: ${error.error.message}`;
       } else {
         userMessage = `Server returned code ${error.status}: ${error.message}`;
       }
-      
+
       return of(result as T);
     };
   }

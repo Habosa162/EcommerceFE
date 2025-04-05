@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <div class="container ">
+  <div class="container">
     <a
       class="navbar-brand align-middle d-flex align-items-center me-lg-4"
       href="#"
@@ -7,103 +7,130 @@
       <img width="50" src="/assets/imgs/shopping-bag.png" alt="" />
       <span class="fw-bold mainColor fs-4 d-none d-md-block">VerdiShop</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+          <a class="nav-link active" aria-current="page" routerLink="/home"
+            >Home</a
+          >
         </li>
-              <!-- Categories Dropdown -->
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link"
-          href="#"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Categories <i class="fa-solid fa-angle-down align-middle"></i>
-        </a>
-
         <!-- Categories Dropdown -->
-        <!-- Categories Dropdown -->
-        <!-- Categories Dropdown -->
-        <!-- Categories Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Categories <i class="fa-solid fa-angle-down align-middle"></i>
+          </a>
 
-        <ul class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white">
-          <li><a class="dropdown-item fs-4" href="#">Our Categories</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <div class="d-flex gap-4 flex-wrap">
-              <!-- Loop through categories -->
-              <div *ngFor="let category of categories" class="dropdown-item-container w-100">
-                <!-- Category with image and name -->
-                <a class="dropdown-item catdropdown rounded-1 w-100" 
-                [routerLink]="['/products']" 
-                [queryParams]="{category: category.name}">
-               <img [src]="category.imgUrl" [alt]="category.name" 
-                    width="50" height="50" class="rounded-1">
-               {{ category.name }}
-             </a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </li>
+          <!-- Categories Dropdown -->
+          <!-- Categories Dropdown -->
+          <!-- Categories Dropdown -->
+          <!-- Categories Dropdown -->
 
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/products">Products</a>
-      </li>
-
-
-
-  <!-- WhisList -->
-      <li class="nav-item  d-flex align-items-center WishList text-center">
-        <a routerLink="/wishlist" class="text-black-50 p-1 text-decoration-none" aria-current="page">
-          <i class="d-lg-none">WishList</i>
-          <i class="fa-solid fa-heart fs-4 px-2"></i>
-        </a>
-      </li>
-
-            <!-- Cart -->
-            <li class="nav-item d-flex align-items-center Cart">
-              <a routerLink="/cart" class="position-relative text-black-50 p-1 text-decoration-none" aria-current="page">
-                <i class="d-lg-none">Cart</i>
-                <i class="fa-solid fa-cart-shopping fs-4 p-xs-2"></i>
-                <span
-                  class="position-absolute top-0 d-sm-none d-xs-none d-md-block  start-100 translate-middle badge rounded-circle bg-danger cart"
+          <ul
+            class="dropdown-menu position-absolute p-4 border-0 shadow-sm bg-white"
+          >
+            <li><a class="dropdown-item fs-4" href="#">Our Categories</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <div class="d-flex gap-4 flex-wrap">
+                <!-- Loop through categories -->
+                <div
+                  *ngFor="let category of categories"
+                  class="dropdown-item-container w-100"
                 >
-                  {{ cartCount() }}
-                </span>
-              </a>
+                  <!-- Category with image and name -->
+                  <a
+                    class="dropdown-item catdropdown rounded-1 w-100"
+                    [routerLink]="['/products']"
+                    [queryParams]="{ category: category.name }"
+                  >
+                    <img
+                      [src]="category.imgUrl"
+                      [alt]="category.name"
+                      width="50"
+                      height="50"
+                      class="rounded-1"
+                    />
+                    {{ category.name }}
+                  </a>
+                </div>
+              </div>
             </li>
+          </ul>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/products">Products</a>
+        </li>
+
+        <!-- WhisList -->
+        <li class="nav-item d-flex align-items-center WishList text-center">
+          <a
+            routerLink="/wishlist"
+            class="text-black-50 p-1 text-decoration-none"
+            aria-current="page"
+          >
+            <i class="d-lg-none">WishList</i>
+            <i class="fa-solid fa-heart fs-4 px-2"></i>
+          </a>
+        </li>
+
+        <!-- Cart -->
+        <li class="nav-item d-flex align-items-center Cart">
+          <a
+            routerLink="/cart"
+            class="position-relative text-black-50 p-1 text-decoration-none"
+            aria-current="page"
+          >
+            <i class="d-lg-none">Cart</i>
+            <i class="fa-solid fa-cart-shopping fs-4 p-xs-2"></i>
+            <span
+              class="position-absolute top-0 d-sm-none d-xs-none d-md-block start-100 translate-middle badge rounded-circle bg-danger cart"
+            >
+              {{ cartCount() }}
+            </span>
+          </a>
+        </li>
       </ul>
-<!-- END OF THE FIRST UNORDERED LIST -->
-
-
+      <!-- END OF THE FIRST UNORDERED LIST -->
 
       <form class="position-relative mx-auto d-none d-lg-flex" role="search">
         <div class="search-container d-flex">
-          <input
-            class="form-control me-2 rounded-pill"
-            type="search"
-            [(ngModel)]="searchQuery"
-            (input)="onSearchInput()"
-            placeholder="Search products..."
-            aria-label="Search"
-            name="search"
-          />
+          <div class="position-relative w-100" #searchResultItemsContainer>
+            <input
+              class="form-control me-2 rounded-pill"
+              type="search"
+              [(ngModel)]="searchQuery"
+              (input)="onSearchChange(searchQuery)"
+              (focus)="showSearchResults = true"
+              placeholder="Search products..."
+              aria-label="Search"
+              name="search"
+            />
+          </div>
           <button class="btn position-absolute end-0 me-2" type="button">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
 
           <!-- Search Results Dropdown -->
           <div
-            *ngIf="showSearchResults && searchQuery"
+            *ngIf="searchResults.length && showSearchResults"
             class="search-results-dropdown"
           >
             <div *ngIf="searchResults.length > 0; else noResults">
@@ -114,6 +141,7 @@
                 <a
                   routerLink="/products/{{ result.id }}"
                   class="d-flex align-items-center p-2"
+                  (click)="showSearchResults = false; searchQuery = ''"
                 >
                   <div class="flex-grow-1">
                     <div class="fw-bold">{{ result.name }}</div>
@@ -132,33 +160,49 @@
         </div>
       </form>
 
-
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
         <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              *ngIf="authService.getUserData()?.ProfileImg"
+              [src]="authService.getUserData().ProfileImg"
+              class="rounded-circle"
+              width="50px"
+              height="50px"
+              alt="User Profile"
+            />
 
-            <img *ngIf="authService.getUserData()?.ProfileImg" [src]="authService.getUserData().ProfileImg" class="rounded-circle" width="50px" height="50px" alt="User Profile">
-
-            <i *ngIf="!authService.getUserData()?.ProfileImg" class="fa-regular fa-circle-user fs-4"></i>
+            <i
+              *ngIf="!authService.getUserData()?.ProfileImg"
+              class="fa-regular fa-circle-user fs-4"
+            ></i>
 
             {{ authService.getUserData()?.Name }}
           </a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="/order-history">Orders</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button class="dropdown-item" (click)="authService.logout()">Logout</button></li>
+            <li>
+              <a class="dropdown-item" routerLink="/order-history">Orders</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button class="dropdown-item" (click)="authService.logout()">
+                Logout
+              </button>
+            </li>
           </ul>
         </li>
         <li class="nav-item" *ngIf="!authService.isLoggedIn()">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
-
-
-
       </ul>
-
     </div>
   </div>
 </nav>
