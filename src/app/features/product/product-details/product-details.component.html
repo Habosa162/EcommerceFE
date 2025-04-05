@@ -50,14 +50,14 @@
 
               <!-- Price -->
               <div class="product-pricing mb-4">
-                <span class="current-price fs-3 fw-bold text-danger">${{ product.finalPrice | number:'1.2-2' }}</span>
+                <span class="current-price fs-3 fw-bold text-danger">${{ (product.price - product.discountAmount)| number:'1.2-2' }}</span>
                 <span *ngIf="product.discountAmount > 0" class="original-price text-decoration-line-through text-muted ms-2">${{ product.price | number:'1.2-2' }}</span>
-                <span *ngIf="product.discountAmount > 0" class="discount-badge bg-danger text-white ms-2 px-2 py-1 rounded small">{{ product.discountAmount }}% OFF</span>
+                <span *ngIf="product.discountAmount > 0" class="discount-badge bg-danger text-white ms-2 px-2 py-1 rounded small">{{ product.discountAmount }} EGP OFF</span>
               </div>
 
               <!-- Stock Status -->
               <div class="stock-status mb-4">
-                <span class="badge" 
+                <span class="badge"
                       [ngClass]="{'bg-success': product.stock > 0, 'bg-danger': product.stock <= 0}">
                   {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
                 </span>
@@ -74,12 +74,12 @@
             'btn-outline-success': !isInCart(product),
             'btn-outline-danger': isInCart(product)
           }">
-    <i class="bi me-2" 
-       [class.bi-cart-plus]="!isInCart(product)" 
+    <i class="bi me-2"
+       [class.bi-cart-plus]="!isInCart(product)"
        [class.bi-cart-dash]="isInCart(product)"></i>
     {{ isInCart(product) ? 'Remove from Cart' : (product.stock > 0 ? 'Add to Cart' : 'Out of Stock') }}
   </button>
-  
+
   <!-- Wishlist Button -->
   <button class="btn btn-outline-success btn-lg px-3"
           (click)="addToWishlist(product)"
@@ -124,15 +124,15 @@
         <div class="product-tabs mt-5">
           <ul class="nav nav-tabs" id="productTabs" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="description-tab" data-bs-toggle="tab" 
-                      data-bs-target="#description" type="button" role="tab" 
+              <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                      data-bs-target="#description" type="button" role="tab"
                       aria-controls="description" aria-selected="true">
                 Description
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" 
-                      data-bs-target="#reviews" type="button" role="tab" 
+              <button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
+                      data-bs-target="#reviews" type="button" role="tab"
                       aria-controls="reviews" aria-selected="false">
                 Reviews ({{ product.reviewCount }})
               </button>
@@ -143,10 +143,10 @@
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
               <h4 class="mb-3">Product Description</h4>
               <p>{{ product.description }}</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex unde illum expedita dolore aut nostrum, 
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex unde illum expedita dolore aut nostrum,
                  quidem placerat laborum nemo, perspiciatis quae, sint tempore etiquid molestiae consequatur eum earum.</p>
             </div>
-            
+
             <!-- Reviews Tab -->
             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
               <div *ngIf="(!product?.reviews?.length || product?.reviews?.length === 0) && (!product?.reviewCount || product?.reviewCount === 0)"
@@ -155,7 +155,7 @@
                 <h5 class="mb-2">No reviews yet</h5>
                 <p class="text-muted">Be the first to review this product!</p>
               </div>
-              
+
               <div *ngFor="let review of product.reviews" class="review-card mb-4 p-3 border rounded">
                 <div class="review-header mb-2 d-flex align-items-center">
                   <div class="rating-stars">
@@ -187,7 +187,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="comment" class="form-label fw-bold">Your Review</label>
-                    <textarea class="form-control" id="comment" rows="3" 
+                    <textarea class="form-control" id="comment" rows="3"
                               [(ngModel)]="newReview.comment" name="comment" required></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary px-4 py-2">
