@@ -1,13 +1,21 @@
-<div class="admin-users-container">
-    <h2 class="text-center mb-4">Manage Users</h2>
+<div class="admin-users-container" style="background: 
+radial-gradient(circle at 76% 40%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 50%, rgba(29,29,29,0.04) 50%, rgba(29,29,29,0.04) 100%),
+radial-gradient(circle at 66% 16%, rgba(214,214,214,0.04) 0%, rgba(214,214,214,0.04) 50%, rgba(91,91,91,0.04) 50%, rgba(91,91,91,0.04) 100%),
+radial-gradient(circle at 86% 81%, rgba(192,192,192,0.04) 0%, rgba(192,192,192,0.04) 50%, rgba(73,73,73,0.04) 50%, rgba(73,73,73,0.04) 100%),
+linear-gradient(90deg, rgb(255,255,255), rgb(255,255,255))">
+    <!-- <h2 class="text-center mb-4">Manage Users</h2> -->
 
     <!-- Active Users List Cards -->
     <div *ngIf="activeUsers.length > 0">
-        <div class="card mb-4">
+        <div class="card mb-4 animate__animated animate__fadeInUp" style="background: 
+        radial-gradient(circle at 76% 40%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 50%, rgba(29,29,29,0.04) 50%, rgba(29,29,29,0.04) 100%),
+        radial-gradient(circle at 66% 16%, rgba(214,214,214,0.04) 0%, rgba(214,214,214,0.04) 50%, rgba(91,91,91,0.04) 50%, rgba(91,91,91,0.04) 100%),
+        radial-gradient(circle at 86% 81%, rgba(192,192,192,0.04) 0%, rgba(192,192,192,0.04) 50%, rgba(73,73,73,0.04) 50%, rgba(73,73,73,0.04) 100%),
+        linear-gradient(90deg, rgb(255,255,255), rgb(255,255,255))">
             <div class="card-header bg-success text-white">
                 <h3 class="mb-0">Active Users</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body animate__animated animate__fadeInRight animate__fadeInDown">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col" *ngFor="let user of activeUsers">
                         <div class="card shadow-sm border-light">
@@ -31,11 +39,19 @@
     </div>
 
     <!-- Spacer -->
-    <div class="my-4"></div>
+    <div class="my-4" style="background: 
+    radial-gradient(circle at 76% 40%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 50%, rgba(29,29,29,0.04) 50%, rgba(29,29,29,0.04) 100%),
+    radial-gradient(circle at 66% 16%, rgba(214,214,214,0.04) 0%, rgba(214,214,214,0.04) 50%, rgba(91,91,91,0.04) 50%, rgba(91,91,91,0.04) 100%),
+    radial-gradient(circle at 86% 81%, rgba(192,192,192,0.04) 0%, rgba(192,192,192,0.04) 50%, rgba(73,73,73,0.04) 50%, rgba(73,73,73,0.04) 100%),
+    linear-gradient(90deg, rgb(255,255,255), rgb(255,255,255))"></div>
 
     <!-- Inactive Users List Cards -->
     <div *ngIf="inactiveUsers.length > 0">
-        <div class="card mb-4">
+        <div class="card mb-4" style="background: 
+        radial-gradient(circle at 76% 40%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 50%, rgba(29,29,29,0.04) 50%, rgba(29,29,29,0.04) 100%),
+        radial-gradient(circle at 66% 16%, rgba(214,214,214,0.04) 0%, rgba(214,214,214,0.04) 50%, rgba(91,91,91,0.04) 50%, rgba(91,91,91,0.04) 100%),
+        radial-gradient(circle at 86% 81%, rgba(192,192,192,0.04) 0%, rgba(192,192,192,0.04) 50%, rgba(73,73,73,0.04) 50%, rgba(73,73,73,0.04) 100%),
+        linear-gradient(90deg, rgb(255,255,255), rgb(255,255,255))">
             <div class="card-header bg-dark-subtle text-white">
                 <h3 class="mb-0">Inactive Users</h3>
             </div>

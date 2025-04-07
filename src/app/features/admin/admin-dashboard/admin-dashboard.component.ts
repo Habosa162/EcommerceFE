@@ -25,7 +25,7 @@ export class AdminDashboardComponent implements OnInit {
     private productService: ProductService,
     private customerService: UserService,
     private orderService: OrderService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchDashboardData();
@@ -102,6 +102,16 @@ export class AdminDashboardComponent implements OnInit {
         return 'Cancelled';
       default:
         return 'Unknown';
+    }
+  }
+  getStatusBadgeClass(status: number): string {
+    switch (status) {
+      case 0: return 'bg-warning';   // Pending
+      case 1: return 'bg-success';   // Paid
+      case 2: return 'bg-danger';    // Failed
+      case 3: return 'bg-info';      // Refunded
+      case 4: return 'bg-secondary'; // Cancelled
+      default: return 'bg-dark';
     }
   }
   deleteProducts(id: any): void {

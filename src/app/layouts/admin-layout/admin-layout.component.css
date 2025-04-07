@@ -1,4 +1,4 @@
-/* Sidebar */
+/* Sidebar
 #sidebar {
     width: 250px;
     min-height: 100vh;
@@ -21,10 +21,19 @@
 }
 
 /* Main Content */
-.main-content {
+/* .main-content {
     transition: margin-left 0.3s ease;
 }
 
 #sidebar.collapsed+.main-content {
     margin-left: 70px;
+}  */
+/* Minimal required CSS for hover gradient effect */
+.bg-gradient-hover:hover {
+    background-image: linear-gradient(to right, currentColor, transparent) !important;
+}
+
+/* Required for sidebar toggle functionality */
+#sidebar.collapsed {
+    margin-left: -250px;
 }
