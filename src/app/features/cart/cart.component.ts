@@ -15,7 +15,6 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private authService: AuthService) {}
   ngOnInit(): void {
     this.cartService.setUser(this.authService.getUserData()?.ID);
-    this.cartService.saveCart(); // Save the cart when the component initializes
     this.cartItems = computed(() => this.cartService.getCart()); // Assign a computed signal
 
   }

@@ -11,7 +11,12 @@ export class CartService  {
   constructor(private authService: AuthService) { }
   
   setUser(userId: string | null) {
+    const isSwitchingToUser = !this.userId && userId;
+
     this.userId = userId;
+    if (isSwitchingToUser) {
+      this.mergeGuestToUserCart();
+    }
     this.cartItems.set(this.loadCart());
   }
   private getCartStorageKey(): string {
@@ -30,22 +35,6 @@ export class CartService  {
 
     if (guestCart) {
         let mergedCart = JSON.parse(guestCart);
-        
-        // if (existingUserCart) {
-        //     const userCart = JSON.parse(existingUserCart);
-            
-        //     // Merge guest cart items into the user cart
-        //     mergedCart.forEach(guestItem => {
-        //         const existingItem = userCart.find(item => item.id === guestItem.id);
-        //         if (existingItem) {
-        //             existingItem.quantity += guestItem.quantity;
-        //         } else {
-        //             userCart.push(guestItem);
-        //         }
-        //     });
-
-        //     mergedCart = userCart; // Use the merged cart
-        // }
 
         localStorage.setItem(userCartKey, JSON.stringify(mergedCart));
         localStorage.removeItem('cart_guest'); // Remove guest cart after migration
@@ -66,23 +55,27 @@ export class CartService  {
 
   // Updated addToCart method to accept quantity
   addToCart(product: any, quantity: number = 1) {
-    const currentItems = this.cartItems();
+    const isLoggedIn = this.authService.isLoggedIn();
+    const cartKey = isLoggedIn ? `cart_${this.userId}` : 'cart_guest';
+    const storedCart = localStorage.getItem(cartKey);
+    const currentItems = storedCart ? JSON.parse(storedCart) : [];
     const existingItem = currentItems.find((item) => item.id === product.id);
 
     if (existingItem) {
       existingItem.quantity += quantity;
-      this.cartItems.set([...currentItems]);
     } else {
-      const updatedItems = [...currentItems, { 
-        ...product, 
+      currentItems.push({
+        ...product,
         quantity: quantity,
         price: Number(product.price),
         finalPrice: Number(product.finalPrice) || Number(product.price)
-      }];
-      this.cartItems.set(updatedItems);
+      });
     }
 
-    this.saveCart();
+    localStorage.setItem(cartKey, JSON.stringify(currentItems));
+    if (cartKey === this.getCartStorageKey()) {
+      this.cartItems.set(currentItems);
+    }
   }
   
   updateQuantity(productId: number, change: number) {
@@ -102,9 +95,19 @@ export class CartService  {
     this.saveCart(); 
   }
 
-  getCartCount() {
+  getCartCount(): number {
+    const currentUserId = this.authService.getUserData()?.ID ?? null;
+    if (this.userId !== currentUserId) {
+      this.userId = currentUserId;
+      // Defer signal mutation to avoid runtime errors
+      queueMicrotask(() => {
+        this.cartItems.set(this.loadCart());
+      });
+    }
+  
     return this.cartItems().reduce((acc, item) => acc + item.quantity, 0);
   }
+  
 
   getTotalPrice() {
     return this.cartItems().reduce(
@@ -112,5 +115,27 @@ export class CartService  {
       0
     );
   }
+  private mergeGuestToUserCart() {
+    const guestCart = localStorage.getItem('cart_guest');
+    const userCartKey = this.getCartStorageKey();
+  
+    if (guestCart) {
+      const guestItems = JSON.parse(guestCart);
+      const userItems = JSON.parse(localStorage.getItem(userCartKey) || '[]');
+  
+      guestItems.forEach((guestItem: any) => {
+        const existingItem = userItems.find((item: any) => item.id === guestItem.id);
+        if (existingItem) {
+          existingItem.quantity += guestItem.quantity;
+        } else {
+          userItems.push(guestItem);
+        }
+      });
+  
+      localStorage.setItem(userCartKey, JSON.stringify(userItems));
+      localStorage.removeItem('cart_guest');
+    }
+  }
+  
 
 }
