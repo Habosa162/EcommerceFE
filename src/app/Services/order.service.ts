@@ -18,7 +18,7 @@ export class OrderService {
    getUserOrders(customerId: string) {
       return this.http.get<order[]>(`${this.orderApiUrl}/GetUserOrders/${customerId}`);
     }
-    getOrderById(orderId: number) {
+    getOrderById(orderId: any) {
       return this.http.get<order>(`${this.orderApiUrl}/${orderId}`);
     }
     cancelOrder(orderId: number) {

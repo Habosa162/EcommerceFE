@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../Services/product.service';
 import { SubCategoryService } from '../../../Services/sub-category.service';
 import { SubCategory } from './../../../core/models/subCategory.model';
 import { IProductCreate } from './../../../core/models/product.model';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-createproduct',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './createproduct.component.html',
 })
 export class CreateproductComponent implements OnInit {
-
+  productForm!: FormGroup;
   products: any[] = [];
   selectedFile!: File;
   subCategories!: SubCategory[];
@@ -33,12 +33,33 @@ export class CreateproductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private subCategoryService: SubCategoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subCategoryService.getsubCategories().subscribe((data) => {
       this.subCategories = data;
     });
+
+    // this.productForm = new FormGroup({
+    //   name: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9\s]+$/)]),
+    //   price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    //   description: new FormControl('', Validators.required),
+    //   brand: new FormControl(''),
+    //   stock: new FormControl(0, [Validators.min(0)]),
+    //   avgRate: new FormControl(0),
+    //   discountAmount: new FormControl(0, [Validators.min(0)]),
+    //   color: new FormControl(''),
+    //   finalPrice: new FormControl({ value: 0, disabled: true }),
+    //   subCategoryId: new FormControl('', Validators.required)
+    // });
+
+    // // Listen to price and discountAmount value changes
+    // this.productForm.get('price')?.valueChanges.subscribe(() => {
+    //   this.calculateFinalPrice();
+    // });
+    // this.productForm.get('discountAmount')?.valueChanges.subscribe(() => {
+    //   this.calculateFinalPrice();
+    // });
   }
 
   onFileSelected(event: any): void {
@@ -68,6 +89,7 @@ export class CreateproductComponent implements OnInit {
     this.selectedFile = null!;
   }
 
+  
   calculateFinalPrice(): void {
     // Recalculate final price whenever price or discount changes
     this.newProduct.finalPrice = this.newProduct.price - this.newProduct.discountAmount;
@@ -75,7 +97,6 @@ export class CreateproductComponent implements OnInit {
       this.newProduct.finalPrice = 0; // Prevent negative final price
     }
   }
-
   onPriceChange(): void {
     this.calculateFinalPrice();
   }
@@ -123,4 +144,6 @@ export class CreateproductComponent implements OnInit {
       },
     });
   }
+
+
 }

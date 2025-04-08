@@ -5,19 +5,20 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-details',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './order-details.component.html',
   styleUrl: './order-details.component.css'
 })
 export class OrderDetailsComponent {
-  order : any ;
-  constructor(private route:ActivatedRoute,private orderService:OrderService){}
+  order: any;
+  constructor(private route: ActivatedRoute, private orderService: OrderService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.route.params.subscribe(params => {
       const orderId = params['id'];
       this.orderService.getOrderById(orderId).subscribe(order => {
         this.order = order;
+        console.log(order)
       });
     });
   }

@@ -24,6 +24,8 @@ import { AdminUserComponent } from './features/admin/admin-user/admin-user.compo
 
 
 import { WishlistComponent } from './features/wishlist/wishlist.component';
+import { AdminPDetailsComponent } from './features/admin/admin-pdetails/admin-pdetails.component';
+import { OrderDComponent } from './features/admin/order-d/order-d.component';
 
 export const routes: Routes = [
   // 🌟 Customer Routes
@@ -89,11 +91,16 @@ export const routes: Routes = [
 
 
 
-  { path: 'dashboard', component: AdminDashboardComponent ,canActivate:[AuthGuard, RoleGuard]},
-  { path: 'manageproducts', component: AdminProductsComponent ,canActivate: [AuthGuard, RoleGuard]},
-  { path: 'orders', component: AdminOrdersComponent ,canActivate: [AuthGuard, RoleGuard]},
-  { path: 'users', component: AdminUserComponent ,canActivate: [AuthGuard, RoleGuard]},
-  { path: 'createproduct', component: CreateproductComponent ,canActivate: [AuthGuard, RoleGuard]},
+  { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'manageproducts', component: AdminProductsComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'orders', component: AdminOrdersComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'users', component: AdminUserComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'createproduct', component: CreateproductComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'orderD/:id', component: OrderDComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'product-details/:id', component: AdminPDetailsComponent, canActivate: [AuthGuard, RoleGuard] },
+
+
+
 
   // {
   //   path: 'admin',

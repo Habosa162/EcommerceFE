@@ -1,79 +1,84 @@
-<div class="container py-5">
-  <div class="card shadow-lg border-0 rounded-4 p-4">
-      <h2 class="text-center text-primary mb-4">Create Product</h2>
-      <form (ngSubmit)="createProduct()">
-          <div class="mb-3">
-              <label for="name" class="form-label">Product Name</label>
-              <input type="text" class="form-control" id="name" [(ngModel)]="newProduct.name" name="name" required>
-          </div>
+<div class="container py-3">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <h2 class="text-center text-primary mb-4">Create Product</h2>
+        <form (ngSubmit)="createProduct()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="newProduct.name" name="name" required>
+            </div>
 
-          <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" [(ngModel)]="newProduct.description"
-                  name="description"></textarea>
-          </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" [(ngModel)]="newProduct.description"
+                    name="description"></textarea>
+            </div>
 
-          <div class="row">
-              <div class="col-md-6 mb-3">
-                  <label for="price" class="form-label">Price</label>
-                  <input type="number" class="form-control" id="price" [(ngModel)]="newProduct.price" name="price"
-                  (ngModelChange)="onPriceChange()" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                  <label for="discountAmount" class="form-label">Discount</label>
-                  <input type="number" class="form-control" id="discountAmount"
-                      [(ngModel)]="newProduct.discountAmount" name="discountAmount" (ngModelChange)="onDiscountChange()" required>
-              </div>
-          </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" [(ngModel)]="newProduct.price" name="price"
+                        (ngModelChange)="onPriceChange()" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="discountAmount" class="form-label">Discount</label>
+                    <input type="number" class="form-control" id="discountAmount"
+                        [(ngModel)]="newProduct.discountAmount" name="discountAmount"
+                        (ngModelChange)="onDiscountChange()" required>
+                </div>
+            </div>
 
-          <div class="mb-3">
-              <label for="subCategory" class="form-label">Select SubCategory</label>
-              <select class="form-select" id="subCategory" [(ngModel)]="newProduct.subCategoryId" name="subCategoryId" required>
-                  <option value="" disabled selected>Select SubCategory</option>
-                  <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
-                      {{ subCategory.name }}
-                      <img *ngIf="subCategory.imgUrl" [src]="subCategory.imgUrl" alt="{{ subCategory.name }}" width="30" height="30">
-                  </option>
-              </select>
-          </div>
+            <div class="mb-3">
+                <label for="subCategory" class="form-label">Select SubCategory</label>
+                <select class="form-select" id="subCategory" [(ngModel)]="newProduct.subCategoryId" name="subCategoryId"
+                    required>
+                    <option value="" disabled selected>Select SubCategory</option>
+                    <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">
+                        {{ subCategory.name }}
+                        <img *ngIf="subCategory.imgUrl" [src]="subCategory.imgUrl" alt="{{ subCategory.name }}"
+                            width="30" height="30">
+                    </option>
+                </select>
+            </div>
 
-          <div class="mb-3">
-              <label for="avgRate" class="form-label">Average Rating</label>
-              <input type="number" class="form-control" id="avgRate" [(ngModel)]="newProduct.avgRate" name="avgRate"
-                  min="0" max="5" step="0.1" placeholder="Enter average rating (0-5)">
-          </div>
+            <div class="mb-3">
+                <label for="avgRate" class="form-label">Average Rating</label>
+                <input type="number" class="form-control" id="avgRate" [(ngModel)]="newProduct.avgRate" name="avgRate"
+                    min="0" max="5" step="0.1" placeholder="Enter average rating (0-5)">
+            </div>
 
-          <div class="mb-3">
-              <label for="stock" class="form-label">Stock Quantity</label>
-              <input type="number" class="form-control" id="stock" [(ngModel)]="newProduct.stock" name="stock" required>
-          </div>
+            <div class="mb-3">
+                <label for="stock" class="form-label">Stock Quantity</label>
+                <input type="number" class="form-control" id="stock" [(ngModel)]="newProduct.stock" name="stock"
+                    required>
+            </div>
 
-          <div class="mb-3">
-              <label for="finalPrice" class="form-label">Final Price</label>
-              <input type="text" class="form-control" id="finalPrice" [(ngModel)]="newProduct.finalPrice" name="finalPrice" [value]="newProduct.finalPrice" readonly>
-          </div>
+            <div class="mb-3">
+                <label for="finalPrice" class="form-label">Final Price</label>
+                <input type="text" class="form-control" id="finalPrice" [(ngModel)]="newProduct.finalPrice"
+                    name="finalPrice" [value]="newProduct.finalPrice" readonly>
+            </div>
 
-          <div class="mb-3">
-              <label for="image" class="form-label">Product Image</label>
-              <input type="file" class="form-control" id="image" (change)="onFileSelected($event)" name="image"
-                  required>
-          </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="image" (change)="onFileSelected($event)" name="image"
+                    required>
+            </div>
 
-          <div class="row">
-              <div class="col-md-6 mb-3">
-                  <label for="brand" class="form-label">Brand</label>
-                  <input type="text" class="form-control" id="brand" [(ngModel)]="newProduct.brand" name="brand">
-              </div>
-              <div class="col-md-6 mb-3">
-                  <label for="color" class="form-label">Color</label>
-                  <input type="text" class="form-control" id="color" [(ngModel)]="newProduct.color" name="color">
-              </div>
-          </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="brand" class="form-label">Brand</label>
+                    <input type="text" class="form-control" id="brand" [(ngModel)]="newProduct.brand" name="brand">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="color" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="color" [(ngModel)]="newProduct.color" name="color">
+                </div>
+            </div>
 
-          <div class="d-flex justify-content-between mt-4">
-              <button type="submit" class="btn btn-primary px-4 py-2">Create Product</button>
-              <button type="button" (click)="resetForm()" class="btn btn-secondary px-4 py-2">Reset</button>
-          </div>
-      </form>
-  </div>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary px-4 py-2">Create Product</button>
+                <button type="button" (click)="resetForm()" class="btn btn-secondary px-4 py-2">Reset</button>
+            </div>
+        </form>
+    </div>
 </div>

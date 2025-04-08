@@ -10,14 +10,18 @@ import { Product } from '../core/models/product.model';
 export class ProductService {
   private productApiUrl = `${environment.apiUrl}/product`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
   getAllProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.productApiUrl}`);
   }
 
+  getProductById(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.productApiUrl}/${id}`);
+  }
   // Delete  products
   deleteProduct(id: any): Observable<any> {
-    return this.http.delete(`${this.productApiUrl}/{id}`);
+    return this.http.delete(`${this.productApiUrl}/${id}`);
   }
 
   createProduct(productData: FormData): Observable<Product> {
@@ -25,7 +29,10 @@ export class ProductService {
   }
 
   updateProduct(productData: FormData, productId: number): Observable<Product> {
-    return this.http.put<Product>(`${this.productApiUrl}/${productId}`, productData);
+    return this.http.put<Product>(
+      `${this.productApiUrl}/${productId}`,
+      productData
+    );
   }
 
   //get product by subcategory id
@@ -38,5 +45,9 @@ export class ProductService {
     return this.http.get<Product[]>(
       `${this.productApiUrl}/top-sold?count=${count}`
     );
+  }
+
+  searchProductsByName(query: string) {
+    return this.http.get<any[]>(`${this.productApiUrl}/search?q=${query}`);
   }
 }

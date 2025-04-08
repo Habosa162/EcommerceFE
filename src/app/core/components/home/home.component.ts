@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private http: HttpClient,
     private categoryService: CategoryService,
     private ProductService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe({
