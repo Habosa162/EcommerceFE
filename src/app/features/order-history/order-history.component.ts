@@ -90,7 +90,7 @@ export class OrderHistoryComponent implements OnInit {
         id: item.productId,
         name: item.name,
         finalPrice: item.unitPrice,
-        image: item.productImg
+        imgUrl: item.productImg
       };
       for (let i = 0; i < item.qty; i++) {
         this.cartService.addToCart(product);

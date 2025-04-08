@@ -109,7 +109,7 @@
 
     <!-- Cancelled Orders Tab -->
     <div *ngIf="activeTab === 'cancelled'">
-        <div *ngIf="pendingOrders.length === 0 && shippedOrders.length === 0 && deliveredOrders.length === 0" class="text-center text-muted py-5">
+        <div *ngIf="cancelOrder.length === 0 " class="text-center text-muted py-5">
             <i class="bi bi-box"></i> We aren't finding any cancelled orders.
         </div>
         <div *ngFor="let order of cancelledOrders" class="order-card card shadow-sm mb-3 border-0">
