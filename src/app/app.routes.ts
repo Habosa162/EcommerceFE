@@ -22,23 +22,29 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 //import { WishlistComponent } from './features/wishlist/wishlist.component';
 import { AdminUserComponent } from './features/admin/admin-user/admin-user.component';
 
-
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 import { AdminPDetailsComponent } from './features/admin/admin-pdetails/admin-pdetails.component';
 import { OrderDComponent } from './features/admin/order-d/order-d.component';
+import { customerGuard } from './guards/customer.guard';
 
 export const routes: Routes = [
   // 🌟 Customer Routes
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [customerGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'products', component: ProductListComponent, title: 'Products' },
+  {
+    path: 'products',
+    component: ProductListComponent,
+    title: 'Products',
+    canActivate: [customerGuard],
+  },
 
   {
     path: 'products/:id',
     component: ProductDetailsComponent,
     title: 'Product Details',
+    canActivate: [customerGuard],
   },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
@@ -58,8 +64,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'category-details/:id', component: CategoryDetailsComponent },
-  { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
-
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+    canActivate: [AuthGuard, customerGuard],
+  },
 
   {
     path: 'products/:id',
@@ -87,20 +96,44 @@ export const routes: Routes = [
     path: 'category-details/:id',
     component: CategoryDetailsComponent,
     title: 'Category Details',
+    canActivate: [customerGuard],
   },
 
-
-
-  { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'manageproducts', component: AdminProductsComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'orders', component: AdminOrdersComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'users', component: AdminUserComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'createproduct', component: CreateproductComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'orderD/:id', component: OrderDComponent, canActivate: [AuthGuard, RoleGuard] },
-  { path: 'product-details/:id', component: AdminPDetailsComponent, canActivate: [AuthGuard, RoleGuard] },
-
-
-
+  {
+    path: 'dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'manageproducts',
+    component: AdminProductsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'orders',
+    component: AdminOrdersComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'users',
+    component: AdminUserComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'createproduct',
+    component: CreateproductComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'orderD/:id',
+    component: OrderDComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
+  {
+    path: 'product-details/:id',
+    component: AdminPDetailsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+  },
 
   // {
   //   path: 'admin',

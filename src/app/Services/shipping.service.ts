@@ -7,7 +7,7 @@ import { order } from '../core/models/order.model';
 })
 export class ShippingService {
   baseUrl: string =
-    'http://verdishop.runasp.net/api/Shipping/GetShippingByOrderId';
+    'https://verdishop.runasp.net/api/Shipping/GetShippingByOrderId';
 
   constructor(private http: HttpClient) {}
 

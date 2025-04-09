@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'http://verdishop.runasp.net/api',
+  apiUrl: 'https://verdishop.runasp.net/api',
 };
 
 // export const environment = {
