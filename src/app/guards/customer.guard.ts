@@ -18,7 +18,7 @@ export class customerGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const role = this.authService.getUserRole();
-    if (role === 'Customer') {
+    if (role !== 'Admin') {
       return true;
     }
     this.router.navigate(['/dashboard']);
