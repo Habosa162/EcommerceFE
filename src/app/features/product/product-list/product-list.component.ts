@@ -27,11 +27,11 @@ export class ProductListComponent implements OnInit {
   selectedBrands: string[] = [];
   selectedPriceRange: string = '';
   priceRanges: string[] = [
-    'Under 100 EGP',
-    '100 EGP - 200 EGP',
-    '200 EGP - 300 EGP',
-    '300 EGP - 500 EGP',
-    'Over 500 EGP',
+    'Under 1000 EGP',
+    '1000 EGP - 2000 EGP',
+    '2000 EGP - 3000 EGP',
+    '3000 EGP - 5000 EGP',
+    'Over 5000 EGP',
   ];
   categories: string[] = [];
   brands: string[] = [];
@@ -84,16 +84,16 @@ export class ProductListComponent implements OnInit {
     if (!this.selectedPriceRange) return true;
 
     switch (this.selectedPriceRange) {
-      case 'Under $100':
-        return price < 100;
-      case '$100 - $200':
-        return price >= 100 && price <= 200;
-      case '$200 - $300':
-        return price >= 200 && price <= 300;
-      case '$300 - $500':
-        return price >= 300 && price <= 500;
-      case 'Over $500':
-        return price > 500;
+      case 'Under 1000 EGP':
+        return price < 1000;
+      case '1000 EGP - 2000 EGP':
+        return price >= 1000 && price <= 2000;
+      case '2000 EGP - 3000 EGP':
+        return price >= 2000 && price <= 3000;
+      case '3000 EGP - 5000 EGP':
+        return price >= 3000 && price <= 5000;
+      case 'Over 5000 EGP':
+        return price > 5000;
       default:
         return true;
     }

@@ -1,23 +1,43 @@
 <div class="container-fluid mt-3">
   <!-- Toast Notification -->
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
-    <div #toastElement class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" style="min-width: 300px">
+    <div
+      #toastElement
+      class="toast align-items-center"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="min-width: 300px"
+    >
       <div class="d-flex">
         <div class="toast-body bg-light d-flex align-items-center">
-          <img [src]="toastProduct?.imageUrl" class="rounded me-3" style="width: 50px; height: 50px; object-fit: contain">
+          <img
+            [src]="toastProduct?.imageUrl"
+            class="rounded me-3"
+            style="width: 50px; height: 50px; object-fit: contain"
+          />
           <div>
-            <div class="fw-bold">${{toastProduct?.finalPrice | number:'1.2-2'}}</div>
-            <small class="text-muted">{{toastMessage}}</small>
+            <div class="fw-bold">
+              ${{ toastProduct?.finalPrice | number : "1.2-2" }}
+            </div>
+            <small class="text-muted">{{ toastMessage }}</small>
           </div>
         </div>
-        <button type="button" class="btn-close me-2 m-auto" (click)="hideToast()"></button>
+        <button
+          type="button"
+          class="btn-close me-2 m-auto"
+          (click)="hideToast()"
+        ></button>
       </div>
     </div>
   </div>
 
   <div class="row g-3">
     <!-- Fixed Sidebar Filters Column -->
-    <div class="col-lg-3 position-sticky top-0" style="height: 100vh; overflow-y: auto; padding-top: 1rem;">
+    <div
+      class="col-lg-3 position-sticky top-0"
+      style="height: 100vh; overflow-y: auto; padding-top: 1rem"
+    >
       <!-- Categories Section -->
       <div class="card">
         <div class="card-header bg-white py-2">
@@ -25,13 +45,19 @@
         </div>
         <div class="card-body p-2">
           <div class="list-group list-group-flush">
-            <div *ngFor="let category of categories" class="list-group-item list-group-item-action p-1">
+            <div
+              *ngFor="let category of categories"
+              class="list-group-item list-group-item-action p-1"
+            >
               <div class="form-check">
-                <input class="form-check-input" type="checkbox"
-                       [id]="'cat-'+category"
-                       [checked]="selectedCategories.includes(category)"
-                       (change)="toggleCategoryFilter(category, $event)">
-                <label class="form-check-label" [for]="'cat-'+category">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'cat-' + category"
+                  [checked]="selectedCategories.includes(category)"
+                  (change)="toggleCategoryFilter(category, $event)"
+                />
+                <label class="form-check-label" [for]="'cat-' + category">
                   {{ category }}
                 </label>
               </div>
@@ -47,13 +73,19 @@
         </div>
         <div class="card-body p-2">
           <div class="list-group list-group-flush">
-            <div *ngFor="let brand of brands" class="list-group-item list-group-item-action p-1">
+            <div
+              *ngFor="let brand of brands"
+              class="list-group-item list-group-item-action p-1"
+            >
               <div class="form-check">
-                <input class="form-check-input" type="checkbox"
-                       [id]="'brand-'+brand"
-                       [checked]="selectedBrands.includes(brand)"
-                       (change)="toggleBrandFilter(brand, $event)">
-                <label class="form-check-label" [for]="'brand-'+brand">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'brand-' + brand"
+                  [checked]="selectedBrands.includes(brand)"
+                  (change)="toggleBrandFilter(brand, $event)"
+                />
+                <label class="form-check-label" [for]="'brand-' + brand">
                   {{ brand }}
                 </label>
               </div>
@@ -69,27 +101,39 @@
         </div>
         <div class="card-body p-2">
           <div class="list-group list-group-flush">
-            <div *ngFor="let range of priceRanges" class="list-group-item list-group-item-action p-1">
+            <div
+              *ngFor="let range of priceRanges"
+              class="list-group-item list-group-item-action p-1"
+            >
               <div class="form-check">
-                <input class="form-check-input" type="radio"
-                       name="priceRange"
-                       [id]="'price-'+range"
-                       [checked]="selectedPriceRange === range"
-                       (change)="filterByPrice(range)">
-                <label class="form-check-label" [for]="'price-'+range">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="priceRange"
+                  [id]="'price-' + range"
+                  [checked]="selectedPriceRange === range"
+                  (change)="filterByPrice(range)"
+                />
+                <label class="form-check-label" [for]="'price-' + range">
                   {{ range }}
                 </label>
               </div>
             </div>
           </div>
-          <button class="btn btn-sm btn-outline-secondary w-100 mt-2" (click)="clearPriceFilter()">
+          <button
+            class="btn btn-sm btn-outline-secondary w-100 mt-2"
+            (click)="clearPriceFilter()"
+          >
             Clear Price Filter
           </button>
         </div>
       </div>
 
       <!-- Clear All Filters Button -->
-      <button class="btn btn-outline-danger w-100 mt-3 mb-3" (click)="clearAllFilters()">
+      <button
+        class="btn btn-outline-danger w-100 mt-3 mb-3"
+        (click)="clearAllFilters()"
+      >
         <i class="bi bi-x-circle me-1"></i> Clear All Filters
       </button>
     </div>
@@ -102,23 +146,32 @@
           <div class="row g-2 align-items-center">
             <div class="col-md-6">
               <div class="input-group">
-                <input type="text" class="form-control form-control-sm"
-                       [(ngModel)]="searchQuery"
-                       placeholder="Search products..."
-                       (keyup.enter)="searchProducts()">
-                <button class="btn btn-primary btn-sm" (click)="searchProducts()">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  [(ngModel)]="searchQuery"
+                  placeholder="Search products..."
+                  (keyup.enter)="searchProducts()"
+                />
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="searchProducts()"
+                >
                   <i class="bi bi-search"></i>
                 </button>
               </div>
             </div>
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <select class="form-select form-select-sm" (change)="viewMode = $any($event.target).value">
                 <option value="grid">Grid View</option>
                 <option value="list">List View</option>
               </select>
-            </div>
+            </div> -->
             <div class="col-md-3">
-              <select class="form-select form-select-sm" (change)="sortProducts($any($event.target).value)">
+              <select
+                class="form-select form-select-sm"
+                (change)="sortProducts($any($event.target).value)"
+              >
                 <option value="">Sort By</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
@@ -131,65 +184,107 @@
 
       <!-- Product Grid -->
       <div class="row g-3">
-        <div *ngFor="let product of filteredProducts" class="col-6 col-md-4 col-lg-3">
+        <div
+          *ngFor="let product of filteredProducts"
+          class="col-6 col-md-4 col-lg-3"
+        >
           <div class="card h-100 product-card">
             <!-- Discount Badge -->
-            <div class="badge bg-danger position-absolute discountBadge" style="top: 0.5rem; right: 0.5rem"
-                 *ngIf="product.discountAmount > 0">
+            <div
+              class="badge bg-danger position-absolute discountBadge"
+              style="top: 0.5rem; right: 0.5rem"
+              *ngIf="product.discountAmount > 0"
+            >
               {{ product.discountAmount }} EGP OFF
             </div>
 
             <!-- Product Image -->
-            <div class="position-relative" style="height: 180px; overflow: hidden;">
-  <a [routerLink]="['/products', product.id]" class="d-block h-100">
-    <img class="img-fluid p-3"
-         [src]="product.imageUrl"
-         [alt]="product.name"
-         style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;">
-  </a>
+            <div
+              class="position-relative"
+              style="height: 180px; overflow: hidden"
+            >
+              <a [routerLink]="['/products', product.id]" class="d-block h-100">
+                <img
+                  class="img-fluid p-3"
+                  [src]="product.imageUrl"
+                  [alt]="product.name"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    cursor: pointer;
+                  "
+                />
+              </a>
 
-  <!-- Centered Action Buttons -->
-  <div class="product-actions position-absolute top-50 start-50 translate-middle d-flex gap-3">
-    <button class="btn btn-sm btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
-            (click)="addToWishlist(product); $event.stopPropagation()"
-            [disabled]="product.stock <= 0"
-            [ngClass]="{'text-danger': isInWishlist(product)}"
-            style="width: 40px; height: 40px;">
-      <i class="bi fs-5" [class.bi-heart]="!isInWishlist(product)" [class.bi-heart-fill]="isInWishlist(product)"></i>
-    </button>
+              <!-- Centered Action Buttons -->
+              <div
+                class="product-actions position-absolute top-50 start-50 translate-middle d-flex gap-3"
+              >
+                <button
+                  class="btn btn-sm btn-light rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
+                  (click)="addToWishlist(product); $event.stopPropagation()"
+                  [disabled]="product.stock <= 0"
+                  [ngClass]="{ 'text-danger': isInWishlist(product) }"
+                  style="width: 40px; height: 40px"
+                >
+                  <i
+                    class="bi fs-5"
+                    [class.bi-heart]="!isInWishlist(product)"
+                    [class.bi-heart-fill]="isInWishlist(product)"
+                  ></i>
+                </button>
 
-    <button class="btn btn-sm btn-primary rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
-            (click)="addToCart(product); $event.stopPropagation()"
-            [disabled]="product.stock <= 0"
-            style="width: 40px; height: 40px;">
-      <i class="bi bi-cart-plus fs-5"></i>
-    </button>
-  </div>
-</div>
-
+                <button
+                  class="btn btn-sm btn-primary rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center"
+                  (click)="addToCart(product); $event.stopPropagation()"
+                  [disabled]="product.stock <= 0"
+                  style="width: 40px; height: 40px"
+                >
+                  <i class="bi bi-cart-plus fs-5"></i>
+                </button>
+              </div>
+            </div>
 
             <!-- Product Info -->
             <div class="card-body p-2">
-              <div class="text-muted small mb-1 text-truncate">{{ product.category }}</div>
+              <div class="text-muted small mb-1 text-truncate">
+                {{ product.category }}
+              </div>
               <h6 class="card-title mb-1 text-truncate">{{ product.name }}</h6>
 
               <div class="mb-2">
-                <span *ngFor="let star of getStars(product.avgRate || 0)" class="text-warning">★</span>
-                <span class="small text-muted">({{ product.reviewCount || 0 }})</span>
+                <span
+                  *ngFor="let star of getStars(product.avgRate || 0)"
+                  class="text-warning"
+                  >★</span
+                >
+                <span class="small text-muted"
+                  >({{ product.reviewCount || 0 }})</span
+                >
               </div>
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <span class="text-dark fw-bold">${{ product.finalPrice | number:'1.2-2' }}</span>
-                  <span class="text-decoration-line-through text-muted small ms-1"
-                        *ngIf="product.discountAmount > 0">
-                    ${{ product.price | number:'1.2-2' }}
+                  <span class="text-dark fw-bold"
+                    >${{ product.finalPrice | number : "1.2-2" }}</span
+                  >
+                  <span
+                    class="text-decoration-line-through text-muted small ms-1"
+                    *ngIf="product.discountAmount > 0"
+                  >
+                    ${{ product.price | number : "1.2-2" }}
                   </span>
                 </div>
 
-                <span class="badge bg-opacity-10"
-                      [ngClass]="{'bg-success': product.stock > 0, 'bg-danger': product.stock <= 0}">
-                  {{ product.stock > 0 ? product.stock : 'Out' }}
+                <span
+                  class="badge bg-opacity-10"
+                  [ngClass]="{
+                    'bg-success': product.stock > 0,
+                    'bg-danger': product.stock <= 0
+                  }"
+                >
+                  {{ product.stock > 0 ? product.stock : "Out" }}
                 </span>
               </div>
             </div>
