@@ -87,7 +87,7 @@
 <section id="top-sold" class="py-5">
   <div class="container">
     <h3 class="mb-5 fw-bold text-capitalize">Most Selling Products</h3>
-    <div class="row">
+    <div class="row gy-3">
       @for(product of Products; track $index) {
       <div class="col-md-6 col-lg-4">
         <app-product-card [product]="product"></app-product-card>

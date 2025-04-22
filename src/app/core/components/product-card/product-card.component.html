@@ -16,8 +16,9 @@
     <div class="d-flex justify-content-between align-items-center">
       <h5 class="card-title">{{ product.name }}</h5>
       <div>
-        <span class="text-decoration-line-through mx-1 text-danger"
-          >${{ product.price }}
+        <span *ngIf="product.discountAmount > 0" class="text-decoration-line-through mx-1 text-danger"
+          >  ${{ product.price}}
+         
         </span>
         <span class="mx-1 fs-5 fw-bold">${{ product.finalPrice }} </span>
       </div>
