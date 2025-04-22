@@ -30,7 +30,7 @@ export class CategoryDetailsComponent implements OnInit {
   }
 
   fetchCategory(id: string) {
-    this.http.get(`https://localhost:7280/api/Category/${id}`).subscribe(
+    this.http.get(`https://verdishop.runasp.net/api/Category/${id}`).subscribe(
       (data) => {
         this.categoryData = data;
         console.log(this.categoryData);
